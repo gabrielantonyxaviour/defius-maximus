@@ -55,7 +55,7 @@ export default function ChefProfile({
 
   return (
     <div className=" w-[600px] h-[400px] xl:h-[500px] absolute top-[18%] lg:top-[22%] left-[24%] lg:left-[32%] bg-[#1F1F1F] rounded-sm">
-      <div className="absolute w-full h-full flex flex-col -top-[1%] -left-[1%] space-y-6 sen rounded-sm text-sm border-2 border-black p-6 bg-[#1F1F1F] text-white overflow-y-auto">
+      <div className="absolute w-full h-full flex flex-col -top-[1%] -left-[1%] space-y-6 sen rounded-sm text-sm border-2 border-white p-6 bg-[#1F1F1F] text-white overflow-y-auto">
         {/* Header */}
         {!chefData || !user ? (
           <div className="w-full h-full flex items-center justify-center">
@@ -67,10 +67,7 @@ export default function ChefProfile({
               <p className="font-bold text-lg">
                 {chefData.id == chef?.id ? "Your Profile" : "Chef Profile"}
               </p>
-              <X
-                className="cursor-pointer hover:text-gray-600"
-                onClick={close}
-              />
+              <X className="cursor-pointer hover:text-white" onClick={close} />
             </div>
 
             <Separator className="bg-[#1F1F1F]" />
@@ -101,7 +98,7 @@ export default function ChefProfile({
                   ))}
                 </div>
                 {chefData.bio && (
-                  <p className="text-sm text-gray-700 max-w-md">
+                  <p className="text-sm text-gray-300 max-w-md">
                     {chefData.bio}
                   </p>
                 )}
@@ -113,7 +110,7 @@ export default function ChefProfile({
             {/* Stats */}
             <div className="grid grid-cols-3 w-full gap-6 pl-6">
               <div className="space-y-1">
-                <div className="flex  items-center gap-2 text-gray-600">
+                <div className="flex  items-center gap-2 text-white">
                   <TrendingUp className="h-4 w-4" />
                   <span className="text-sm">Avg. PNL</span>
                 </div>
@@ -123,7 +120,7 @@ export default function ChefProfile({
               </div>
 
               <div className="space-y-1">
-                <div className="flex items-center gap-2 text-gray-600">
+                <div className="flex items-center gap-2 text-white">
                   <Users className="h-4 w-4" />
                   <span className="text-sm">Subscribers</span>
                 </div>
@@ -133,7 +130,7 @@ export default function ChefProfile({
               </div>
 
               <div className="space-y-1">
-                <div className="flex items-center gap-2 text-gray-600">
+                <div className="flex items-center gap-2 text-white">
                   <BarChart className="h-4 w-4" />
                   <span className="text-sm">Calls/Day</span>
                 </div>
@@ -184,7 +181,7 @@ export default function ChefProfile({
                       await new Promise((resolve) => setTimeout(resolve, 2000));
                       setLoading(3);
                     }}
-                    className="group absolute -top-[4px] -left-[2px] rounded-sm w-full h-[36px] flex py-4 px-6 bg-[#BF4317] hover:bg-[#BF4317] hover:text-white border-[1px] border-black mr-[2px]"
+                    className="group absolute -top-[4px] -left-[2px] rounded-sm w-full h-[36px] flex py-4 px-6 bg-[#BF4317] hover:bg-[#BF4317] hover:text-white border-[1px] border-white mr-[2px]"
                   >
                     {loading == 1 ? (
                       <>

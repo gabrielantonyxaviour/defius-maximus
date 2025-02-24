@@ -208,7 +208,7 @@ export default function Layout({
               onClick={() => {
                 open();
               }}
-              className="group absolute -top-1 -left-1 rounded-sm w-full h-full flex items-center justify-center bg-[#BF4317] hover:bg-[#1F1F1F] hover:text-white border border-black"
+              className="group absolute -top-1 -left-1 rounded-sm w-full h-full flex items-center justify-center bg-[#BF4317] hover:bg-[#e6450d] hover:text-white border border-black"
             >
               <div className="flex items-center gap-2">
                 <p className="sen text-sm sm:text-base">Connect Wallet</p>

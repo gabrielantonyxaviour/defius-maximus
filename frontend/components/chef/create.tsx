@@ -230,7 +230,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
 
   return (
     <div className="2xl:relative absolute 2xl:top-[0%] 2xl:left-[0%] left-[16%] xl:w-[48%] w-[80%] 2xl:h-full h-[600px] bg-[#1F1F1F] rounded-sm">
-      <div className="absolute w-full h-full flex flex-col -top-[0.5%] -left-[0.5%] space-y-2 sen rounded-sm text-sm border-2 border-black py-2 bg-[#1F1F1F] text-white">
+      <div className="absolute w-full h-full flex flex-col -top-[0.5%] -left-[0.5%] space-y-2 sen rounded-sm text-sm border-2 border-white py-2 bg-[#1F1F1F] text-white">
         <div className="flex justify-between items-center px-4">
           <div className="flex space-x-2 items-center">
             {selectedType != "Choose" && (
@@ -268,7 +268,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                     onClick={() => {
                       setSelectedType("Spot");
                     }}
-                    className={`absolute cursor-pointer w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-black py-2  bg-[#1F1F1F] text-white  `}
+                    className={`absolute cursor-pointer w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-white py-2  bg-[#1F1F1F] text-white  `}
                   >
                     <div className="flex space-x-1 items-center justify-center pt-2">
                       <p className="nouns spacing-2 tracking-wide text-xl">
@@ -289,7 +289,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                     onClick={() => {
                       setSelectedType("Perps");
                     }}
-                    className={`absolute cursor-pointer w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-black py-2  bg-[#1F1F1F] text-white  `}
+                    className={`absolute cursor-pointer w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-white py-2  bg-[#1F1F1F] text-white  `}
                   >
                     <div className="flex space-x-1 items-center justify-center pt-2">
                       <p className="nouns spacing-2 tracking-wide text-xl">
@@ -368,7 +368,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                     <PopoverTrigger asChild>
                       <Button
                         variant="outline"
-                        className="w-full mt-2 hover:bg-[#BF4317] hover:text-white"
+                        className="w-full mt-2 hover:bg-[#BF4317] text-black hover:text-white"
                       >
                         {selectedDex && (
                           <img
@@ -436,7 +436,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                     <PopoverTrigger asChild>
                       <Button
                         variant="outline"
-                        className="w-full mt-2 justify-between hover:bg-[#BF4317] hover:text-white"
+                        className="w-full mt-2 justify-between hover:bg-[#BF4317] text-black hover:text-white"
                         disabled={selectedDex == null}
                       >
                         <div className="ml-2 flex w-full items-center space-x-2">
@@ -564,7 +564,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                     <PopoverTrigger asChild>
                       <Button
                         variant="outline"
-                        className="w-full mt-2 hover:bg-[#BF4317] hover:text-white font-semibold"
+                        className="w-full mt-2 hover:bg-[#BF4317] text-black hover:text-white font-semibold"
                         disabled={
                           !selectedAsset ||
                           Object.keys(assets[selectedAsset] || {}).length === 1
@@ -672,6 +672,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                   type="number"
                   step="0.01"
                   value={entryPrice}
+                  className="text-black"
                   onChange={(e) => {
                     setEntryPrice(Number(e.target.value));
                   }}
@@ -687,6 +688,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                       type="number"
                       placeholder="Price"
                       step="0.01"
+                      className="text-black"
                       value={tp.price}
                       onChange={(e) => {
                         const newTakeProfits = [...takeProfits];
@@ -698,6 +700,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                       type="number"
                       placeholder="Percentage"
                       step="0.1"
+                      className="text-black"
                       value={tp.percentage}
                       onChange={(e) => {
                         const newTakeProfits = [...takeProfits];
@@ -714,7 +717,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                       type="button"
                       variant="outline"
                       onClick={handleAddTakeProfit}
-                      className="flex items-center gap-1 hover:bg-[#BF4317] hover:text-white"
+                      className="flex items-center gap-1 hover:bg-black text-black hover:text-white"
                     >
                       <Plus className="h-4 w-4" /> Add Take Profit
                     </Button>
@@ -742,6 +745,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                       placeholder="Price"
                       step="0.01"
                       value={dca.price}
+                      className="text-black"
                       onChange={(e) => {
                         const newDcaPoints = [...dcaPoints];
                         newDcaPoints[index].price = e.target.value;
@@ -752,6 +756,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                       type="number"
                       placeholder="Percentage"
                       step="0.1"
+                      className="text-black"
                       value={dca.percentage}
                       onChange={(e) => {
                         const newDcaPoints = [...dcaPoints];
@@ -768,7 +773,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                       type="button"
                       variant="outline"
                       onClick={handleAddDCA}
-                      className="flex items-center gap-1 hover:bg-[#BF4317] hover:text-white"
+                      className="flex items-center gap-1 hover:bg-black text-black hover:text-white"
                     >
                       <Plus className="h-4 w-4" /> Add DCA points
                     </Button>
@@ -792,6 +797,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                 <Input
                   type="number"
                   step="0.01"
+                  className="text-black"
                   value={stopLoss}
                   onChange={(e) => {
                     setStopLoss(Number(e.target.value));
@@ -806,7 +812,8 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                     type="number"
                     min="1"
                     max="20"
-                    step="1"
+                    className="text-black"
+                    step="1 "
                     value={leverage}
                     onChange={(e) => {
                       setLeverage(Number(e.target.value));
@@ -823,7 +830,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                       <Button
                         variant={"outline"}
                         className={cn(
-                          "w-[240px] pl-3 text-left font-normal hover:bg-[#BF4317] hover:text-white",
+                          "w-[240px] pl-3 text-left font-normal hover:bg-[#BF4317] text-black hover:text-white",
                           !selectedDate && "text-muted-foreground"
                         )}
                       >
@@ -870,6 +877,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                   type="number"
                   step="0.05"
                   min="1"
+                  className="text-black"
                   value={expectedPnl}
                   onChange={(e) => {
                     setExpectedPnl(e.target.value);
@@ -883,6 +891,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                   className="h-32 resize-none"
                   placeholder="Enter your research description..."
                   value={researchDescription}
+                  className="text-black"
                   onChange={(e) => {
                     setResearchDescription(e.target.value);
                   }}

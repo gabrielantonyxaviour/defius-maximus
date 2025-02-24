@@ -103,7 +103,7 @@ export default function CreateChefForm() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="bg-white"
+                  className="bg-white text-black"
                 />
               </div>
               <div className="space-y-2 w-1/2 pl-1">
@@ -125,7 +125,7 @@ export default function CreateChefForm() {
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
                 required
-                className="h-32 bg-white"
+                className="h-32 bg-white text-black"
               />
             </div>
 
@@ -203,7 +203,7 @@ export default function CreateChefForm() {
                     min="0"
                     value={subFee}
                     onChange={(e) => setSubFee(e.target.value)}
-                    className="bg-white"
+                    className="bg-white text-black"
                     required={isPaidSubscription}
                   />
                 </div>
