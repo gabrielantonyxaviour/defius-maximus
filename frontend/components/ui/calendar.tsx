@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { DayPicker } from "react-day-picker"
+import * as React from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { DayPicker } from "react-day-picker";
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>
+export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
 function Calendar({
   className,
@@ -31,20 +31,20 @@ function Calendar({
         ),
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
-        table: "w-full border-collapse border-[#c49963] space-y-1",
+        table: "w-full border-collapse border-[#BF4317] space-y-1",
         head_row: "flex",
         head_cell:
           "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
         row: "flex w-full mt-2",
-        cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-[#c49963] [&:has([aria-selected])]:bg-transparent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+        cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-[#BF4317] [&:has([aria-selected])]:bg-transparent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
         day: cn(
           buttonVariants({ variant: "ghost" }),
-          "h-9 w-9 p-0 font-normal aria-selected:opacity-100 hover:bg-[#c49963] hover:text-primary-foreground focus:bg-[#c49963] focus:text-primary-foreground"
+          "h-9 w-9 p-0 font-normal aria-selected:opacity-100 hover:bg-[#BF4317] hover:text-primary-foreground focus:bg-[#BF4317] focus:text-primary-foreground"
         ),
         day_range_end: "day-range-end",
         day_selected:
-          "bg-[#c49963] text-primary-foreground hover:bg-[#c49963] hover:text-primary-foreground focus:bg-[#c49963] focus:text-primary-foreground",
-        day_today: "border-2 border-[#c49963] text-accent-foreground",
+          "bg-[#BF4317] text-primary-foreground hover:bg-[#BF4317] hover:text-primary-foreground focus:bg-[#BF4317] focus:text-primary-foreground",
+        day_today: "border-2 border-[#BF4317] text-accent-foreground",
         day_outside:
           "day-outside text-muted-foreground aria-selected:bg-transparent aria-selected:text-muted-foreground",
         day_disabled: "text-muted-foreground opacity-50",
@@ -63,8 +63,8 @@ function Calendar({
       }}
       {...props}
     />
-  )
+  );
 }
-Calendar.displayName = "Calendar"
+Calendar.displayName = "Calendar";
 
-export { Calendar }
+export { Calendar };

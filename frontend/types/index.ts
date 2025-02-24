@@ -3,10 +3,10 @@ export type User = {
   name: string;
   paused: boolean;
   mode: "BLUE PILL" | "RED PILL";
-  agent_url: string;
-  pkp_address: string;
-  safe_address: string;
+  address: string;
+  pkey: string;
   profit_goal?: number | null;
+  agent_url?: string;
   profit_timeline?: number | null;
   email?: string | null;
 };

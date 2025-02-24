@@ -5,21 +5,20 @@ import { Toaster } from "@/components/ui/toaster";
 import { EnvironmentStoreProvider } from "@/components/context";
 import Layout from "@/components/layout";
 import WalletProvider from "@/components/providers/wallet-provider";
+import { headers } from "next/headers";
 
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookies = headers().get("cookie");
   return (
     <EnvironmentStoreProvider>
       <html lang="en">
         <body
           style={{
-            backgroundImage: "url('/bg.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
+            backgroundColor: "#BF4317",
           }}
           className="select-none"
         >
@@ -29,7 +28,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <WalletProvider>
+            <WalletProvider cookies={cookies}>
               <Toaster />
               <Layout>{children}</Layout>
             </WalletProvider>

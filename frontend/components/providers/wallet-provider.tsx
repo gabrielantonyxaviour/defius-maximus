@@ -1,54 +1,57 @@
 "use client";
+import { wagmiAdapter, projectId } from "@/config";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { WagmiConfig, createClient, configureChains } from 'wagmi';
-import { avalancheFuji } from 'wagmi/chains';
-import { publicProvider } from 'wagmi/providers/public';
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
-import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
-import { StytchProvider } from '@stytch/nextjs';
-import { createStytchUIClient } from '@stytch/nextjs/ui';
+import { createAppKit } from "@reown/appkit/react";
+import { rootstockTestnet, rootstock } from "@reown/appkit/networks";
+import React, { type ReactNode } from "react";
+import { cookieToInitialState, WagmiProvider, type Config } from "wagmi";
 
+// Set up queryClient
+const queryClient = new QueryClient();
 
-const { provider, chains } = configureChains(
-  [avalancheFuji],
-  [publicProvider()]
-);
+if (!projectId) {
+  throw new Error("Project ID is not defined");
+}
 
-const client = createClient({
-  autoConnect: false,
-  connectors: [
-    new MetaMaskConnector({
-      chains,
-      options: {
-        UNSTABLE_shimOnConnectSelectAccount: true,
-      },
-    }),
-    new CoinbaseWalletConnector({
-      chains,
-      options: {
-        appName: 'wagmi',
-      },
-    }),
-  ],
-  provider,
+// Set up metadata
+const metadata = {
+  name: "Defius Maximus",
+  description:
+    "AGENTIC “FOllow” trading that increases your odds to make the next 10x trade.",
+  url: "https://reown.com/appkit", // origin must match your domain & subdomain
+  icons: ["https://assets.reown.com/defius.png"],
+};
+
+// Create the modal
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  projectId,
+  networks: [rootstockTestnet, rootstock],
+  defaultNetwork: rootstockTestnet,
+  metadata: metadata,
+  features: {
+    analytics: true, // Optional - defaults to your Cloud configuration
+  },
 });
-
-const stytch = createStytchUIClient(
-  process.env.NEXT_PUBLIC_STYTCH_PUBLIC_TOKEN || ''
-);
-
 
 export default function WalletProvider({
   children,
+  cookies,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
+  cookies: string | null;
 }) {
+  const initialState = cookieToInitialState(
+    wagmiAdapter.wagmiConfig as Config,
+    cookies
+  );
 
   return (
-    <StytchProvider stytch={stytch}>
-      <WagmiConfig client={client}>
-        {children}
-      </WagmiConfig>
-    </StytchProvider>
+    <WagmiProvider
+      config={wagmiAdapter.wagmiConfig as Config}
+      initialState={initialState}
+    >
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </WagmiProvider>
   );
 }

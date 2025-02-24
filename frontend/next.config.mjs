@@ -2,9 +2,11 @@
 const nextConfig = {
   webpack: (config) => {
     // ...
-    config.externals['@solana/web3.js'] = 'commonjs @solana/web3.js';
+    config.externals["@solana/web3.js"] = "commonjs @solana/web3.js";
+    config.externals.push("pino-pretty", "lokijs", "encoding");
     return config;
   },
+
   async headers() {
     return [
       {
@@ -36,7 +38,7 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ['t.me', 'picsum.photos'],
+    domains: ["t.me", "picsum.photos"],
     remotePatterns: [
       {
         protocol: "https",
