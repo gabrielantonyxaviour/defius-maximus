@@ -1,19 +1,19 @@
 import { getSwap, ChainId } from "sushi";
 import { createPublicClient, createWalletClient, http, type Hex } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { mainnet } from "viem/chains";
+import { base } from "viem/chains";
 
 async function main() {
   const publicClient = createPublicClient({
-    chain: mainnet,
+    chain: base,
     transport: http(),
   });
 
   // Get a swap from the API
   const data = await getSwap({
-    chainId: ChainId.ETHEREUM, // ethereum chain id
+    chainId: ChainId.BASE, // ethereum chain id
     tokenIn: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", // eth token
-    tokenOut: "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2", // sushi token
+    tokenOut: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", // usdc token
     to: "0x", // replace with your own address
     amount: BigInt("1000000000000000000"), // 1 eth
     maxSlippage: 0.005, // 0.05% max slippage
@@ -35,9 +35,9 @@ async function main() {
     console.log("Output: ", callResult);
 
     // Send a transaction
-    const PRIVATE_KEY = process.env.PRIVATE_KEY as Hex;
+    const PRIVATE_KEY = process.env.MAINNET_PRIVATE_KEY as Hex;
     const walletClient = createWalletClient({
-      chain: mainnet,
+      chain: base,
       transport: http(),
     });
     const hash = await walletClient.sendTransaction({

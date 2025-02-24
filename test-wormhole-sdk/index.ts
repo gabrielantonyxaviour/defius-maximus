@@ -11,7 +11,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 async function main() {
-  const wh = await wormhole("Testnet", [evm], {
+  const wh = await wormhole("Mainnet", [evm], {
     chains: {
       BaseSepolia: {
         rpc:
@@ -37,25 +37,27 @@ async function main() {
       },
     },
   });
-  const ctx = wh.getChain("BaseSepolia");
+  const ctx = wh.getChain("Rootstock");
   const rcv = wh.getChain("ArbitrumSepolia");
   const sender = await getSigner(ctx);
   const receiver = await getSigner(rcv);
   const sndTb = await ctx.getTokenBridge();
-  const tokenId = Wormhole.tokenId(ctx.chain, "native");
-  const amt = amount.units(
-    amount.parse("0.01", ctx.config.nativeTokenDecimals)
-  );
-  const transfer = sndTb.transfer(
-    sender.address.address,
-    receiver.address,
-    tokenId.address,
-    amt
-  );
-  const txids = await signSendWait(ctx, transfer, sender.signer);
-  console.log("Sent: ", txids);
+  // const tokenId = Wormhole.tokenId(ctx.chain, "native");
+  // const amt = amount.units(
+  //   amount.parse("0.01", ctx.config.nativeTokenDecimals)
+  // );
+  // const transfer = sndTb.transfer(
+  //   sender.address.address,
+  //   receiver.address,
+  //   tokenId.address,
+  //   amt
+  // );
+  // const txids = await signSendWait(ctx, transfer, sender.signer);
+  // console.log("Sent: ", txids);
 
-  const [whm] = await ctx.parseTransaction(txids[txids.length - 1]!.txid);
+  const [whm] = await ctx.parseTransaction(
+    "0x89514167e2a446e9ace5d42d36d9e61d75ec2aa0b130d14db4334a488ae7257b"
+  );
   console.log("Wormhole Messages: ", whm);
 
   const vaa = await wh.getVaa(
