@@ -60,7 +60,7 @@ export default function ChefHome() {
               className={`absolute flex flex-col items-center -top-[4px] -left-[4px] w-full h-full space-y-2 sen  rounded-sm text-sm border border-[2px] border-black p-2 cursor-pointer ${
                 showWindows[i.id - 1]
                   ? "bg-[#1F1F1F] text-white font-bold"
-                  : "bg-[#BF4317] text-white"
+                  : "bg-[#BF4317] hover:bg-[#e6450d] text-white"
               }`}
             >
               <img
