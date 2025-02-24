@@ -888,10 +888,9 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
               <div className="space-y-2">
                 <Label>Research Description</Label>
                 <Textarea
-                  className="h-32 resize-none"
+                  className="h-32 resize-none text-black"
                   placeholder="Enter your research description..."
                   value={researchDescription}
-                  className="text-black"
                   onChange={(e) => {
                     setResearchDescription(e.target.value);
                   }}
