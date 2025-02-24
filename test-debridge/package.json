@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "@debridge-finance/desdk": "^1.0.2",
+    "dotenv": "^16.4.7",
+    "viem": "^2.23.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  }
+}
