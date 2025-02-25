@@ -38,6 +38,3 @@ const startServer = async () => {
 };
 
 startServer();
-
-// src/index.ts - Entry point
-import "./app";

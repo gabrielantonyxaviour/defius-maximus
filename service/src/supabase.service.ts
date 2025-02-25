@@ -43,15 +43,16 @@ export class SupabaseService {
             const {
               id,
               chef_id,
-              analysis,
               asset,
+              direction,
+              entry_price,
+              leverage,
+              trade_type,
               dex,
               chain,
-              direction,
               research_description,
-              entry_price,
-              trade_type,
               expected_pnl,
+              analysis,
             } = payload.new as TradePlay;
             if (!analysis) return;
             console.log("\nRECEIVED NEW TRADE!!!\n\n");
@@ -62,6 +63,7 @@ export class SupabaseService {
             console.log("Chain: ", chain == "both" ? "ARB or AVAX" : chain);
             console.log("Trade Direction: ", direction);
             console.log("Entry Price: ", entry_price);
+            console.log("Leverage: ", leverage);
             console.log("Trade Type: ", trade_type);
             console.log("Expected PNL: ", expected_pnl);
             console.log("Research Description: ", research_description);
@@ -114,9 +116,13 @@ export class SupabaseService {
             }
 
             // Fetch Balance.
-            const rpcUrl = `https://arb-sepolia.g.alchemy.com/v2/${
-              process.env.ALCHEMY_API_KEY || ""
-            }`;
+            const rpcUrl =
+              chain == "421614"
+                ? "https://arb-sepolia.g.alchemy.com/v2/" +
+                  process.env.ALCHMEY_API_KEY
+                : "https://avax-fuji.g.alchemy.com/v2/" +
+                  process.env.ALCHMEY_API_KEY;
+
             let ethBalance = "0";
             const ethResponse = await fetch(rpcUrl, {
               method: "POST",
@@ -135,11 +141,11 @@ export class SupabaseService {
             if (ethData.result)
               ethBalance = (parseInt(ethData.result, 16) / 1e18).toString();
             else {
-              console.error("Failed to fetch ETH Balance");
+              console.error("Failed to fetch ETH / AVAX Balance");
               return; // Modified to just return instead of using Response.json
             }
-            console.log("\nBalanace of the user wallet on Arbitrum Sepolia\n");
-            console.log(parseFloat(ethBalance).toFixed(4) + " ETH\n\n");
+            console.log(`\nBalanace of the user wallet on ${chain} \n`);
+            console.log(parseFloat(ethBalance).toFixed(4) + " ETH / AVAX\n\n");
             if (parseFloat(ethBalance) < 0.007) {
               console.log("\nInsufficient funds to perform the trade");
               return;
@@ -175,69 +181,13 @@ export class SupabaseService {
             // Get amount, constants and trade data prepared
             let amount =
               (parseFloat(equitypercent) * parseFloat(ethBalance)) / 100;
-            const provider = new ethers.JsonRpcProvider(rpcUrl);
-            const wallet = new ethers.Wallet(user.pkey || "", provider);
-            const exchangeRouter = new ethers.Contract(
-              ARB_SEPOLIA_EXCHANGE_ROUTER,
-              ARB_SEPOLIA_EXCHANGE_ROUTER_ABI,
-              wallet
-            );
 
             if (amount < 0.005) {
               console.log(
-                "\n\nMinimum Amount required to place a trade is 0.005 ETH\n\n"
+                "\n\nMinimum Amount required to place a trade is 0.005 ETH / AVAX \n\n"
               );
               amount = 0.005;
             }
-            const { hash } = await exchangeRouter.multicall(
-              [
-                exchangeRouter.interface.encodeFunctionData("sendWnt", [
-                  ORDER_VAULT,
-                  ethers.parseEther(amount.toString()),
-                ]),
-                exchangeRouter.interface.encodeFunctionData("createOrder", [
-                  {
-                    addresses: {
-                      receiver: wallet.address, // Your address
-                      callbackContract: ethers.ZeroAddress,
-                      uiFeeReceiver: ethers.ZeroAddress,
-                      market: MARKET_TOKEN,
-                      initialCollateralToken: INITIAL_COLLATERAL_TOKEN, // USDC address
-                      swapPath: [], // Empty array as no swaps needed
-                    },
-                    numbers: {
-                      sizeDeltaUsd: "1000000000000000000000000000000",
-                      initialCollateralDeltaAmount: "246368",
-                      triggerPrice: 0,
-                      acceptablePrice: "637806525538620321327636838",
-                      executionFee: "495000000000000",
-                      callbackGasLimit: 0,
-                      minOutputAmount: 0,
-                      validFromTime: 0,
-                    },
-                    orderType: 2, // Market order (executes immediately)
-                    decreasePositionSwapType: 0,
-                    isLong: true, // Long position
-                    shouldUnwrapNativeToken: false,
-                    referralCode:
-                      "0x0000000000000000000000000000000000000000000000000000000000000000",
-                  },
-                ]),
-              ],
-              { value: ethers.parseEther(amount.toString()) }
-            );
-
-            console.log(
-              "\n\nSuccessfully created a trade " +
-                asset +
-                "/USD futures position with " +
-                amount +
-                " ETH\n\n"
-            );
-
-            console.log(
-              "\nTx hash:\nhttps://sepolia.arbiscan.io/tx/" + hash + "\n\n"
-            );
 
             // Update supabase of the new executed trade
             const { data: _createTrade, error: createTradeError } =
@@ -245,10 +195,10 @@ export class SupabaseService {
                 .from("executed_trades")
                 .insert({
                   trade_play_id: id,
-                  username: username,
+                  user_id: user.id,
                   amount: amount,
                   pnl_usdt: 0,
-                  tx_hash: hash,
+                  tx_hash: "hash",
                   status: "open",
                 })
                 .select()

@@ -9,5 +9,6 @@ export interface TradePlay {
   research_description: string;
   entry_price: string;
   trade_type: string;
+  leverage: string;
   expected_pnl: string;
 }

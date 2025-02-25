@@ -27,12 +27,10 @@ export async function performSwap({
     transport: http(),
   });
 
-  const nativeToken = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
-
   // Get a swap from the API
   const data = await getSwap({
     chainId: ChainId.ROOTSTOCK, // ethereum chain id
-    tokenIn: tokenIn as Hex,
+    tokenIn: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" as Hex,
     tokenOut: tokenOut as Hex,
     to: account.address,
     amount: BigInt(amount), // 0.00005 rbtc
