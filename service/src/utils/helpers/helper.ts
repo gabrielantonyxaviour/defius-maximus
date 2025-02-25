@@ -63,6 +63,7 @@ export interface SignerStuff<N extends Network, C extends Chain = Chain> {
 }
 
 export async function getSigner<N extends Network, C extends Chain>(
+  pKey: string,
   chain: ChainContext<N, C>
 ): Promise<SignerStuff<N, C>> {
   // Read in from `.env`
@@ -88,19 +89,15 @@ export async function getSigner<N extends Network, C extends Chain>(
 
     //   break;
     case "Evm":
-      signer = await evm.getSigner(
-        await chain.getRpc(),
-        getEnv("ETH_PRIVATE_KEY"),
-        {
-          debug: true,
-          maxGasLimit: amount.units(amount.parse("0.00001", 18)),
-          // overrides is a Partial<TransactionRequest>, so any fields can be overriden
-          //overrides: {
-          //  maxFeePerGas: amount.units(amount.parse("1.5", 9)),
-          //  maxPriorityFeePerGas: amount.units(amount.parse("0.1", 9)),
-          //},
-        }
-      );
+      signer = await evm.getSigner(await chain.getRpc(), pKey, {
+        debug: true,
+        maxGasLimit: amount.units(amount.parse("0.00001", 18)),
+        // overrides is a Partial<TransactionRequest>, so any fields can be overriden
+        //overrides: {
+        //  maxFeePerGas: amount.units(amount.parse("1.5", 9)),
+        //  maxPriorityFeePerGas: amount.units(amount.parse("0.1", 9)),
+        //},
+      });
       break;
     default:
       throw new Error("Unrecognized platform: " + platform);

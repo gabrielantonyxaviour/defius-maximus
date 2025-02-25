@@ -13,10 +13,17 @@
   "description": "",
   "dependencies": {
     "@supabase/supabase-js": "^2.49.1",
+    "@wormhole-foundation/sdk": "^1.10.0",
+    "@wormhole-foundation/sdk-base": "^1.10.0",
+    "@wormhole-foundation/sdk-definitions": "^1.10.0",
+    "@wormhole-foundation/sdk-evm": "^1.10.0",
+    "@wormhole-foundation/sdk-evm-tokenbridge": "^1.10.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
-    "ethers": "^6.13.5",
-    "express": "^4.21.2"
+    "ethers": "^5.7.2",
+    "express": "^4.21.2",
+    "sushi": "^5.0.19",
+    "viem": "^2.23.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
