@@ -2,7 +2,8 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "sushi": "^5.0.19",
-    "viem": "^2.23.5"
+    "viem": "^2.23.5",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/node": "^22.13.5",

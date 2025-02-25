@@ -1,21 +1,29 @@
 import { getSwap, ChainId } from "sushi";
 import { createPublicClient, createWalletClient, http, type Hex } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-import { base } from "viem/chains";
+import { rootstock } from "viem/chains";
+import dotenv from "dotenv";
+dotenv.config();
 
 async function main() {
+  const PRIVATE_KEY = process.env.MAINNET_PRIVATE_KEY as Hex;
+  const account = privateKeyToAccount(PRIVATE_KEY);
+
+  console.log("Account Address");
+  console.log(account.address);
+
   const publicClient = createPublicClient({
-    chain: base,
+    chain: rootstock,
     transport: http(),
   });
 
   // Get a swap from the API
   const data = await getSwap({
-    chainId: ChainId.BASE, // ethereum chain id
-    tokenIn: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", // eth token
-    tokenOut: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913", // usdc token
-    to: "0x", // replace with your own address
-    amount: BigInt("1000000000000000000"), // 1 eth
+    chainId: ChainId.ROOTSTOCK, // ethereum chain id
+    tokenIn: "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE", // native token
+    tokenOut: "0x2AcC95758f8b5F583470ba265EB685a8F45fC9D5", // rif token
+    to: "0xeE5C50573A8AF1B8Ee2D89CB9eB27dc298c5f75D", // replace with your own address
+    amount: BigInt("50000000000000"), // 0.00005 rbtc
     maxSlippage: 0.005, // 0.05% max slippage
     includeTransaction: true, // include transaction in response
   });
@@ -35,13 +43,13 @@ async function main() {
     console.log("Output: ", callResult);
 
     // Send a transaction
-    const PRIVATE_KEY = process.env.MAINNET_PRIVATE_KEY as Hex;
     const walletClient = createWalletClient({
-      chain: base,
+      chain: rootstock,
       transport: http(),
     });
+
     const hash = await walletClient.sendTransaction({
-      account: privateKeyToAccount(PRIVATE_KEY),
+      account,
       data: tx.data,
       to: tx.to,
       value: tx.value,

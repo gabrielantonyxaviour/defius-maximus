@@ -6,7 +6,6 @@ import {
 } from "@wormhole-foundation/sdk";
 import evm from "@wormhole-foundation/sdk/evm";
 import { getSigner } from "./helpers/helper";
-// import solana from "@wormhole-foundation/sdk/solana";
 import dotenv from "dotenv";
 dotenv.config();
 
