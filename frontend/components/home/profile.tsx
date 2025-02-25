@@ -145,7 +145,7 @@ export default function Profile({ close }: { close: () => void }) {
                     className="rounded-full"
                   />
                   <p className="text-sm">
-                    {parseFloat(walletBalance).toFixed(2)} RBTC
+                    {parseFloat(walletBalance).toFixed(4)} RBTC
                   </p>
                 </div>
                 {/* <div className="flex items-center space-x-2">

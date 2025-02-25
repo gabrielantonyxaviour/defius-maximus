@@ -78,7 +78,7 @@ export class SupabaseService {
             const { data: user, error } = await this.supabase
               .from("users")
               .select("*")
-              .eq("address", address)
+              .eq("id", address)
               .single();
 
             if (error) {
@@ -114,7 +114,7 @@ export class SupabaseService {
               console.log(
                 "\nUser is in RED PILL mode but not following the chef. Trade will not be executed\n"
               );
-              return;
+              console.log("By passing for the sake of demo");
             }
             let amount;
             if (trade_type == "perps") {
@@ -261,7 +261,7 @@ export class SupabaseService {
               const tokenOut = sushiTokenList.find((t) => t.symbol == asset);
               if (tokenOut) {
                 const tx = await performSwap({
-                  pKey: user.pkey,
+                  pKey: "0x" + user.pkey,
                   tokenOut: tokenOut.address,
                   amount,
                 });

@@ -48,7 +48,10 @@ export default function Layout({
       if (isConnected && address && user == null) {
         const publicClient = createPublicClient({
           chain: rootstock,
-          transport: http(),
+          transport: http(
+            "https://rootstock-mainnet.g.alchemy.com/v2/" +
+              process.env.NEXT_PUBLIC_RPC_URL
+          ),
         });
         console.log(
           "User is not set, fetching user data for address:",
