@@ -73,6 +73,5 @@ export async function performSwap({
       hash: hash,
     });
     console.log("Receipt: ", receipt);
-    return receipt;
   }
 }

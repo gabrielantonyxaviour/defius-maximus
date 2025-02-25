@@ -32,8 +32,8 @@ export async function placeTrade(
   asset: string,
   chain: string,
   amount: string,
-  leverage: string,
-  positionSizeInNative: string,
+  leverage: number,
+  positionSizeInNative: number,
   takeProfit: TakeProfit[],
   stopLoss: StopLoss[],
   isLong: boolean
@@ -57,4 +57,178 @@ export async function placeTrade(
 
   const executionFee =
     chain == "421614" ? expandDecimals(5, 14) : expandDecimals(1, 16);
+
+  const params: OrderParams = {
+    rpcUrl: rpcUrl,
+    chain: chain,
+    native: native,
+    assetName: asset,
+    positionSizeInETH: positionSizeInNative,
+    takeProfit: takeProfit,
+    stopLoss: stopLoss,
+    leverage: leverage,
+    slippage: 1,
+    isLong: isLong,
+    executionFee: executionFee,
+  };
+
+  if (addresses.token == undefined) {
+    console.log(
+      "Token " +
+        addresses.token +
+        " is not configured for chain " +
+        params.chain
+    );
+    return;
+  }
+
+  const exchangeRouterContract = new ethers.Contract(
+    addresses.exchangeRouter,
+    exchangeRouterAbi,
+    wallet
+  );
+  const dataStoreContract = new ethers.Contract(
+    addresses.dataStore,
+    dataStoreAbi,
+    wallet
+  );
+
+  // Get Price
+  const { assetPriceInUSD, amountInUSD, amountInETH } = await convertEthToAsset(
+    params.chain,
+    params.native,
+    params.assetName,
+    params.positionSizeInETH
+  );
+
+  console.log({ assetPriceInUSD, amountInUSD, amountInETH });
+
+  // Get Market Token Address
+  const marketTokenAddress = await getMarketTokenAddress(
+    dataStoreContract,
+    addresses.token,
+    addresses.token,
+    addresses.usdc,
+    "0x4bd5869a01440a9ac6d7bf7aa7004f402b52b845f20e2cec925101e13d84d075"
+  );
+
+  console.log({ marketTokenAddress });
+
+  const ethUsdMarket = await getMarketTokenAddress(
+    dataStoreContract,
+    addresses.wnt,
+    addresses.wnt,
+    addresses.usdc,
+    "0x4bd5869a01440a9ac6d7bf7aa7004f402b52b845f20e2cec925101e13d84d075"
+  );
+
+  console.log({ ethUsdMarket });
+
+  console.log({ executionFee: params.executionFee });
+
+  // TODO: Implement Stop Loss and Take Profit
+
+  const walletAddress = await wallet.getAddress();
+  console.log("ASSET PRICE WITH SLIPPAGE");
+  console.log(
+    (assetPriceInUSD + BigInt("1005699232234760000000000")).toString()
+  );
+  console.log("ASSET PRICE");
+  console.log(assetPriceInUSD.toString());
+  const createOrderParams =
+    params.chain == "421614"
+      ? [
+          {
+            addresses: {
+              receiver: walletAddress,
+              callbackContract: zeroAddress,
+              uiFeeReceiver: zeroAddress,
+              market: marketTokenAddress,
+              initialCollateralToken: addresses.wnt,
+              swapPath: params.assetName == params.native ? [] : [ethUsdMarket],
+            },
+            numbers: {
+              sizeDeltaUsd: (amountInUSD * BigInt(params.leverage)).toString(),
+              initialCollateralDeltaAmount: 0,
+              triggerPrice: 0,
+              acceptablePrice: !params.isLong
+                ? (
+                    assetPriceInUSD -
+                    (assetPriceInUSD * BigInt(params.slippage)) / BigInt(100)
+                  ).toString()
+                : (
+                    assetPriceInUSD +
+                    (assetPriceInUSD * BigInt(params.slippage)) / BigInt(100)
+                  ).toString(),
+              executionFee: params.executionFee.toString(),
+              callbackGasLimit: 0,
+              minOutputAmount: 0,
+              validFromTime: 0,
+            },
+            orderType: 2,
+            decreasePositionSwapType: 0,
+            isLong: params.isLong,
+            shouldUnwrapNativeToken: true,
+            referralCode:
+              "0x0000000000000000000000000000000000000000000000000000000000000000",
+          },
+        ]
+      : [
+          {
+            addresses: {
+              receiver: walletAddress,
+              cancellationReceiver: zeroAddress,
+              callbackContract: zeroAddress,
+              uiFeeReceiver: zeroAddress,
+              market: marketTokenAddress,
+              initialCollateralToken: addresses.wnt,
+              swapPath: params.assetName == params.native ? [] : [ethUsdMarket],
+            },
+            numbers: {
+              sizeDeltaUsd: (amountInUSD * BigInt(params.leverage)).toString(),
+              initialCollateralDeltaAmount: 0,
+              triggerPrice: 0,
+              acceptablePrice: !params.isLong
+                ? (
+                    assetPriceInUSD -
+                    (assetPriceInUSD * BigInt(params.slippage)) / BigInt(100)
+                  ).toString()
+                : (
+                    assetPriceInUSD +
+                    (assetPriceInUSD * BigInt(params.slippage)) / BigInt(100)
+                  ).toString(),
+              executionFee: params.executionFee.toString(),
+              callbackGasLimit: 0,
+              minOutputAmount: 0,
+              validFromTime: 0,
+            },
+            orderType: 2,
+            decreasePositionSwapType: 0,
+            isLong: params.isLong,
+            shouldUnwrapNativeToken: true,
+            autoCancel: false,
+            referralCode:
+              "0x0000000000000000000000000000000000000000000000000000000000000000",
+          },
+        ];
+  console.log(createOrderParams);
+  const tx = await exchangeRouterContract.multicall(
+    [
+      exchangeRouterContract.interface.encodeFunctionData("sendWnt", [
+        orderVaultDeployments[params.chain],
+        (amountInETH + params.executionFee).toString(),
+      ]),
+      exchangeRouterContract.interface.encodeFunctionData(
+        "createOrder",
+        createOrderParams
+      ),
+    ],
+    { value: amountInETH + params.executionFee }
+  );
+
+  console.log("Tx sent");
+  console.log(tx);
+  const receipt = await tx.wait();
+  console.log("Transaction receipt");
+  console.log(receipt);
 }
