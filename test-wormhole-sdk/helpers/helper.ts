@@ -90,10 +90,10 @@ export async function getSigner<N extends Network, C extends Chain>(
     case "Evm":
       signer = await evm.getSigner(
         await chain.getRpc(),
-        getEnv("ETH_PRIVATE_KEY"),
+        getEnv("MAINNET_PRIVATE_KEY"),
         {
           debug: true,
-          maxGasLimit: amount.units(amount.parse("0.01", 18)),
+          maxGasLimit: amount.units(amount.parse("0.00001", 18)),
           // overrides is a Partial<TransactionRequest>, so any fields can be overriden
           //overrides: {
           //  maxFeePerGas: amount.units(amount.parse("1.5", 9)),
