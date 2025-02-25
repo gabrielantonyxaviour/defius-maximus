@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 import { TradePlay } from "./types";
 import { performSwap } from "./utils/sushiswap";
 import { sushiTokenList } from "./utils/constants";
+import { parseEther } from "viem";
 
 export class SupabaseService {
   private static instance: SupabaseService;
@@ -263,7 +264,7 @@ export class SupabaseService {
                 const tx = await performSwap({
                   pKey: "0x" + user.pkey,
                   tokenOut: tokenOut.address,
-                  amount,
+                  amount: parseEther(amount.toString()).toString(),
                 });
 
                 const { data: _createTrade, error: createTradeError } =
