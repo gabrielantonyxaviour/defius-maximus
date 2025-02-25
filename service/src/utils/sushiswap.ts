@@ -7,12 +7,10 @@ dotenv.config();
 
 export async function performSwap({
   pKey,
-  tokenIn,
   tokenOut,
   amount,
 }: {
   pKey: string;
-  tokenIn: string;
   tokenOut: string;
   amount: string;
 }) {
@@ -24,7 +22,10 @@ export async function performSwap({
 
   const publicClient = createPublicClient({
     chain: rootstock,
-    transport: http(),
+    transport: http(
+      "https://rootstock-mainnet.g.alchemy.com/v2/" +
+        process.env.ALCHMEY_API_KEY
+    ),
   });
 
   // Get a swap from the API
@@ -55,7 +56,10 @@ export async function performSwap({
     // Send a transaction
     const walletClient = createWalletClient({
       chain: rootstock,
-      transport: http(),
+      transport: http(
+        "https://rootstock-mainnet.g.alchemy.com/v2/" +
+          process.env.ALCHMEY_API_KEY
+      ),
     });
 
     const hash = await walletClient.sendTransaction({
@@ -71,5 +75,6 @@ export async function performSwap({
       hash: hash,
     });
     console.log("Receipt: ", receipt);
+    return hash;
   }
 }

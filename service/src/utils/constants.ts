@@ -6398,3 +6398,123 @@ export const exchangeRouterAbi = {
     },
   ],
 };
+
+export const sushiTokenList = [
+  {
+    address: "0x440CD83C160De5C96Ddb20246815eA44C7aBBCa8",
+    chainId: 30,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/rootstock/0x440CD83C160De5C96Ddb20246815eA44C7aBBCa8.jpg",
+    name: "BitPRO",
+    symbol: "BITP",
+  },
+  {
+    address: "0xe700691dA7b9851F2F35f8b8182c69c53CcaD9Db",
+    chainId: 30,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/rootstock/0xe700691dA7b9851F2F35f8b8182c69c53CcaD9Db.jpg",
+    name: "Dollar on Chain",
+    symbol: "DOC",
+  },
+  {
+    address: "0x1D931Bf8656d795E50eF6D639562C5bD8Ac2B78f",
+    chainId: 30,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/rootstock/0x1D931Bf8656d795E50eF6D639562C5bD8Ac2B78f.jpg",
+    name: "ETHs",
+    symbol: "ETHs",
+  },
+  {
+    address: "0x9AC7fE28967B30E3A4e6e03286d715b42B453D10",
+    chainId: 30,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/rootstock/0x9AC7fE28967B30E3A4e6e03286d715b42B453D10.jpg",
+    name: "MOC",
+    symbol: "MOC",
+  },
+  {
+    address: "0x6B1A73d547F4009a26B8485B63d7015d248Ad406",
+    chainId: 30,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/rootstock/0x6B1A73d547F4009a26B8485B63d7015d248Ad406.jpg",
+    name: "rDAI",
+    symbol: "rDAI",
+  },
+  {
+    address: "0x2AcC95758f8b5F583470ba265EB685a8F45fC9D5",
+    chainId: 30,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/rootstock/0x2AcC95758f8b5F583470ba265EB685a8F45fC9D5.jpg",
+    name: "RIF",
+    symbol: "RIF",
+  },
+  {
+    address: "0xf4d27c56595Ed59B66cC7F03CFF5193e4bd74a61",
+    chainId: 30,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/rootstock/0xf4d27c56595Ed59B66cC7F03CFF5193e4bd74a61.jpg",
+    name: "RIFPro",
+    symbol: "RIFP",
+  },
+  {
+    address: "0x1BDA44fda023f2aF8280A16FD1b01d1a493BA6C4",
+    chainId: 30,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/rootstock/0x1BDA44fda023f2aF8280A16FD1b01d1a493BA6C4.jpg",
+    name: "rUSDC",
+    symbol: "rUSDC",
+  },
+  {
+    address: "0xef213441A85dF4d7ACbDaE0Cf78004e1E486bB96",
+    chainId: 30,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/rootstock/0xef213441A85dF4d7ACbDaE0Cf78004e1E486bB96.jpg",
+    name: "rUSDT",
+    symbol: "rUSDT",
+  },
+  {
+    address: "0xEFc78fc7d48b64958315949279Ba181c2114ABBd",
+    chainId: 30,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/rootstock/0xEFc78fc7d48b64958315949279Ba181c2114ABBd.jpg",
+    name: "Sovryn Token",
+    symbol: "SOV",
+  },
+  {
+    address: "0x3A15461d8aE0F0Fb5Fa2629e9DA7D66A794a6e37",
+    chainId: 30,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/rootstock/0x3A15461d8aE0F0Fb5Fa2629e9DA7D66A794a6e37.jpg",
+    name: "RIF US Dollar",
+    symbol: "USDRIF",
+  },
+  {
+    address: "0x542fDA317318eBF1d3DEAf76E0b632741A7e677d",
+    chainId: 30,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/rootstock/0x542fDA317318eBF1d3DEAf76E0b632741A7e677d.jpg",
+    name: "Wrapped WBTC",
+    symbol: "WRBTC",
+  },
+  {
+    address: "0xb5999795BE0EbB5bAb23144AA5FD6A02D080299F",
+    chainId: 30,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/rootstock/0xb5999795BE0EbB5bAb23144AA5FD6A02D080299F.jpg",
+    name: "XUSD",
+    symbol: "XUSD",
+  },
+];

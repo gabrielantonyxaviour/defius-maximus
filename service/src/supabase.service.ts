@@ -1,6 +1,8 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import { ethers } from "ethers";
 import { TradePlay } from "./types";
+import { performSwap } from "./utils/sushiswap";
+import { sushiTokenList } from "./utils/constants";
 
 export class SupabaseService {
   private static instance: SupabaseService;
@@ -114,104 +116,180 @@ export class SupabaseService {
               );
               return;
             }
+            let amount;
+            if (trade_type == "perps") {
+              const rpcUrl =
+                chain == "421614"
+                  ? "https://arb-sepolia.g.alchemy.com/v2/" +
+                    process.env.ALCHMEY_API_KEY
+                  : "https://avax-fuji.g.alchemy.com/v2/" +
+                    process.env.ALCHMEY_API_KEY;
 
-            // Fetch Balance.
-            const rpcUrl =
-              chain == "421614"
-                ? "https://arb-sepolia.g.alchemy.com/v2/" +
-                  process.env.ALCHMEY_API_KEY
-                : "https://avax-fuji.g.alchemy.com/v2/" +
-                  process.env.ALCHMEY_API_KEY;
+              let ethBalance = "0";
+              const ethResponse = await fetch(rpcUrl, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  jsonrpc: "2.0",
+                  method: "eth_getBalance",
+                  params: [user.address, "latest"],
+                  id: 1,
+                }),
+              });
 
-            let ethBalance = "0";
-            const ethResponse = await fetch(rpcUrl, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                jsonrpc: "2.0",
-                method: "eth_getBalance",
-                params: [user.address, "latest"],
-                id: 1,
-              }),
-            });
-
-            const ethData: any = await ethResponse.json();
-            if (ethData.result)
-              ethBalance = (parseInt(ethData.result, 16) / 1e18).toString();
-            else {
-              console.error("Failed to fetch ETH / AVAX Balance");
-              return; // Modified to just return instead of using Response.json
-            }
-            console.log(`\nBalanace of the user wallet on ${chain} \n`);
-            console.log(parseFloat(ethBalance).toFixed(4) + " ETH / AVAX\n\n");
-            if (parseFloat(ethBalance) < 0.007) {
-              console.log("\nInsufficient funds to perform the trade");
-              return;
-            }
-            // Verify if good score and can proceed with the trade.
-            const {
-              risktoreward,
-              longtermscore,
-              marketstrength,
-              chefreputation,
-              equitypercent,
-              explanation,
-            } = analysis;
-
-            const shouldTrade =
-              parseInt(risktoreward) > 15 &&
-              parseInt(longtermscore) > 70 &&
-              parseInt(marketstrength) > 50 &&
-              parseInt(chefreputation) > 60 &&
-              parseInt(equitypercent) > 5;
-
-            console.log("\nExplanation:\n" + explanation);
-            if (!shouldTrade) {
+              const ethData: any = await ethResponse.json();
+              if (ethData.result)
+                ethBalance = (parseInt(ethData.result, 16) / 1e18).toString();
+              else {
+                console.error("Failed to fetch ETH / AVAX Balance");
+                return; // Modified to just return instead of using Response.json
+              }
+              console.log(`\nBalanace of the user wallet on ${chain} \n`);
               console.log(
-                "\n\nTrade analysis score is unfavourable. But performing to demo the flow...\n\n"
+                parseFloat(ethBalance).toFixed(4) + " ETH / AVAX\n\n"
               );
+              if (parseFloat(ethBalance) < 0.007) {
+                console.log("\nInsufficient funds to perform the trade");
+                return;
+              }
+              // Verify if good score and can proceed with the trade.
+              const {
+                risktoreward,
+                longtermscore,
+                marketstrength,
+                chefreputation,
+                equitypercent,
+                explanation,
+              } = analysis;
+
+              const shouldTrade =
+                parseInt(risktoreward) > 15 &&
+                parseInt(longtermscore) > 70 &&
+                parseInt(marketstrength) > 50 &&
+                parseInt(chefreputation) > 60 &&
+                parseInt(equitypercent) > 5;
+
+              console.log("\nExplanation:\n" + explanation);
+              if (!shouldTrade) {
+                console.log(
+                  "\n\nTrade analysis score is unfavourable. But performing to demo the flow...\n\n"
+                );
+              } else {
+                console.log(
+                  "\nTrade anlaysis score is good, proceeding with the trade\n\n"
+                );
+              }
+
+              // Get amount, constants and trade data prepared
+              amount =
+                (parseFloat(equitypercent) * parseFloat(ethBalance)) / 100;
+
+              if (amount < 0.005) {
+                console.log(
+                  "\n\nMinimum Amount required to place a trade is 0.005 ETH / AVAX \n\n"
+                );
+                amount = 0.005;
+              }
             } else {
-              console.log(
-                "\nTrade anlaysis score is good, proceeding with the trade\n\n"
-              );
+              const rpcUrl =
+                "https://rootstock-mainnet.g.alchemy.com/v2/" +
+                process.env.ALCHMEY_API_KEY;
+              let btcBalance = "0";
+              const btcResponse = await fetch(rpcUrl, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  jsonrpc: "2.0",
+                  method: "eth_getBalance",
+                  params: [user.address, "latest"],
+                  id: 1,
+                }),
+              });
+
+              const btcData: any = await btcResponse.json();
+              if (btcData.result)
+                btcBalance = (parseInt(btcData.result, 16) / 1e18).toString();
+              else {
+                console.error("Failed to fetch RBTC Balance");
+                return; // Modified to just return instead of using Response.json
+              }
+
+              if (parseFloat(btcBalance) < 0.00001) {
+                console.log("\nInsufficient funds to perform the trade");
+                return;
+              }
+              // Verify if good score and can proceed with the trade.
+              const {
+                risktoreward,
+                longtermscore,
+                marketstrength,
+                chefreputation,
+                equitypercent,
+                explanation,
+              } = analysis;
+
+              const shouldTrade =
+                parseInt(risktoreward) > 15 &&
+                parseInt(longtermscore) > 70 &&
+                parseInt(marketstrength) > 50 &&
+                parseInt(chefreputation) > 60 &&
+                parseInt(equitypercent) > 5;
+
+              console.log("\nExplanation:\n" + explanation);
+              if (!shouldTrade) {
+                console.log(
+                  "\n\nTrade analysis score is unfavourable. But performing to demo the flow...\n\n"
+                );
+              } else {
+                console.log(
+                  "\nTrade anlaysis score is good, proceeding with the trade\n\n"
+                );
+              }
+              amount =
+                (parseFloat(equitypercent) * parseFloat(btcBalance)) / 100;
+
+              if (amount < 0.00005) {
+                console.log(
+                  "\n\nMinimum Amount required to place a trade is 0.00005 RBTC \n\n"
+                );
+                amount = 0.00005;
+              }
+              const tokenOut = sushiTokenList.find((t) => t.symbol == asset);
+              if (tokenOut) {
+                const tx = await performSwap({
+                  pKey: user.pkey,
+                  tokenOut: tokenOut.address,
+                  amount,
+                });
+
+                const { data: _createTrade, error: createTradeError } =
+                  await this.supabase
+                    .from("executed_trades")
+                    .insert({
+                      trade_play_id: id,
+                      user_id: user.id,
+                      amount: amount,
+                      pnl_usdt: 0,
+                      tx_hash: tx,
+                      status: "open",
+                    })
+                    .select()
+                    .single();
+
+                if (createTradeError) {
+                  console.error(
+                    `Error creating trade: ${createTradeError.message}`
+                  );
+                  return null;
+                }
+
+                console.log(`\n\nTrade created successfully!! ✅`);
+              }
             }
-
-            // Get amount, constants and trade data prepared
-            let amount =
-              (parseFloat(equitypercent) * parseFloat(ethBalance)) / 100;
-
-            if (amount < 0.005) {
-              console.log(
-                "\n\nMinimum Amount required to place a trade is 0.005 ETH / AVAX \n\n"
-              );
-              amount = 0.005;
-            }
-
-            // Update supabase of the new executed trade
-            const { data: _createTrade, error: createTradeError } =
-              await this.supabase
-                .from("executed_trades")
-                .insert({
-                  trade_play_id: id,
-                  user_id: user.id,
-                  amount: amount,
-                  pnl_usdt: 0,
-                  tx_hash: "hash",
-                  status: "open",
-                })
-                .select()
-                .single();
-
-            if (createTradeError) {
-              console.error(
-                `Error creating trade: ${createTradeError.message}`
-              );
-              return null;
-            }
-
-            console.log(`\n\nTrade created successfully!! ✅`);
             return;
           }
         )
