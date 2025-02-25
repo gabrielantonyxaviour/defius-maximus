@@ -143,7 +143,7 @@ export default function Layout({
               >
                 <div className="flex items-center gap-2">
                   <Image
-                    src={"/chains/rootstock.jpg"}
+                    src={"/chains/rootstock.png"}
                     width={25}
                     height={25}
                     alt="arbitrum"

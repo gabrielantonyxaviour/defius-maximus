@@ -138,7 +138,7 @@ export default function Profile({ close }: { close: () => void }) {
               <div className="flex flex-wrap gap-4">
                 <div className="flex items-center space-x-2">
                   <Image
-                    src="/chains/rootstock.jpg"
+                    src="/chains/rootstock.png"
                     width={25}
                     height={25}
                     alt="arb"

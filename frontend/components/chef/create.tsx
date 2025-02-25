@@ -34,13 +34,12 @@ import {
   exchanges,
   perpExchanges,
   spotExchanges,
+  sushiTokenList,
 } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { useEnvironmentStore } from "../context";
-import { COW_SWAP_ASSETS } from "@/lib/constants/cow";
-import { AggregatedToken } from "@/lib/constants/cow/types";
 
 interface CreateRecipeProps {
   close: () => void;
@@ -121,9 +120,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
   const handleAssetChange = (asset: string) => {
     setSelectedAsset(asset);
     const chains =
-      selectedType == "Spot"
-        ? COW_SWAP_ASSETS.filter((a) => asset == a.symbol)[0].chains
-        : Object.keys(assets[asset]);
+      selectedType == "Spot" ? ["rootstock"] : Object.keys(assets[asset]);
     if (chains.length === 1) {
       setSelectedChain(chains[0]);
     } else {
@@ -448,10 +445,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                           {selectedAsset && (
                             <div className="flex space-x-1 flex-1 justify-end">
                               {(selectedType == "Spot"
-                                ? COW_SWAP_ASSETS.filter(
-                                    (asset: AggregatedToken) =>
-                                      asset.symbol == selectedAsset
-                                  )[0].chains
+                                ? ["rootstock"]
                                 : Object.keys(assets[selectedAsset]).filter(
                                     (chain: string) =>
                                       assets[selectedAsset][
@@ -483,8 +477,18 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                           </CommandEmpty>
                           <CommandGroup>
                             {selectedType == "Spot"
-                              ? COW_SWAP_ASSETS.map(
-                                  (asset: AggregatedToken, idx: number) => (
+                              ? sushiTokenList.map(
+                                  (
+                                    asset: {
+                                      address: string;
+                                      chainId: number;
+                                      decimals: number;
+                                      logoURI: string;
+                                      name: string;
+                                      symbol: string;
+                                    },
+                                    idx: number
+                                  ) => (
                                     <CommandItem
                                       key={asset.symbol}
                                       value={asset.symbol}
@@ -501,14 +505,16 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                                           <Check className=" h-4 w-4" />
                                         )}
                                         <div className="flex space-x-1 flex-1 justify-end">
-                                          {asset.chains.map((chain: string) => (
-                                            <img
-                                              key={chain}
-                                              src={`/chains/${chain}.png`}
-                                              className="rounded-full w-[24px] h-[24px]"
-                                              alt={chain}
-                                            />
-                                          ))}
+                                          {["rootstock"].map(
+                                            (chain: string) => (
+                                              <img
+                                                key={chain}
+                                                src={`/chains/${chain}.png`}
+                                                className="rounded-full w-[24px] h-[24px]"
+                                                alt={chain}
+                                              />
+                                            )
+                                          )}
                                         </div>
                                       </div>
                                     </CommandItem>
@@ -588,9 +594,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                           <CommandGroup>
                             {selectedAsset &&
                               (selectedType == "Spot"
-                                ? COW_SWAP_ASSETS.filter(
-                                    (asset) => asset.symbol == selectedAsset
-                                  )[0].chains
+                                ? ["rootstock"]
                                 : Object.values(assets[selectedAsset]).filter(
                                     (address) => address != ""
                                   )
@@ -607,9 +611,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                               )}
                             {selectedAsset &&
                               (selectedType == "Spot"
-                                ? COW_SWAP_ASSETS.filter(
-                                    (asset) => asset.symbol == selectedAsset
-                                  )[0].chains
+                                ? ["rootstock"]
                                 : Object.keys(assets[selectedAsset]).filter(
                                     (chain) =>
                                       assets[selectedAsset][
