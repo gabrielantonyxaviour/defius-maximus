@@ -61,10 +61,12 @@ export async function performSwap({
     });
 
     const hash = await walletClient.sendTransaction({
+      chain: rootstock,
       account,
       data: tx.data,
       to: tx.to,
       value: tx.value,
+      kzg: undefined,
     });
     console.log("Tx: ", hash);
     const receipt = await publicClient.waitForTransactionReceipt({
