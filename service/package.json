@@ -23,7 +23,8 @@
     "ethers": "^5.7.2",
     "express": "^4.21.2",
     "sushi": "^5.0.19",
-    "viem": "^2.23.5"
+    "viem": "^2.23.5",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",

@@ -2,7 +2,7 @@
 import { wagmiAdapter, projectId } from "@/config";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createAppKit } from "@reown/appkit/react";
-import { rootstockTestnet, rootstock } from "@reown/appkit/networks";
+import { rootstock } from "@reown/appkit/networks";
 import React, { type ReactNode } from "react";
 import { cookieToInitialState, WagmiProvider, type Config } from "wagmi";
 
@@ -26,8 +26,8 @@ const metadata = {
 const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
-  networks: [rootstockTestnet, rootstock],
-  defaultNetwork: rootstockTestnet,
+  networks: [rootstock],
+  defaultNetwork: rootstock,
   metadata: metadata,
   features: {
     analytics: true, // Optional - defaults to your Cloud configuration

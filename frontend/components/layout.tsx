@@ -5,11 +5,15 @@ import { useEnvironmentStore } from "./context";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { shortenAddress } from "@/lib/utils";
-import { useAppKit, useAppKitAccount } from "@reown/appkit/react";
+import {
+  useAppKit,
+  useAppKitAccount,
+  useDisconnect,
+} from "@reown/appkit/react";
 import generateKeypairs from "@/lib/gen-wallet";
 import { User } from "@/types";
 import { useBalance } from "wagmi";
-import { rootstock, rootstockTestnet } from "viem/chains";
+import { rootstock } from "viem/chains";
 import { createPublicClient, formatEther, http } from "viem";
 
 export default function Layout({
@@ -31,6 +35,7 @@ export default function Layout({
   const router = useRouter();
   const { open, close } = useAppKit();
   const { address, isConnected } = useAppKitAccount();
+  const { disconnect } = useDisconnect();
   useEffect(() => {
     (async () => {
       console.log(
@@ -42,7 +47,7 @@ export default function Layout({
 
       if (isConnected && address && user == null) {
         const publicClient = createPublicClient({
-          chain: rootstockTestnet,
+          chain: rootstock,
           transport: http(),
         });
         console.log(
@@ -183,7 +188,9 @@ export default function Layout({
           {user ? (
             <Button
               onClick={() => {
+                disconnect();
                 setUser(null);
+                router.push("/");
               }}
               className="group absolute -top-1 -left-1 rounded-sm w-full h-full flex items-center justify-center bg-[#BF4317] hover:bg-[#e6450d] hover:text-white border border-black"
             >

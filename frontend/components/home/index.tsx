@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useEnvironmentStore } from "../context";
 import Profile from "./profile";
 import Chefs from "./chefs";
@@ -59,6 +59,12 @@ export default function Home() {
   const router = useRouter();
   const [searchUsername, setSearchUsername] = useState("");
   const [selectedTradeId, setSelectedTradeId] = useState("");
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  }, [user]);
 
   return user == undefined ? (
     <div></div>
