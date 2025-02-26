@@ -18,6 +18,11 @@ export default function Actions({
 }) {
   const { actions } = useEnvironmentStore((store) => store);
 
+  useEffect(() => {
+    console.log("ACTIONS");
+    console.log(actions);
+  }, []);
+
   return (
     <div className="2xl:relative absolute 2xl:top-[0%] 2xl:left-[0%] left-[24%] w-[68%] 2xl:h-full h-[600px] flex flex-col space-y-2 sen rounded-sm text-sm border-[2px] border-[#2B2B2B] py-2 bg-[#1F1F1F] text-white">
       <div className="flex justify-between items-center w-full px-6">

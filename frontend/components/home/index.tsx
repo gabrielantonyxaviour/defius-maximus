@@ -65,6 +65,11 @@ export default function Home() {
     }
   }, [user]);
 
+  useEffect(() => {
+    console.log("SEARCH USERNAME");
+    console.log(searchUsername);
+  }, [searchUsername]);
+
   return user == undefined ? (
     <div></div>
   ) : (

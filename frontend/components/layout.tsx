@@ -197,9 +197,6 @@ export default function Layout({
             <Button
               onClick={() => {
                 open();
-
-                setUser(null);
-                router.push("/");
               }}
               className="group absolute -top-1 -left-1 rounded-sm w-full h-full flex items-center justify-center bg-[#BF4317] hover:bg-[#e6450d] hover:text-white border border-[#3A3A3A]"
             >

@@ -75,36 +75,110 @@ export default function ChefProfile({
             <Separator className="bg-[#1F1F1F]" />
 
             {/* Profile Header */}
-            <div className="flex items-start space-x-6">
-              <Avatar className="h-24 w-24">
-                <AvatarImage src={chefData.image || ""} />
-                <AvatarFallback>
-                  {chefData.name?.charAt(0) || chefData.user_id.charAt(0)}
-                </AvatarFallback>
-              </Avatar>
-              <div className="space-y-2">
-                <div>
-                  <h2 className="text-2xl font-bold">
-                    {chefData.name || chefData.user_id}
-                  </h2>
+            <div className="flex justify-between">
+              <div className="flex items-start space-x-6">
+                <Avatar className="h-24 w-24">
+                  <AvatarImage src={chefData.image || ""} />
+                  <AvatarFallback>
+                    {chefData.name?.charAt(0) || chefData.user_id.charAt(0)}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="space-y-2">
+                  <div>
+                    <h2 className="text-2xl font-bold">
+                      {chefData.name || chefData.user_id}
+                    </h2>
+                  </div>
+                  <div className="flex flex-wrap gap-2 mt-1.5 ">
+                    {chefData.niche.map((tag) => (
+                      <Badge
+                        key={tag}
+                        variant="secondary"
+                        className="bg-[#BF4317] text-white hover:bg-[#BF4317] hover:text-white"
+                      >
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                  {chefData.bio && (
+                    <p className="text-sm text-gray-300 max-w-md">
+                      {chefData.bio}
+                    </p>
+                  )}
                 </div>
-                <div className="flex flex-wrap gap-2 mt-1.5 ">
-                  {chefData.niche.map((tag) => (
-                    <Badge
-                      key={tag}
-                      variant="secondary"
-                      className="bg-[#BF4317] text-white hover:bg-[#BF4317] hover:text-white"
-                    >
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
-                {chefData.bio && (
-                  <p className="text-sm text-gray-300 max-w-md">
-                    {chefData.bio}
-                  </p>
-                )}
               </div>
+
+              {chefData.id != chef?.id && (
+                <div className="flex flex-col items-center space-y-1">
+                  <div className="relative bg-[#1F1F1F] w-[200px] h-[34px] rounded-sm mx-auto">
+                    {" "}
+                    <Button
+                      disabled={
+                        loading == 1 ||
+                        loading == 3 ||
+                        user_follows.includes(chefData.id)
+                      }
+                      onClick={async (e) => {
+                        setLoading(1);
+                        const followResponse = await fetch(
+                          "/api/supabase/follow-chef",
+                          {
+                            method: "POST",
+                            headers: {
+                              "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                              username: user.id,
+                              chef_id: chefData.id,
+                              confidence_level: 80,
+                            }),
+                          }
+                        );
+
+                        const { success, error } = await followResponse.json();
+                        if (error) {
+                          console.error("Failed to follow chef:", error);
+                          setLoading(2);
+                          return;
+                        }
+                        console.log("Followed chef:", success);
+                        setUserFollow(chefData.id);
+                        await new Promise((resolve) =>
+                          setTimeout(resolve, 2000)
+                        );
+                        setLoading(3);
+                      }}
+                      className="group absolute -top-[4px] -left-[2px] rounded-sm w-full h-[36px] flex py-4 px-6 bg-[#BF4317] hover:bg-[#BF4317] hover:text-white border-[1px] border-[#3A3A3A] mr-[2px]"
+                    >
+                      {loading == 1 ? (
+                        <>
+                          <CircleDashedIcon className="animate-spin" />
+                          <p>Following...</p>
+                        </>
+                      ) : loading == 2 ? (
+                        <>
+                          <X />
+                          <p>Error </p>
+                        </>
+                      ) : user_follows.includes(chefData.id) || loading == 3 ? (
+                        <>
+                          <Check className="h-6 w-6" />
+                          <p>Subscribed</p>
+                        </>
+                      ) : (
+                        <>
+                          <Zap className="h-6 w-6" />
+                          <p>Follow</p>
+                        </>
+                      )}
+                    </Button>
+                  </div>
+
+                  {!user_follows.includes(chefData.id) && (
+                    <p className="text-xs">at {chefData.sub_fee} USDT/month</p>
+                  )}
+                </div>
+              )}
             </div>
 
             <Separator className="bg-[#1F1F1F]" />
@@ -143,98 +217,38 @@ export default function ChefProfile({
             </div>
 
             {/* <Separator className="bg-[#1F1F1F]" /> */}
-            <div className="flex space-x-3">
-              <Image
-                src={"/chains/story.png"}
-                width={25}
-                height={25}
-                alt="arbitrum"
-                className="rounded-full"
-              />
-              <p className="text-sm text-gray-300">IP Account</p>
-              <div
-                className="group flex space-x-1 cursor-pointer"
-                onClick={() => {
-                  // win
-                }}
-              >
-                <p className="group-hover:text-white text-gray-300">
-                  {chef?.ip_address}
-                </p>
-                <ArrowUpRightFromSquare className="h-4 w-4" />
+            <div className="flex flex-col justify-center items-center space-y-2">
+              <div className="flex space-x-3 w-full justify-center items-center">
+                <Image
+                  src={"/chains/story.png"}
+                  width={25}
+                  height={25}
+                  alt="arbitrum"
+                  className="rounded-full"
+                />
+                <p className="text-sm text-gray-300">Story IP Account</p>
+                <div
+                  className="group flex space-x-1 cursor-pointer"
+                  onClick={() => {}}
+                >
+                  <ArrowUpRightFromSquare
+                    className="h-4 w-4"
+                    onClick={() => {
+                      window.open(
+                        "https://aeneid.explorer.story.foundation/collections/" +
+                          chefData?.ip_address,
+                        "_blank"
+                      );
+                    }}
+                  />
+                </div>
               </div>
+              <p className="group-hover:text-white text-gray-300 text-center">
+                {chefData?.ip_address}
+              </p>
             </div>
 
             {/* Subscription */}
-            {chefData.id != chef?.id && (
-              <div className="flex flex-col items-center space-y-1">
-                <div className="relative bg-[#1F1F1F] w-[200px] h-[34px] rounded-sm mx-auto">
-                  {" "}
-                  <Button
-                    disabled={
-                      loading == 1 ||
-                      loading == 3 ||
-                      user_follows.includes(chefData.id)
-                    }
-                    onClick={async (e) => {
-                      setLoading(1);
-                      const followResponse = await fetch(
-                        "/api/supabase/follow-chef",
-                        {
-                          method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                          },
-                          body: JSON.stringify({
-                            username: user.id,
-                            chef_id: chefData.id,
-                            confidence_level: 80,
-                          }),
-                        }
-                      );
-
-                      const { success, error } = await followResponse.json();
-                      if (error) {
-                        console.error("Failed to follow chef:", error);
-                        setLoading(2);
-                        return;
-                      }
-                      console.log("Followed chef:", success);
-                      setUserFollow(chefData.id);
-                      await new Promise((resolve) => setTimeout(resolve, 2000));
-                      setLoading(3);
-                    }}
-                    className="group absolute -top-[4px] -left-[2px] rounded-sm w-full h-[36px] flex py-4 px-6 bg-[#BF4317] hover:bg-[#BF4317] hover:text-white border-[1px] border-[#3A3A3A] mr-[2px]"
-                  >
-                    {loading == 1 ? (
-                      <>
-                        <CircleDashedIcon className="animate-spin" />
-                        <p>Following...</p>
-                      </>
-                    ) : loading == 2 ? (
-                      <>
-                        <X />
-                        <p>Error </p>
-                      </>
-                    ) : user_follows.includes(chefData.id) || loading == 3 ? (
-                      <>
-                        <Check className="h-6 w-6" />
-                        <p>Subscribed</p>
-                      </>
-                    ) : (
-                      <>
-                        <Zap className="h-6 w-6" />
-                        <p>Follow</p>
-                      </>
-                    )}
-                  </Button>
-                </div>
-
-                {!user_follows.includes(chefData.id) && (
-                  <p className="text-xs">at {chefData.sub_fee} USDT/month</p>
-                )}
-              </div>
-            )}
           </>
         )}
       </div>
