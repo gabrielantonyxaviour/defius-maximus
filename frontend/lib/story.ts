@@ -45,7 +45,7 @@ export async function createSpgNftCollection(
   const response = await client.nftClient.createNFTCollection({
     name: name,
     symbol: symbol,
-    isPublicMinting: false,
+    isPublicMinting: true,
     mintOpen: true,
     mintFeeRecipient: zeroAddress,
     contractURI: "",

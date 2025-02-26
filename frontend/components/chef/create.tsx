@@ -237,116 +237,118 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
         },
       },
     };
-    console.log("okay till here");
+    const { uri: ipMetadataUri, hash: ipMetadataHash } =
+      await uploadJsonToPinata(`ip-${chef?.id}-${Date.now()}`, ipMetadata);
+
+    const { uri: nftMetadataUri, hash: nftMetadataHash } =
+      await uploadJsonToPinata(`nft-${chef?.id}-${Date.now()}`, nftMetadata);
+
+    console.log("IPFS Upload successful");
+
+    console.log("INPUT");
+    console.log({
+      nftAddress: chef?.ip_address as Hex,
+      ipMetadata: {
+        ipMetadataUri,
+        ipMetadataHash: ("0x" + ipMetadataHash) as Hex,
+        nftMetadataURI: nftMetadataUri,
+        nftMetadataHash: ("0x" + nftMetadataHash) as Hex,
+      },
+    });
+
+    const { txHash, ipId, tokenId } = await mintAndRegisterIp(storyClient, {
+      nftAddress: chef?.ip_address as Hex,
+      ipMetadata: {
+        ipMetadataUri,
+        ipMetadataHash: ("0x" + ipMetadataHash) as Hex,
+        nftMetadataURI: nftMetadataUri,
+        nftMetadataHash: ("0x" + nftMetadataHash) as Hex,
+      },
+    });
+
+    console.log("IP minted successfully");
+    console.log("IP ID:", ipId);
+    console.log("Token ID:", tokenId);
+    console.log("Transaction Hash:", txHash);
+    toast("Successfully minted your IP", {
+      description: "Submitted your recipe for AI evaluation.",
+      action: {
+        label: "View IP",
+        onClick: () => {
+          window.open(`https://aeneid.storyscan.xyz/ipfs/${ipId}`, "_blank");
+        },
+      },
+    });
+
+    // Handle form submission here
+    console.log({
+      takeProfits,
+      dcaPoints,
+      selectedAsset,
+      selectedChain,
+      direction,
+      selectedDate,
+      entryPrice,
+      leverage,
+      stopLoss,
+      researchDescription,
+      image,
+      imagePreview,
+      selectedTime,
+      expectedPnl,
+    });
+
+    const targetDateTime = new Date(selectedDate);
+    const [hours, minutes] = selectedTime.split(":").map(Number);
+    targetDateTime.setHours(hours, minutes, 0, 0);
+
+    const currentDate = new Date();
+    const timeFrame = Math.floor(
+      (targetDateTime.getTime() - currentDate.getTime()) / 1000
+    );
+
+    console.log(timeFrame);
+    const formData = new FormData();
+    formData.append("chef_id", chef?.id || "");
+    formData.append("username", (chef as any).username || "");
+    formData.append("asset", selectedAsset);
+    formData.append("direction", direction);
+    formData.append("chain", selectedChain);
+    formData.append("entry_price", entryPrice.toString());
+    formData.append("stop_loss", stopLoss.toString());
+    formData.append("leverage", leverage.toString());
+    formData.append("timeframe", timeFrame.toString());
+    formData.append("research_description", researchDescription);
+    formData.append("dex", (selectedDex || "gmx").toUpperCase());
+    formData.append("image", image);
+    formData.append("take_profit", JSON.stringify(takeProfits));
+    formData.append("dca", JSON.stringify(dcaPoints));
+    formData.append("trade_type", selectedType.toLowerCase());
+    formData.append("expected_pnl", expectedPnl.length > 0 ? expectedPnl : "0");
+    console.log("FormData");
+    console.log(formData);
+
     try {
-      const { uri: ipMetadataUri, hash: ipMetadataHash } =
-        await uploadJsonToPinata(`ip-${chef?.id}-${Date.now()}`, ipMetadata);
-
-      const { uri: nftMetadataUri, hash: nftMetadataHash } =
-        await uploadJsonToPinata(`nft-${chef?.id}-${Date.now()}`, nftMetadata);
-
-      console.log("IPFS Upload successful");
-
-      console.log("INPUT");
-      console.log(chef);
-      console.log({
-        nftAddress: chef?.ip_address as Hex,
-        ipMetadata: {
-          ipMetadataUri,
-          ipMetadataHash: ("0x" + ipMetadataHash) as Hex,
-          nftMetadataURI: nftMetadataUri,
-          nftMetadataHash: ("0x" + nftMetadataHash) as Hex,
-        },
+      const response = await fetch("/api/supabase/create-play", {
+        method: "POST",
+        body: formData,
       });
+      const { play, error } = await response.json();
 
-      const { txHash, ipId, tokenId } = await mintAndRegisterIp(storyClient, {
-        nftAddress: chef?.ip_address as Hex,
-        ipMetadata: {
-          ipMetadataUri,
-          ipMetadataHash: ("0x" + ipMetadataHash) as Hex,
-          nftMetadataURI: nftMetadataUri,
-          nftMetadataHash: ("0x" + nftMetadataHash) as Hex,
-        },
-      });
-      console.log("IP minted successfully");
-      console.log("IP ID:", ipId);
-      console.log("Token ID:", tokenId);
-      console.log("Transaction Hash:", txHash);
+      if (error) {
+        console.log(error);
+        setError(error);
+        setLoading(0);
+        return;
+      }
+
+      console.log("Successfully created play");
+      console.log(play);
+      setLoading(2);
+      setRecipe(play);
     } catch (e) {
-      setError("Error with story");
-      setLoading(0);
-      return;
+      setLoading(3);
     }
-
-    // // Handle form submission here
-    // console.log({
-    //   takeProfits,
-    //   dcaPoints,
-    //   selectedAsset,
-    //   selectedChain,
-    //   direction,
-    //   selectedDate,
-    //   entryPrice,
-    //   leverage,
-    //   stopLoss,
-    //   researchDescription,
-    //   image,
-    //   imagePreview,
-    //   selectedTime,
-    //   expectedPnl,
-    // });
-
-    // const targetDateTime = new Date(selectedDate);
-    // const [hours, minutes] = selectedTime.split(":").map(Number);
-    // targetDateTime.setHours(hours, minutes, 0, 0);
-
-    // const currentDate = new Date();
-    // const timeFrame = Math.floor(
-    //   (targetDateTime.getTime() - currentDate.getTime()) / 1000
-    // );
-
-    // console.log(timeFrame);
-    // const formData = new FormData();
-    // formData.append("chef_id", chef?.id || "");
-    // formData.append("username", (chef as any).username || "");
-    // formData.append("asset", selectedAsset);
-    // formData.append("direction", direction);
-    // formData.append("chain", selectedChain);
-    // formData.append("entry_price", entryPrice.toString());
-    // formData.append("stop_loss", stopLoss.toString());
-    // formData.append("leverage", leverage.toString());
-    // formData.append("timeframe", timeFrame.toString());
-    // formData.append("research_description", researchDescription);
-    // formData.append("dex", (selectedDex || "gmx").toUpperCase());
-    // formData.append("image", image);
-    // formData.append("take_profit", JSON.stringify(takeProfits));
-    // formData.append("dca", JSON.stringify(dcaPoints));
-    // formData.append("trade_type", selectedType.toLowerCase());
-    // formData.append("expected_pnl", expectedPnl.length > 0 ? expectedPnl : "0");
-    // console.log("FormData");
-    // console.log(formData);
-
-    // try {
-    //   const response = await fetch("/api/supabase/create-play", {
-    //     method: "POST",
-    //     body: formData,
-    //   });
-    //   const { play, error } = await response.json();
-
-    //   if (error) {
-    //     console.log(error);
-    //     setError(error);
-    //     setLoading(0);
-    //     return;
-    //   }
-
-    //   console.log("Successfully created play");
-    //   console.log(play);
-    //   setLoading(2);
-    //   setRecipe(play);
-    // } catch (e) {
-    //   setLoading(3);
-    // }
   };
 
   return (
@@ -726,6 +728,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                                 <CommandItem
                                   value="any"
                                   onSelect={() => setSelectedChain("")}
+                                  className="hover:text-white"
                                 >
                                   Any
                                   {selectedChain === "" && (
@@ -747,14 +750,16 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                                   key={chain}
                                   value={chain}
                                   onSelect={() => setSelectedChain(chain)}
-                                  className="font-semibold"
+                                  className="font-semibold "
                                 >
                                   <img
                                     src={`/chains/${chain}.png`}
                                     className="rounded-full w-[24px] h-[24px]"
                                     alt={chain}
                                   />
-                                  {chain.toUpperCase()}
+                                  <p className="hover:text-white">
+                                    {chain.toUpperCase()}
+                                  </p>
                                   {selectedChain === chain && (
                                     <Check className="ml-auto h-4 w-4" />
                                   )}

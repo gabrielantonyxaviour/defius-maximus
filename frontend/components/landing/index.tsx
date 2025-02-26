@@ -3,9 +3,12 @@ import Image from "next/image";
 import { buttonVariants } from "../ui/button";
 import Link from "next/link";
 import { useEnvironmentStore } from "../context";
+import { CircleDashedIcon } from "lucide-react";
+import { useAppKitAccount } from "@reown/appkit/react";
 
 export default function Landing() {
   const { user } = useEnvironmentStore((store) => store);
+  const { address, status } = useAppKitAccount();
   return (
     <div className="w-screen h-screen flex flex-col justify-center pt-2">
       <div className="relative bg-[#1F1F1F] w-[100%] md:w-[700px] 2xl:h-[50%] h-[75%] sm:h-[60%] rounded-xl mx-auto">
@@ -24,32 +27,49 @@ export default function Landing() {
           <p className="text-center text-xs sen px-4 pt-2 md:pt-0 text-white">
             An autonomous AI agent that prints you money by clicking a button.
           </p>
-          <div className="flex flex-col md:flex-row justify-center py-4 space-x-0 md:space-x-2 space-y-2 md:space-y-0 px-4 md:px-0">
-            <Link
-              href={user ? `/home` : "#"}
-              className={`${buttonVariants({
-                variant: "outline",
-              })} ${
-                user
-                  ? "hover:border-2 hover:border-[#3A3A3A] hover:font-bold"
-                  : "opacity-50 cursor-not-allowed"
-              } sen rounded-sm bg-transparent border-0 hover:bg-transparent text-white hover:text-white hover:border-[#3A3A3A] hover:border-[1px]`}
-            >
-              Get Started
-            </Link>
-            <Link
-              href={user ? `/chef` : "#"}
-              className={`${buttonVariants({
-                variant: "default",
-              })} ${
-                user
-                  ? " border-0 bg-[#BF4317] hover:bg-[#e6450d]"
-                  : "opacity-50 cursor-not-allowed border-0 bg-[#BF4317] hover:bg-[#1F1F1F]"
-              } sen rounded-sm text-white`}
-            >
-              Chef Mode
-            </Link>
-          </div>
+          {status == "connecting" ||
+          status == "reconnecting" ||
+          (!user && status == "connected") ? (
+            <div className="w-full flex justify-center space-x-2 text-gray-300 items-center pt-4">
+              <CircleDashedIcon className="animate-spin" />
+              <p className=" sen text-sm">Loading...</p>
+            </div>
+          ) : (
+            !user && (
+              <div className="w-full flex justify-center space-x-2 text-gray-300 items-center pt-4">
+                <p className=" sen text-sm">Connect wallet to get Started</p>
+              </div>
+            )
+          )}
+
+          {user && (
+            <div className="flex flex-col md:flex-row justify-center py-4 space-x-0 md:space-x-2 space-y-2 md:space-y-0 px-4 md:px-0">
+              <Link
+                href={user ? `/home` : "#"}
+                className={`${buttonVariants({
+                  variant: "outline",
+                })} ${
+                  user
+                    ? "hover:border-2 hover:border-[#3A3A3A] hover:font-bold"
+                    : "opacity-50 cursor-not-allowed"
+                } sen rounded-sm bg-transparent border-0 hover:bg-transparent text-white hover:text-white hover:border-[#3A3A3A] hover:border-[1px]`}
+              >
+                Get Started
+              </Link>
+              <Link
+                href={user ? `/chef` : "#"}
+                className={`${buttonVariants({
+                  variant: "default",
+                })} ${
+                  user
+                    ? " border-0 bg-[#BF4317] hover:bg-[#e6450d]"
+                    : "opacity-50 cursor-not-allowed border-0 bg-[#BF4317] hover:bg-[#1F1F1F]"
+                } sen rounded-sm text-white`}
+              >
+                Chef Mode
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </div>

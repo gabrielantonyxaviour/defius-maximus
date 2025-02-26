@@ -38,7 +38,6 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ["t.me", "picsum.photos"],
     remotePatterns: [
       {
         protocol: "https",
@@ -47,7 +46,12 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "avatars.githubusercontent.com",
+        hostname: "t.me",
+        port: "",
+      },
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
         port: "",
       },
       {
