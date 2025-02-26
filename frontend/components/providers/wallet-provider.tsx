@@ -18,8 +18,8 @@ const metadata = {
   name: "Defius Maximus",
   description:
     "AGENTIC “FOllow” trading that increases your odds to make the next 10x trade.",
-  url: "https://reown.com/appkit", // origin must match your domain & subdomain
-  icons: ["https://assets.reown.com/defius.png"],
+  url: "https://defius-maximus.vercel.app/", // origin must match your domain & subdomain
+  icons: ["https://defius-maximus.vercel.app/defius.png"],
 };
 
 // Create the modal
@@ -30,7 +30,8 @@ const modal = createAppKit({
   defaultNetwork: storyAeneid,
   metadata: metadata,
   features: {
-    analytics: true, // Optional - defaults to your Cloud configuration
+    analytics: true,
+    onramp: true,
   },
 });
 

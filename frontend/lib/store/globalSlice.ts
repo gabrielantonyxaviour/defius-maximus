@@ -5,9 +5,6 @@ interface GlobalState {
   user: User | null;
   chef: Chef | null;
   walletBalance: string;
-  balance: string;
-  ethPrice: string;
-  avaxPrice: string;
   totalEquity: string;
   pnl: string;
   user_follows: string[];
@@ -19,9 +16,6 @@ interface GlobalActions {
   setUser: (user: User | null) => void;
   setChef: (chef: Chef | null) => void;
   setWalletBalance: (bal: string) => void;
-  setBalance: (bal: string) => void;
-  setEthPrice: (price: string) => void;
-  setAvaxPrice: (price: string) => void;
   setTotalEquity: (equity: string) => void;
   setPnl: (pnl: string) => void;
   setUserFollows: (user_follows: string[]) => void;
@@ -35,10 +29,7 @@ export type GlobalSlice = GlobalState & GlobalActions;
 
 export const initialGlobalState: GlobalState = {
   user: null,
-  ethPrice: "0",
-  avaxPrice: "0",
   totalEquity: "0",
-  balance: "0",
   walletBalance: "0",
   chef: null,
   pnl: "0",
@@ -56,12 +47,6 @@ export const createGlobalSlice: StateCreator<
   ...initialGlobalState,
   setUser: (user) => {
     set({ user });
-  },
-  setEthPrice: (ethPrice) => {
-    set({ ethPrice });
-  },
-  setAvaxPrice: (avaxPrice) => {
-    set({ avaxPrice });
   },
   setTotalEquity: (totalEquity) => {
     set({ totalEquity });
@@ -109,9 +94,6 @@ export const createGlobalSlice: StateCreator<
   },
   setActions: (actions) => {
     set({ actions });
-  },
-  setBalance: (balance) => {
-    set({ balance });
   },
   setWalletBalance: (walletBalance) => {
     set({ walletBalance });

@@ -83,3 +83,14 @@ export type ExecutedTrade = {
   tx_hash: string;
   status: "ongoing" | "completed";
 };
+
+export type NFTMetadata = {};
+
+export type IPMetadata = {};
+
+export type CreateChefFormInput = {
+  name: string;
+  bio: string;
+  twitter: string;
+  website: string;
+};

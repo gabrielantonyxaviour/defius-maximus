@@ -2,7 +2,7 @@
 
 import { cookieStorage, createStorage, http } from "@wagmi/core";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
-import { story, storyAeneid } from "@reown/appkit/networks";
+import { aeneid } from "@story-protocol/core-sdk";
 
 export const projectId = process.env.NEXT_PUBLIC_REOWN_PROJECT_ID || "";
 
@@ -10,7 +10,7 @@ if (!projectId) {
   throw new Error("Project ID is not defined");
 }
 
-export const networks = [storyAeneid, story];
+export const networks = [aeneid];
 
 //Set up the Wagmi Adapter (Config)
 export const wagmiAdapter = new WagmiAdapter({
