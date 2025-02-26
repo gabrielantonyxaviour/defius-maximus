@@ -227,7 +227,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
 
   return (
     <div className="2xl:relative absolute 2xl:top-[0%] 2xl:left-[0%] left-[16%] xl:w-[48%] w-[80%] 2xl:h-full h-[600px] bg-[#1F1F1F] rounded-sm">
-      <div className="absolute w-full h-full flex flex-col -top-[0.5%] -left-[0.5%] space-y-2 sen rounded-sm text-sm border-2 border-white py-2 bg-[#1F1F1F] text-white">
+      <div className="absolute w-full h-full flex flex-col -top-[0.5%] -left-[0.5%] space-y-2 sen rounded-sm text-sm border-2 border-[#3A3A3A] py-2 bg-[#1F1F1F] text-white">
         <div className="flex justify-between items-center px-4">
           <div className="flex space-x-2 items-center">
             {selectedType != "Choose" && (
@@ -265,7 +265,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                     onClick={() => {
                       setSelectedType("Spot");
                     }}
-                    className={`absolute cursor-pointer w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-white py-2  bg-[#1F1F1F] text-white  `}
+                    className={`absolute cursor-pointer w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-[#3A3A3A] py-2  bg-[#1F1F1F] text-white  `}
                   >
                     <div className="flex space-x-1 items-center justify-center pt-2">
                       <p className="nouns spacing-2 tracking-wide text-xl">
@@ -286,7 +286,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                     onClick={() => {
                       setSelectedType("Perps");
                     }}
-                    className={`absolute cursor-pointer w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-white py-2  bg-[#1F1F1F] text-white  `}
+                    className={`absolute cursor-pointer w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-[#3A3A3A] py-2  bg-[#1F1F1F] text-white  `}
                   >
                     <div className="flex space-x-1 items-center justify-center pt-2">
                       <p className="nouns spacing-2 tracking-wide text-xl">
@@ -307,7 +307,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                     onClick={() => {
                       setSelectedType("Memecoins");
                     }}
-                    className={`absolute cursor-not-allowed w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-black py-2  bg-[#BF4317]  text-[#1F1F1F] `}
+                    className={`absolute cursor-not-allowed w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-[#3A3A3A] py-2  bg-[#BF4317]  text-[#1F1F1F] `}
                   >
                     <div className="flex flex-col space-x-1 items-center justify-center pt-2">
                       <p className="nouns spacing-2 tracking-wide text-xl">
@@ -331,7 +331,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                     onClick={() => {
                       setSelectedType("Stocks");
                     }}
-                    className={`absolute cursor-not-allowed w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-black py-2  bg-[#BF4317]  text-[#1F1F1F] `}
+                    className={`absolute cursor-not-allowed w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-[#3A3A3A] py-2  bg-[#BF4317]  text-[#1F1F1F] `}
                   >
                     <div className="flex flex-col space-x-1 items-center justify-center pt-2">
                       <p className="nouns spacing-2 tracking-wide text-xl">

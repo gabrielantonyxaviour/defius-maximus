@@ -9,7 +9,7 @@ export default function Landing() {
   return (
     <div className="w-screen h-screen flex flex-col justify-center pt-2">
       <div className="relative bg-[#1F1F1F] w-[100%] md:w-[700px] 2xl:h-[50%] h-[75%] sm:h-[60%] rounded-xl mx-auto">
-        <div className="absolute flex flex-col justify-center -top-[4px] -left-[4px] bg-[#1F1F1F]  w-[100%] md:w-[700px] mx-auto h-full rounded-xl border-[1px] border-black">
+        <div className="absolute flex flex-col justify-center -top-[4px] -left-[4px] bg-[#1F1F1F]  w-[100%] md:w-[700px] mx-auto h-full rounded-xl border-[1px] border-[#3A3A3A]">
           <div className="flex justify-between items-center p-2"></div>
           <div className="bg-[#1F1F1F] w-full flex justify-center items-center rounded-xl py-4 md:py-8 xl:py-12">
             <img
@@ -31,9 +31,9 @@ export default function Landing() {
                 variant: "outline",
               })} ${
                 user
-                  ? "hover:border-2 hover:border-black hover:font-bold"
+                  ? "hover:border-2 hover:border-[#3A3A3A] hover:font-bold"
                   : "opacity-50 cursor-not-allowed"
-              } sen rounded-sm bg-transparent border-0 hover:bg-transparent text-white hover:text-white hover:border-white hover:border-[1px]`}
+              } sen rounded-sm bg-transparent border-0 hover:bg-transparent text-white hover:text-white hover:border-[#3A3A3A] hover:border-[1px]`}
             >
               Get Started
             </Link>

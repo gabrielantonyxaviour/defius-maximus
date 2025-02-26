@@ -48,7 +48,7 @@ export default function Recipes({
   }, [chef]);
   return (
     <div className="2xl:relative absolute 2xl:top-[0%] 2xl:left-[0%] left-[16%] w-[80%] 2xl:h-full h-[600px] bg-[#1F1F1F] rounded-sm">
-      <div className="absolute w-full h-full flex flex-col -top-[0.5%] -left-[0.5%] space-y-2 sen rounded-sm text-sm border-2 border-white py-2 bg-[#1F1F1F] text-white">
+      <div className="absolute w-full h-full flex flex-col -top-[0.5%] -left-[0.5%] space-y-2 sen rounded-sm text-sm border-2 border-[#3A3A3A] py-2 bg-[#1F1F1F] text-white">
         <div className="flex justify-between items-center px-4">
           <h2 className="text-xl font-bold">Your Recipes</h2>
           <Button
@@ -64,7 +64,7 @@ export default function Recipes({
         <ScrollArea className="h-[450px] px-6">
           <table className="w-full h-full">
             <thead>
-              <tr className="text-left border-b-[1px] border-white sticky top-0 bg-[#1F1F1F]">
+              <tr className="text-left border-b-[1px] border-[#3A3A3A] sticky top-0 bg-[#1F1F1F]">
                 <th className="py-3 font-bold text-center">Id</th>
                 <th className="py-3 font-bold text-center">Chain</th>
                 <th className="py-3 font-bold text-center">Asset</th>
@@ -82,7 +82,7 @@ export default function Recipes({
               {recipes.map((item, id) => (
                 <tr
                   key={id}
-                  className="border-b border-black/20 hover:bg-[#1F1F1F]/5"
+                  className="border-b border-[#3A3A3A]/20 hover:bg-[#1F1F1F]/5"
                 >
                   <td className="py-4 text-center pl-3">{id + 1}</td>
                   <td className="py-4 text-center">

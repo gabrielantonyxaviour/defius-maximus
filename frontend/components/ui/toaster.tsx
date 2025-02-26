@@ -26,7 +26,7 @@ export function Toaster() {
               <div
                 className={`flex flex-col justify-center absolute bg-[#1F1F1F] w-full h-full  -top-[4px] -left-[4px] rounded-sm w-[402px] ${
                   action ? "h-[115px] p-5" : "h-[89px] px-5"
-                }  border-black `}
+                }  border-[#3A3A3A] `}
               >
                 {title && <ToastTitle>{title}</ToastTitle>}
                 {description && (

@@ -134,7 +134,7 @@ export default function Layout({
             <div className="relative w-[150px] bg-[#1F1F1F] h-10 rounded-sm">
               <Button
                 onClick={() => {}}
-                className="absolute -top-1 -left-1 w-full h-full flex items-center justify-center space-x-2 bg-[#BF4317] hover:bg-[#BF4317] border border-black"
+                className="absolute -top-1 -left-1 w-full h-full flex items-center justify-center space-x-2 bg-[#BF4317] hover:bg-[#BF4317] border border-[#3A3A3A]"
               >
                 <div className="flex items-center gap-2">
                   <Image
@@ -160,7 +160,7 @@ export default function Layout({
               //       //   "_blank"
               //       // );
               //     }}
-              //     className="absolute -top-1 -left-1 w-full h-full flex items-center justify-center space-x-2 bg-[#BF4317] hover:bg-[#BF4317] border-black"
+              //     className="absolute -top-1 -left-1 w-full h-full flex items-center justify-center space-x-2 bg-[#BF4317] hover:bg-[#BF4317] border-[#3A3A3A]"
               //   >
               //     <div className="flex items-center gap-2">
               //       <Image
@@ -187,7 +187,7 @@ export default function Layout({
                 setUser(null);
                 router.push("/");
               }}
-              className="group absolute -top-1 -left-1 rounded-sm w-full h-full flex items-center justify-center bg-[#BF4317] hover:bg-[#e6450d] hover:text-white border border-black"
+              className="group absolute -top-1 -left-1 rounded-sm w-full h-full flex items-center justify-center bg-[#BF4317] hover:bg-[#e6450d] hover:text-white border border-[#3A3A3A]"
             >
               <div className="flex items-center gap-2">
                 <Image
@@ -210,7 +210,7 @@ export default function Layout({
               onClick={() => {
                 open();
               }}
-              className="group absolute -top-1 -left-1 rounded-sm w-full h-full flex items-center justify-center bg-[#BF4317] hover:bg-[#e6450d] hover:text-white border border-black"
+              className="group absolute -top-1 -left-1 rounded-sm w-full h-full flex items-center justify-center bg-[#BF4317] hover:bg-[#e6450d] hover:text-white border border-[#3A3A3A]"
             >
               <div className="flex items-center gap-2">
                 <p className="sen text-sm sm:text-base">Connect Wallet</p>

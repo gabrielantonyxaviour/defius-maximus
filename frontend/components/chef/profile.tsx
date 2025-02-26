@@ -55,7 +55,7 @@ export default function ChefProfile({
 
   return (
     <div className=" w-[600px] h-[400px] xl:h-[500px] absolute top-[18%] lg:top-[22%] left-[24%] lg:left-[32%] bg-[#1F1F1F] rounded-sm">
-      <div className="absolute w-full h-full flex flex-col -top-[1%] -left-[1%] space-y-6 sen rounded-sm text-sm border-2 border-white p-6 bg-[#1F1F1F] text-white overflow-y-auto">
+      <div className="absolute w-full h-full flex flex-col -top-[1%] -left-[1%] space-y-6 sen rounded-sm text-sm border-2 border-[#3A3A3A] p-6 bg-[#1F1F1F] text-white overflow-y-auto">
         {/* Header */}
         {!chefData || !user ? (
           <div className="w-full h-full flex items-center justify-center">
@@ -181,7 +181,7 @@ export default function ChefProfile({
                       await new Promise((resolve) => setTimeout(resolve, 2000));
                       setLoading(3);
                     }}
-                    className="group absolute -top-[4px] -left-[2px] rounded-sm w-full h-[36px] flex py-4 px-6 bg-[#BF4317] hover:bg-[#BF4317] hover:text-white border-[1px] border-white mr-[2px]"
+                    className="group absolute -top-[4px] -left-[2px] rounded-sm w-full h-[36px] flex py-4 px-6 bg-[#BF4317] hover:bg-[#BF4317] hover:text-white border-[1px] border-[#3A3A3A] mr-[2px]"
                   >
                     {loading == 1 ? (
                       <>

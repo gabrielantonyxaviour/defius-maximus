@@ -88,7 +88,7 @@ export default function CreateChefForm() {
   return (
     <div className="w-[600px] h-[700px] absolute top-[22%] left-[32%] bg-[#1F1F1F] rounded-sm">
       <div
-        className={`absolute w-[600px] h-[700px] flex flex-col items-center -top-[1%] px-6 -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-black py-2 bg-[#1F1F1F] text-white`}
+        className={`absolute w-[600px] h-[700px] flex flex-col items-center -top-[1%] px-6 -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-[#3A3A3A] py-2 bg-[#1F1F1F] text-white`}
       >
         <div className="flex justify-between items-center w-full ">
           <p className=" font-bold text-lg">Create Chef</p>

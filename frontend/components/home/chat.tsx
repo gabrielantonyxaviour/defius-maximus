@@ -81,7 +81,7 @@ export default function Chat({
     <div className="w-[700px] h-[700px] absolute top-[16%] left-[32%] bg-[#1F1F1F] rounded-sm">
       <div
         onClick={() => {}}
-        className={`absolute flex flex-col items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-black py-2 bg-[#1F1F1F] text-white`}
+        className={`absolute flex flex-col items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-[#3A3A3A] py-2 bg-[#1F1F1F] text-white`}
       >
         <div className="flex justify-between items-center w-full px-2">
           <p className="px-4 font-bold text-lg">Chick Chat</p>
@@ -90,7 +90,7 @@ export default function Chat({
         {selectedTrade && (
           <table className="w-full">
             <thead>
-              <tr className="text-left border-b-2 border-black sticky top-0 bg-[#1F1F1F]">
+              <tr className="text-left border-b-2 border-[#3A3A3A] sticky top-0 bg-[#1F1F1F]">
                 <th className="py-3 font-bold text-center">Asset</th>
                 <th className="py-3 font-bold text-center">Amount (USDT)</th>
                 <th className="py-3 font-bold text-center">Chef</th>
@@ -102,7 +102,7 @@ export default function Chat({
             <tbody>
               <tr
                 key={selectedTrade.id}
-                className="border-b border-black/20 hover:bg-[#1F1F1F]/5"
+                className="border-b border-[#3A3A3A]/20 hover:bg-[#1F1F1F]/5"
               >
                 <td
                   className="py-4 text-center font-mono cursor-pointer"
