@@ -46,8 +46,7 @@ export default function Home() {
       image: "/home/chef.png",
     },
   ];
-  const { user, setEthPrice, setAvaxPrice, setTotalEquity } =
-    useEnvironmentStore((store) => store);
+  const { user, setTotalEquity } = useEnvironmentStore((store) => store);
   const [showWindows, setShowWindows] = useState([
     false,
     false,

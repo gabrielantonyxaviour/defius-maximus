@@ -1643,107 +1643,107 @@
   integrity sha512-tieX9Va5w1yP88vMgfH1pHTacDQ9TgDTjox3tLlisKDXRQWdjw+QeVVghhf5XqqIxXHgPdcGwBvKY6UP+SIvLw==
 
 "@reown/appkit-adapter-wagmi@^1.6.8":
-  version "1.6.8"
-  resolved "https://registry.yarnpkg.com/@reown/appkit-adapter-wagmi/-/appkit-adapter-wagmi-1.6.8.tgz#92ba8621a048c083e71cfccf8a416b5effd2e99d"
-  integrity sha512-FULDqxDxhqFiyH0vM/a/+eHj1olsSRODBiWuDc4biqVTrHkb7IQtkQwA9MGZHsTj73St0gQeiqivS921glHRhw==
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/@reown/appkit-adapter-wagmi/-/appkit-adapter-wagmi-1.6.9.tgz#d36f9b4affd3b5a6d3161a9d840360cb0df37265"
+  integrity sha512-tiwGZgoihDWba0HIZYp967cTN332WgYBBM1UuKX15uCCQJuSJCZL0cGg4tY3cw/4XIgjlVSVedNjpVYljBef/Q==
   dependencies:
-    "@reown/appkit" "1.6.8"
-    "@reown/appkit-common" "1.6.8"
-    "@reown/appkit-core" "1.6.8"
-    "@reown/appkit-polyfills" "1.6.8"
-    "@reown/appkit-scaffold-ui" "1.6.8"
-    "@reown/appkit-ui" "1.6.8"
-    "@reown/appkit-utils" "1.6.8"
-    "@reown/appkit-wallet" "1.6.8"
+    "@reown/appkit" "1.6.9"
+    "@reown/appkit-common" "1.6.9"
+    "@reown/appkit-core" "1.6.9"
+    "@reown/appkit-polyfills" "1.6.9"
+    "@reown/appkit-scaffold-ui" "1.6.9"
+    "@reown/appkit-ui" "1.6.9"
+    "@reown/appkit-utils" "1.6.9"
+    "@reown/appkit-wallet" "1.6.9"
     "@walletconnect/universal-provider" "2.18.0"
     "@walletconnect/utils" "2.18.0"
     valtio "1.13.2"
   optionalDependencies:
     "@wagmi/connectors" ">=5.7"
 
-"@reown/appkit-common@1.6.8":
-  version "1.6.8"
-  resolved "https://registry.yarnpkg.com/@reown/appkit-common/-/appkit-common-1.6.8.tgz#7e57d4fdb67629713331705bfec94245694c6103"
-  integrity sha512-i3J2qLC/51yhOBLAor8ToXDcD5LNiew12leWLBsnigl/N5OqhXNMxPHepC+01MYCDGDn2pOnU1ub+ES/OS6UrA==
+"@reown/appkit-common@1.6.9":
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/@reown/appkit-common/-/appkit-common-1.6.9.tgz#ae5b44ee4250ba5eafa792a72c7d3f7e85732923"
+  integrity sha512-2wWlE4NK7yDybrV4JQm6budJUlpVACs6It2A+E4Ol+s2lHcDCIKpq7XX1kX6AdWKig5AlBEz9dpjtWV3npB9ZQ==
   dependencies:
     big.js "6.2.2"
     dayjs "1.11.10"
     viem ">=2.23.0"
 
-"@reown/appkit-core@1.6.8":
-  version "1.6.8"
-  resolved "https://registry.yarnpkg.com/@reown/appkit-core/-/appkit-core-1.6.8.tgz#85cc3855b083d3e14e272a2b572717f50de56ced"
-  integrity sha512-biFB+wiAjx0kaqqX6wNEbK1v6yVYSWdOrCk3HqjVctJwuBNBX6ZLRf6Lm7a1pUiVRVjDc88hT828WL5MhZ6zgw==
+"@reown/appkit-core@1.6.9":
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/@reown/appkit-core/-/appkit-core-1.6.9.tgz#600292c9c6046cdcf13b2e3a945737ebbd747f06"
+  integrity sha512-gy39L+6/R7XETjfsHyAsktQAAyTMTyDbDc91+oU1oYkyKXe8Yt/V3iIGzCURzZ0d/ir5f9fRI0TqaJkuZWC28A==
   dependencies:
-    "@reown/appkit-common" "1.6.8"
-    "@reown/appkit-wallet" "1.6.8"
+    "@reown/appkit-common" "1.6.9"
+    "@reown/appkit-wallet" "1.6.9"
     "@walletconnect/universal-provider" "2.18.0"
     valtio "1.13.2"
     viem ">=2.23"
 
-"@reown/appkit-polyfills@1.6.8":
-  version "1.6.8"
-  resolved "https://registry.yarnpkg.com/@reown/appkit-polyfills/-/appkit-polyfills-1.6.8.tgz#0b301aa231cb0ad246efbe236d3d26718e88bccf"
-  integrity sha512-Iw1IEloHDlv2StRFnqZhA1/Q8DLs4OUtDBAp0AoAgDfz2EkCdUzFiC464I5xOnmSqUwyGm3dQGObBdq7aesPkA==
+"@reown/appkit-polyfills@1.6.9":
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/@reown/appkit-polyfills/-/appkit-polyfills-1.6.9.tgz#fbc2fccd43675b8116209c4d7a0c814bec784089"
+  integrity sha512-3VZiCmp1a0f3wtsIUSTd+DSO2h2IS7KGb8UA7niqozzneUBBdT2pLGUNJ6sLGUjKmvbTW5q4uVoCJ0g5AGSctA==
   dependencies:
     buffer "6.0.3"
 
-"@reown/appkit-scaffold-ui@1.6.8":
-  version "1.6.8"
-  resolved "https://registry.yarnpkg.com/@reown/appkit-scaffold-ui/-/appkit-scaffold-ui-1.6.8.tgz#2429e87ff7b217903b6973b7ede2fa003cfd0eb8"
-  integrity sha512-5uDOmlrnBIsPZCZ1/PyIVqkxQ+n39bLtTePrWteRoIaAtGRd1TiYCpPB+HO0SdLhXn66B4YzoQMCEIrIpzFqDg==
+"@reown/appkit-scaffold-ui@1.6.9":
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/@reown/appkit-scaffold-ui/-/appkit-scaffold-ui-1.6.9.tgz#325a5a3aa225c29a14fb0a7148e9259e5eab91bd"
+  integrity sha512-DBXvFnAlQICa3CTqYKbFlp8LlRtuvnJEzzb06PTE3rgTak3ipol5I3bRVrdPkz1L1XqkC5wV/JzwfpCPMEJcww==
   dependencies:
-    "@reown/appkit-common" "1.6.8"
-    "@reown/appkit-core" "1.6.8"
-    "@reown/appkit-ui" "1.6.8"
-    "@reown/appkit-utils" "1.6.8"
-    "@reown/appkit-wallet" "1.6.8"
+    "@reown/appkit-common" "1.6.9"
+    "@reown/appkit-core" "1.6.9"
+    "@reown/appkit-ui" "1.6.9"
+    "@reown/appkit-utils" "1.6.9"
+    "@reown/appkit-wallet" "1.6.9"
     lit "3.1.0"
 
-"@reown/appkit-ui@1.6.8":
-  version "1.6.8"
-  resolved "https://registry.yarnpkg.com/@reown/appkit-ui/-/appkit-ui-1.6.8.tgz#9e6f703b1b887d1b4fb4768add430dd04097eaec"
-  integrity sha512-UB3AaCiLRKkEI73i6LoX3rxbEUPELw/1Twdi5UlSm+IwwacGp0IAmkcRq0d9OwgTJymN6dEslUlNrH+PTpFblg==
+"@reown/appkit-ui@1.6.9":
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/@reown/appkit-ui/-/appkit-ui-1.6.9.tgz#038c1fc4c93d196a48eb5e7dcc450f1aa8f81aac"
+  integrity sha512-eKvum8bVkEqKAnu1fEvdtkH8UA6XK/rc5pF+sj9b7vOQtVUMCqTYVN4vI2czA9fhvZ1M6WQ/v5owWSf3RCQquQ==
   dependencies:
     lit "3.1.0"
     qrcode "1.5.3"
 
-"@reown/appkit-utils@1.6.8":
-  version "1.6.8"
-  resolved "https://registry.yarnpkg.com/@reown/appkit-utils/-/appkit-utils-1.6.8.tgz#64fdd1ca60082cbc475de765fc264973a635f8fc"
-  integrity sha512-n/RLOy3a9SRcRGg3YT9p2BDdbBPBB50/mQiZ9pB19+hlO+FSikOinPSLoAtn2v4LEKCZWTTb14f3jMoa+n+djQ==
+"@reown/appkit-utils@1.6.9":
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/@reown/appkit-utils/-/appkit-utils-1.6.9.tgz#fa10a9d840c2c7b9883a9c5e334a09a527e16809"
+  integrity sha512-ZG6Yt4l7AY4wD6tIpPbn0aUZXXI6/TWzDzJ9oTHw4QdK+J8LCR4H5UypUfX4o0+P8d6f06ECrgnMH6JrRc/fHA==
   dependencies:
-    "@reown/appkit-common" "1.6.8"
-    "@reown/appkit-core" "1.6.8"
-    "@reown/appkit-polyfills" "1.6.8"
-    "@reown/appkit-wallet" "1.6.8"
+    "@reown/appkit-common" "1.6.9"
+    "@reown/appkit-core" "1.6.9"
+    "@reown/appkit-polyfills" "1.6.9"
+    "@reown/appkit-wallet" "1.6.9"
     "@walletconnect/logger" "2.1.2"
     "@walletconnect/universal-provider" "2.18.0"
     valtio "1.13.2"
     viem ">=2.23.0"
 
-"@reown/appkit-wallet@1.6.8":
-  version "1.6.8"
-  resolved "https://registry.yarnpkg.com/@reown/appkit-wallet/-/appkit-wallet-1.6.8.tgz#a661a624845a79213757220d4c6b4dc0acc01c47"
-  integrity sha512-lYjdz8dTTIigrIyfbu2Lh1jc/YvXaZYM+vwZ8Lc9PD5e1GKZBOH8mU68EMXkoqqvLIsG1Y5aMYuBgzcGaRGuvA==
+"@reown/appkit-wallet@1.6.9":
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/@reown/appkit-wallet/-/appkit-wallet-1.6.9.tgz#e59fc6644fd352450892eb22048f77db412eacda"
+  integrity sha512-Lm2Z9UI7ittxTAMNgdnigogK8Rn/FDypFAWyGiGNZbLyW0lmx0XP/i1syXRm8lMx2r5OXT58q1x66SJl6PFcvg==
   dependencies:
-    "@reown/appkit-common" "1.6.8"
-    "@reown/appkit-polyfills" "1.6.8"
+    "@reown/appkit-common" "1.6.9"
+    "@reown/appkit-polyfills" "1.6.9"
     "@walletconnect/logger" "2.1.2"
     zod "3.22.4"
 
-"@reown/appkit@1.6.8", "@reown/appkit@^1.6.8":
-  version "1.6.8"
-  resolved "https://registry.yarnpkg.com/@reown/appkit/-/appkit-1.6.8.tgz#5c25486b4bf8e8caa20bb82c75d2d679b0efac93"
-  integrity sha512-GA7VZ+TZ7POVjfjWNyeffLoTIjX+iEvmRdKo9TEEvPBZ77996eiQFnhaaQHCNg1Wf9Ba/lptxVJT07gSZknh5A==
+"@reown/appkit@1.6.9", "@reown/appkit@^1.6.8":
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/@reown/appkit/-/appkit-1.6.9.tgz#f0b1033ddddb7d73318332a2ad4f36af3a7399d2"
+  integrity sha512-haSc8G3uQ0hAQklN1RedYoNj+KHUDBRO6rYNa4KIhhp+49EWK7U0gcI1rKGPWpJO1I+ga3Ynj01EVCocFvefIg==
   dependencies:
-    "@reown/appkit-common" "1.6.8"
-    "@reown/appkit-core" "1.6.8"
-    "@reown/appkit-polyfills" "1.6.8"
-    "@reown/appkit-scaffold-ui" "1.6.8"
-    "@reown/appkit-ui" "1.6.8"
-    "@reown/appkit-utils" "1.6.8"
-    "@reown/appkit-wallet" "1.6.8"
+    "@reown/appkit-common" "1.6.9"
+    "@reown/appkit-core" "1.6.9"
+    "@reown/appkit-polyfills" "1.6.9"
+    "@reown/appkit-scaffold-ui" "1.6.9"
+    "@reown/appkit-ui" "1.6.9"
+    "@reown/appkit-utils" "1.6.9"
+    "@reown/appkit-wallet" "1.6.9"
     "@walletconnect/types" "2.18.0"
     "@walletconnect/universal-provider" "2.18.0"
     "@walletconnect/utils" "2.18.0"
@@ -2498,61 +2498,61 @@
     "@types/node" "*"
 
 "@typescript-eslint/eslint-plugin@^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0":
-  version "8.24.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-8.24.1.tgz#d104c2a6212304c649105b18af2c110b4a1dd4ae"
-  integrity sha512-ll1StnKtBigWIGqvYDVuDmXJHVH4zLVot1yQ4fJtLpL7qacwkxJc1T0bptqw+miBQ/QfUbhl1TcQ4accW5KUyA==
+  version "8.25.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin/-/eslint-plugin-8.25.0.tgz#5e1d56f067e5808fa82d1b75bced82396e868a14"
+  integrity sha512-VM7bpzAe7JO/BFf40pIT1lJqS/z1F8OaSsUB3rpFJucQA4cOSuH2RVVVkFULN+En0Djgr29/jb4EQnedUo95KA==
   dependencies:
     "@eslint-community/regexpp" "^4.10.0"
-    "@typescript-eslint/scope-manager" "8.24.1"
-    "@typescript-eslint/type-utils" "8.24.1"
-    "@typescript-eslint/utils" "8.24.1"
-    "@typescript-eslint/visitor-keys" "8.24.1"
+    "@typescript-eslint/scope-manager" "8.25.0"
+    "@typescript-eslint/type-utils" "8.25.0"
+    "@typescript-eslint/utils" "8.25.0"
+    "@typescript-eslint/visitor-keys" "8.25.0"
     graphemer "^1.4.0"
     ignore "^5.3.1"
     natural-compare "^1.4.0"
     ts-api-utils "^2.0.1"
 
 "@typescript-eslint/parser@^5.4.2 || ^6.0.0 || ^7.0.0 || ^8.0.0":
-  version "8.24.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-8.24.1.tgz#67965c2d2ddd7eadb2f094c395695db8334ef9a2"
-  integrity sha512-Tqoa05bu+t5s8CTZFaGpCH2ub3QeT9YDkXbPd3uQ4SfsLoh1/vv2GEYAioPoxCWJJNsenXlC88tRjwoHNts1oQ==
+  version "8.25.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-8.25.0.tgz#58fb81c7b7a35184ba17583f3d7ac6c4f3d95be8"
+  integrity sha512-4gbs64bnbSzu4FpgMiQ1A+D+urxkoJk/kqlDJ2W//5SygaEiAP2B4GoS7TEdxgwol2el03gckFV9lJ4QOMiiHg==
   dependencies:
-    "@typescript-eslint/scope-manager" "8.24.1"
-    "@typescript-eslint/types" "8.24.1"
-    "@typescript-eslint/typescript-estree" "8.24.1"
-    "@typescript-eslint/visitor-keys" "8.24.1"
+    "@typescript-eslint/scope-manager" "8.25.0"
+    "@typescript-eslint/types" "8.25.0"
+    "@typescript-eslint/typescript-estree" "8.25.0"
+    "@typescript-eslint/visitor-keys" "8.25.0"
     debug "^4.3.4"
 
-"@typescript-eslint/scope-manager@8.24.1":
-  version "8.24.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/scope-manager/-/scope-manager-8.24.1.tgz#1e1e76ec4560aa85077ab36deb9b2bead4ae124e"
-  integrity sha512-OdQr6BNBzwRjNEXMQyaGyZzgg7wzjYKfX2ZBV3E04hUCBDv3GQCHiz9RpqdUIiVrMgJGkXm3tcEh4vFSHreS2Q==
+"@typescript-eslint/scope-manager@8.25.0":
+  version "8.25.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/scope-manager/-/scope-manager-8.25.0.tgz#ac3805077aade898e98ca824294c998545597df3"
+  integrity sha512-6PPeiKIGbgStEyt4NNXa2ru5pMzQ8OYKO1hX1z53HMomrmiSB+R5FmChgQAP1ro8jMtNawz+TRQo/cSXrauTpg==
   dependencies:
-    "@typescript-eslint/types" "8.24.1"
-    "@typescript-eslint/visitor-keys" "8.24.1"
+    "@typescript-eslint/types" "8.25.0"
+    "@typescript-eslint/visitor-keys" "8.25.0"
 
-"@typescript-eslint/type-utils@8.24.1":
-  version "8.24.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/type-utils/-/type-utils-8.24.1.tgz#99113e1df63d1571309d87eef68967344c78dd65"
-  integrity sha512-/Do9fmNgCsQ+K4rCz0STI7lYB4phTtEXqqCAs3gZW0pnK7lWNkvWd5iW545GSmApm4AzmQXmSqXPO565B4WVrw==
+"@typescript-eslint/type-utils@8.25.0":
+  version "8.25.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/type-utils/-/type-utils-8.25.0.tgz#ee0d2f67c80af5ae74b5d6f977e0f8ded0059677"
+  integrity sha512-d77dHgHWnxmXOPJuDWO4FDWADmGQkN5+tt6SFRZz/RtCWl4pHgFl3+WdYCn16+3teG09DY6XtEpf3gGD0a186g==
   dependencies:
-    "@typescript-eslint/typescript-estree" "8.24.1"
-    "@typescript-eslint/utils" "8.24.1"
+    "@typescript-eslint/typescript-estree" "8.25.0"
+    "@typescript-eslint/utils" "8.25.0"
     debug "^4.3.4"
     ts-api-utils "^2.0.1"
 
-"@typescript-eslint/types@8.24.1":
-  version "8.24.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-8.24.1.tgz#8777a024f3afc4ace5e48f9a804309c6dd38f95a"
-  integrity sha512-9kqJ+2DkUXiuhoiYIUvIYjGcwle8pcPpdlfkemGvTObzgmYfJ5d0Qm6jwb4NBXP9W1I5tss0VIAnWFumz3mC5A==
+"@typescript-eslint/types@8.25.0":
+  version "8.25.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/types/-/types-8.25.0.tgz#f91512c2f532b1d6a8826cadd0b0e5cd53cf97e0"
+  integrity sha512-+vUe0Zb4tkNgznQwicsvLUJgZIRs6ITeWSCclX1q85pR1iOiaj+4uZJIUp//Z27QWu5Cseiw3O3AR8hVpax7Aw==
 
-"@typescript-eslint/typescript-estree@8.24.1":
-  version "8.24.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-8.24.1.tgz#3bb479401f8bd471b3c6dd3db89e7256977c54db"
-  integrity sha512-UPyy4MJ/0RE648DSKQe9g0VDSehPINiejjA6ElqnFaFIhI6ZEiZAkUI0D5MCk0bQcTf/LVqZStvQ6K4lPn/BRg==
+"@typescript-eslint/typescript-estree@8.25.0":
+  version "8.25.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/typescript-estree/-/typescript-estree-8.25.0.tgz#d8409c63abddd4cf5b93c031b24b9edc1c7c1299"
+  integrity sha512-ZPaiAKEZ6Blt/TPAx5Ot0EIB/yGtLI2EsGoY6F7XKklfMxYQyvtL+gT/UCqkMzO0BVFHLDlzvFqQzurYahxv9Q==
   dependencies:
-    "@typescript-eslint/types" "8.24.1"
-    "@typescript-eslint/visitor-keys" "8.24.1"
+    "@typescript-eslint/types" "8.25.0"
+    "@typescript-eslint/visitor-keys" "8.25.0"
     debug "^4.3.4"
     fast-glob "^3.3.2"
     is-glob "^4.0.3"
@@ -2560,22 +2560,22 @@
     semver "^7.6.0"
     ts-api-utils "^2.0.1"
 
-"@typescript-eslint/utils@8.24.1":
-  version "8.24.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/utils/-/utils-8.24.1.tgz#08d14eac33cfb3456feeee5a275b8ad3349e52ed"
-  integrity sha512-OOcg3PMMQx9EXspId5iktsI3eMaXVwlhC8BvNnX6B5w9a4dVgpkQZuU8Hy67TolKcl+iFWq0XX+jbDGN4xWxjQ==
+"@typescript-eslint/utils@8.25.0":
+  version "8.25.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/utils/-/utils-8.25.0.tgz#3ea2f9196a915ef4daa2c8eafd44adbd7d56d08a"
+  integrity sha512-syqRbrEv0J1wywiLsK60XzHnQe/kRViI3zwFALrNEgnntn1l24Ra2KvOAWwWbWZ1lBZxZljPDGOq967dsl6fkA==
   dependencies:
     "@eslint-community/eslint-utils" "^4.4.0"
-    "@typescript-eslint/scope-manager" "8.24.1"
-    "@typescript-eslint/types" "8.24.1"
-    "@typescript-eslint/typescript-estree" "8.24.1"
+    "@typescript-eslint/scope-manager" "8.25.0"
+    "@typescript-eslint/types" "8.25.0"
+    "@typescript-eslint/typescript-estree" "8.25.0"
 
-"@typescript-eslint/visitor-keys@8.24.1":
-  version "8.24.1"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/visitor-keys/-/visitor-keys-8.24.1.tgz#8bdfe47a89195344b34eb21ef61251562148202b"
-  integrity sha512-EwVHlp5l+2vp8CoqJm9KikPZgi3gbdZAtabKT9KPShGeOcJhsv4Zdo3oc8T8I0uKEmYoU4ItyxbptjF08enaxg==
+"@typescript-eslint/visitor-keys@8.25.0":
+  version "8.25.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/visitor-keys/-/visitor-keys-8.25.0.tgz#e8646324cd1793f96e02669cb717a05319403164"
+  integrity sha512-kCYXKAum9CecGVHGij7muybDfTS2sD3t0L4bJsEZLkyrXUImiCTq1M3LG2SRtOhiHFwMR9wAFplpT6XHYjTkwQ==
   dependencies:
-    "@typescript-eslint/types" "8.24.1"
+    "@typescript-eslint/types" "8.25.0"
     eslint-visitor-keys "^4.2.0"
 
 "@ungap/structured-clone@^1.2.0":
@@ -3411,9 +3411,9 @@ camelize@^1.0.0:
   integrity sha512-dU+Tx2fsypxTgtLoE36npi3UqcjSSMNYfkqgmoEhtZrraP5VWq0K7FkWVTYa8eMPtnU/G2txVsfdCJTn9uzpuQ==
 
 caniuse-lite@^1.0.30001579:
-  version "1.0.30001700"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001700.tgz#26cd429cf09b4fd4e745daf4916039c794d720f6"
-  integrity sha512-2S6XIXwaE7K7erT8dY+kLQcpa5ms63XlRkMkReXjle+kf6c5g38vyMl+Z5y8dSxOFDhcFe+nxnn261PLxBSQsQ==
+  version "1.0.30001701"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001701.tgz#ad9c90301f7153cf6b3314d16cc30757285bf9e7"
+  integrity sha512-faRs/AW3jA9nTwmJBSO1PQ6L/EOgsB5HMQQq4iCu5zhPgVVgO/pZRHlmatwijZKetFw8/Pr4q6dEN8sJuq8qTw==
 
 "cbw-sdk@npm:@coinbase/wallet-sdk@3.9.3":
   version "3.9.3"
@@ -4482,9 +4482,9 @@ fast-safe-stringify@^2.0.6:
   integrity sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==
 
 fastq@^1.6.0:
-  version "1.19.0"
-  resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.19.0.tgz#a82c6b7c2bb4e44766d865f07997785fecfdcb89"
-  integrity sha512-7SFSRCNjBQIZH/xZR3iy5iQYR8aGBE0h3VG6/cwlbrpdciNYBMotQav8c1XI3HjHH+NikUpP53nPdlZSdWmFzA==
+  version "1.19.1"
+  resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.19.1.tgz#d50eaba803c8846a883c16492821ebcd2cda55f5"
+  integrity sha512-GwLTyxkCXjXbxqIhTsMI2Nui8huMPtnxg7krajPJAjnEG/iiOS7i+zCtWGZR9G0NBKbXKh6X9m9UIsYX/N6vvQ==
   dependencies:
     reusify "^1.0.4"
 
@@ -6544,9 +6544,9 @@ resolve@^2.0.0-next.5:
     supports-preserve-symlinks-flag "^1.0.0"
 
 reusify@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
-  integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/reusify/-/reusify-1.1.0.tgz#0fe13b9522e1473f51b558ee796e08f11f9b489f"
+  integrity sha512-g6QUff04oZpHs0eG5p83rFLhHeV00ug/Yf9nZM6fLeUrPguBTkTQOdpAWWspMh55TZfVQDPaN3NQJfbVRAxdIw==
 
 rimraf@^3.0.2:
   version "3.0.2"
