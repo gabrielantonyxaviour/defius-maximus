@@ -90,6 +90,10 @@ export async function createChef({
   image,
   sub_fee,
   niche,
+  nftName,
+  nftSymbol,
+  ipAddress,
+  twitter,
 }: {
   user_id: string;
   name: string;
@@ -97,11 +101,28 @@ export async function createChef({
   niche: string[];
   image?: string;
   sub_fee?: string;
+  nftName: string;
+  nftSymbol: string;
+  ipAddress: string;
+  twitter: string;
 }): Promise<Chef | null> {
   console.log(`Creating chef with user id: ${user_id}`);
   const { data, error } = await supabase
     .from("chefs")
-    .insert([{ user_id, name, bio, image, niche, sub_fee }])
+    .insert([
+      {
+        user_id,
+        name,
+        bio,
+        image,
+        niche,
+        sub_fee,
+        nft_name: nftName,
+        nft_symbol: nftSymbol,
+        ip_address: ipAddress,
+        twitter,
+      },
+    ])
     .select()
     .single();
 

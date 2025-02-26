@@ -5,39 +5,51 @@ import {
   StoryClient,
   StoryConfig,
 } from "@story-protocol/core-sdk";
-import { createWalletClient, custom, http, toHex, zeroAddress } from "viem";
+import {
+  createWalletClient,
+  custom,
+  Hex,
+  http,
+  toHex,
+  WalletClient,
+  zeroAddress,
+} from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { storyAeneid } from "viem/chains";
 
-export async function setupStoryClient(): Promise<StoryClient> {
-  const wallet = createWalletClient({
-    chain: storyAeneid,
-    transport: http("https://aeneid.storyrpc.io"),
-    account: privateKeyToAccount(
-      process.env.NEXT_PUBLIC_PRIVATE_KEY as `0x${string}`
-    ),
-  });
-  const config: StoryConfig = {
-    account: wallet.account,
+export async function setupStoryClient(
+  wallet: WalletClient
+): Promise<StoryClient> {
+  // const wallet = createWalletClient({
+  //   chain: storyAeneid,
+  //   transport: http("https://aeneid.storyrpc.io"),
+  //   account: privateKeyToAccount(
+  //     process.env.NEXT_PUBLIC_PRIVATE_KEY as `0x${string}`
+  //   ),
+  // });
+  const config = {
+    wallet: wallet as WalletClient,
     transport: custom(wallet!.transport),
-    chainId: "aeneid",
+    chainId: "1315" as any,
   };
-  const client = StoryClient.newClient(config);
+  const client = StoryClient.newClientUseWallet(config);
   return client;
 }
 
 export async function createSpgNftCollection(
   client: StoryClient,
   name: string,
-  symbol: string
+  symbol: string,
+  owner: string
 ): Promise<CreateNFTCollectionResponse> {
   const response = await client.nftClient.createNFTCollection({
-    name: "Test SPG NFT Collection",
-    symbol: "TST",
+    name: name,
+    symbol: symbol,
     isPublicMinting: false,
     mintOpen: true,
     mintFeeRecipient: zeroAddress,
     contractURI: "",
+    owner: owner as Hex,
     txOptions: { waitForTransaction: true },
   });
   console.log(

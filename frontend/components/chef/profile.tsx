@@ -7,6 +7,7 @@ import {
   Save,
   Zap,
   Check,
+  ArrowUpRightFromSquare,
 } from "lucide-react";
 import { useEnvironmentStore } from "../context";
 import { useEffect, useState } from "react";
@@ -15,6 +16,7 @@ import { Separator } from "@/components/ui/separator";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import { Chef } from "@/types";
+import Image from "next/image";
 
 export default function ChefProfile({
   chef_id,
@@ -140,7 +142,28 @@ export default function ChefProfile({
               </div>
             </div>
 
-            <Separator className="bg-[#1F1F1F]" />
+            {/* <Separator className="bg-[#1F1F1F]" /> */}
+            <div className="flex space-x-3">
+              <Image
+                src={"/chains/story.png"}
+                width={25}
+                height={25}
+                alt="arbitrum"
+                className="rounded-full"
+              />
+              <p className="text-sm text-gray-300">IP Account</p>
+              <div
+                className="group flex space-x-1 cursor-pointer"
+                onClick={() => {
+                  // win
+                }}
+              >
+                <p className="group-hover:text-white text-gray-300">
+                  {chef?.ip_address}
+                </p>
+                <ArrowUpRightFromSquare className="h-4 w-4" />
+              </div>
+            </div>
 
             {/* Subscription */}
             {chefData.id != chef?.id && (

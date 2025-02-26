@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
 import { format } from "date-fns";
 import {
   Popover,
@@ -41,6 +42,10 @@ import { Calendar } from "../ui/calendar";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { useEnvironmentStore } from "../context";
 import OverlappingCircles from "../ui/overlapping-circles";
+import { uploadJsonToPinata } from "@/lib/pinata";
+import { createHash } from "crypto";
+import { mintAndRegisterIp } from "@/lib/story";
+import { Hex } from "viem";
 
 interface CreateRecipeProps {
   close: () => void;
@@ -52,7 +57,9 @@ type PerpsDex = "gmx";
 type SpotDex = "cow";
 
 const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
-  const { chef, setRecipe } = useEnvironmentStore((store) => store);
+  const { chef, setRecipe, user, storyClient } = useEnvironmentStore(
+    (store) => store
+  );
   const [entryPrice, setEntryPrice] = useState<number>(2628); // Entry price for ETH
   const [leverage, setLeverage] = useState<number>(3); // Adjusted leverage for ETH
   const [stopLoss, setStopLoss] = useState<number>(2500); // Stop loss below entry
@@ -155,76 +162,191 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
     console.log(image);
     if (!image) {
       setError("Please upload a profile image");
+      setLoading(0);
       return;
     }
-    // Handle form submission here
-    console.log({
-      takeProfits,
-      dcaPoints,
-      selectedAsset,
-      selectedChain,
-      direction,
-      selectedDate,
-      entryPrice,
-      leverage,
-      stopLoss,
-      researchDescription,
-      image,
-      imagePreview,
-      selectedTime,
-      expectedPnl,
+    if (!storyClient) {
+      setError("Story Client is not set");
+      setLoading(0);
+      return;
+    }
+
+    toast("Minting an IP for your recipe", {
+      description: "Storing on IPFS and publishing on chain...",
     });
 
-    const targetDateTime = new Date(selectedDate);
-    const [hours, minutes] = selectedTime.split(":").map(Number);
-    targetDateTime.setHours(hours, minutes, 0, 0);
+    const ipMetadata = {
+      title: chef?.nft_name,
+      description: chef?.bio,
+      image: chef?.image,
+      imageHash: createHash("sha256")
+        .update(chef?.image || "image")
+        .digest("hex"),
+      mediaUrl: chef?.image,
+      mediaHash: createHash("sha256")
+        .update(chef?.image || "image")
+        .digest("hex"),
+      mediaType: "image/png",
+      creators: [
+        {
+          name: chef?.name,
+          address: user?.address,
+          description: chef?.bio,
+          contributionPercent: 100,
+          socialMedia: [
+            {
+              platform: "Twitter",
+              url: "http://x.com/" + chef?.twitter,
+            },
+          ],
+        },
+      ],
+    };
 
-    const currentDate = new Date();
-    const timeFrame = Math.floor(
-      (targetDateTime.getTime() - currentDate.getTime()) / 1000
-    );
-
-    console.log(timeFrame);
-    const formData = new FormData();
-    formData.append("chef_id", chef?.id || "");
-    formData.append("username", (chef as any).username || "");
-    formData.append("asset", selectedAsset);
-    formData.append("direction", direction);
-    formData.append("chain", selectedChain);
-    formData.append("entry_price", entryPrice.toString());
-    formData.append("stop_loss", stopLoss.toString());
-    formData.append("leverage", leverage.toString());
-    formData.append("timeframe", timeFrame.toString());
-    formData.append("research_description", researchDescription);
-    formData.append("dex", "GMX");
-    formData.append("image", image);
-    formData.append("take_profit", JSON.stringify(takeProfits));
-    formData.append("dca", JSON.stringify(dcaPoints));
-    formData.append("trade_type", selectedType.toLowerCase());
-    formData.append("expected_pnl", expectedPnl.length > 0 ? expectedPnl : "0");
-    console.log("FormData");
-    console.log(formData);
-
+    const nftMetadata = {
+      name: chef?.nft_name,
+      description: chef?.bio,
+      image: chef?.image,
+      external_url: "https://x.com/" + chef?.twitter,
+      attributes: [
+        {
+          trait_type: "Creator",
+          value: chef?.name,
+        },
+        {
+          trait_type: "Creator Address",
+          value: user?.address,
+        },
+      ],
+      properties: {
+        files: [
+          {
+            uri: chef?.image,
+            type: "image/png",
+          },
+        ],
+        category: "image",
+        creators: [
+          {
+            address: user?.address,
+            share: 100,
+          },
+        ],
+        socials: {
+          twitter: chef?.twitter,
+        },
+      },
+    };
+    console.log("okay till here");
     try {
-      const response = await fetch("/api/supabase/create-play", {
-        method: "POST",
-        body: formData,
-      });
-      const { play, error } = await response.json();
+      const { uri: ipMetadataUri, hash: ipMetadataHash } =
+        await uploadJsonToPinata(`ip-${chef?.id}-${Date.now()}`, ipMetadata);
 
-      if (error) {
-        console.log(error);
-        setError(error);
-        setLoading(0);
-        return;
-      }
-      console.log("Successfully created play");
-      console.log(play);
-      setLoading(2);
-      setRecipe(play);
+      const { uri: nftMetadataUri, hash: nftMetadataHash } =
+        await uploadJsonToPinata(`nft-${chef?.id}-${Date.now()}`, nftMetadata);
+
+      console.log("IPFS Upload successful");
+
+      console.log("INPUT");
+      console.log(chef);
+      console.log({
+        nftAddress: chef?.ip_address as Hex,
+        ipMetadata: {
+          ipMetadataUri,
+          ipMetadataHash: ("0x" + ipMetadataHash) as Hex,
+          nftMetadataURI: nftMetadataUri,
+          nftMetadataHash: ("0x" + nftMetadataHash) as Hex,
+        },
+      });
+
+      const { txHash, ipId, tokenId } = await mintAndRegisterIp(storyClient, {
+        nftAddress: chef?.ip_address as Hex,
+        ipMetadata: {
+          ipMetadataUri,
+          ipMetadataHash: ("0x" + ipMetadataHash) as Hex,
+          nftMetadataURI: nftMetadataUri,
+          nftMetadataHash: ("0x" + nftMetadataHash) as Hex,
+        },
+      });
+      console.log("IP minted successfully");
+      console.log("IP ID:", ipId);
+      console.log("Token ID:", tokenId);
+      console.log("Transaction Hash:", txHash);
     } catch (e) {
-      setLoading(3);
+      setError("Error with story");
+      setLoading(0);
+      return;
     }
+
+    // // Handle form submission here
+    // console.log({
+    //   takeProfits,
+    //   dcaPoints,
+    //   selectedAsset,
+    //   selectedChain,
+    //   direction,
+    //   selectedDate,
+    //   entryPrice,
+    //   leverage,
+    //   stopLoss,
+    //   researchDescription,
+    //   image,
+    //   imagePreview,
+    //   selectedTime,
+    //   expectedPnl,
+    // });
+
+    // const targetDateTime = new Date(selectedDate);
+    // const [hours, minutes] = selectedTime.split(":").map(Number);
+    // targetDateTime.setHours(hours, minutes, 0, 0);
+
+    // const currentDate = new Date();
+    // const timeFrame = Math.floor(
+    //   (targetDateTime.getTime() - currentDate.getTime()) / 1000
+    // );
+
+    // console.log(timeFrame);
+    // const formData = new FormData();
+    // formData.append("chef_id", chef?.id || "");
+    // formData.append("username", (chef as any).username || "");
+    // formData.append("asset", selectedAsset);
+    // formData.append("direction", direction);
+    // formData.append("chain", selectedChain);
+    // formData.append("entry_price", entryPrice.toString());
+    // formData.append("stop_loss", stopLoss.toString());
+    // formData.append("leverage", leverage.toString());
+    // formData.append("timeframe", timeFrame.toString());
+    // formData.append("research_description", researchDescription);
+    // formData.append("dex", (selectedDex || "gmx").toUpperCase());
+    // formData.append("image", image);
+    // formData.append("take_profit", JSON.stringify(takeProfits));
+    // formData.append("dca", JSON.stringify(dcaPoints));
+    // formData.append("trade_type", selectedType.toLowerCase());
+    // formData.append("expected_pnl", expectedPnl.length > 0 ? expectedPnl : "0");
+    // console.log("FormData");
+    // console.log(formData);
+
+    // try {
+    //   const response = await fetch("/api/supabase/create-play", {
+    //     method: "POST",
+    //     body: formData,
+    //   });
+    //   const { play, error } = await response.json();
+
+    //   if (error) {
+    //     console.log(error);
+    //     setError(error);
+    //     setLoading(0);
+    //     return;
+    //   }
+
+    //   console.log("Successfully created play");
+    //   console.log(play);
+    //   setLoading(2);
+    //   setRecipe(play);
+    // } catch (e) {
+    //   setLoading(3);
+    // }
   };
 
   return (

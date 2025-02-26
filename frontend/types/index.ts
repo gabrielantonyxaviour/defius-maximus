@@ -24,6 +24,10 @@ export type Chef = {
   total_subscribers: number;
   avg_pnl_percentage: number;
   avg_calls_per_day: number;
+  nft_name: string;
+  nft_symbol: string;
+  ip_address: string;
+  twitter: string;
 };
 export interface AssetData {
   [ticker: string]: {

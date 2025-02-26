@@ -68,6 +68,10 @@ export default function CreateChefForm() {
       setError("Story client is not initialized");
       return;
     }
+    if (!user) {
+      setError("User is not logged in");
+      return;
+    }
     // Handle form submission here
     console.log({ name, bio, image, niches });
 
@@ -76,10 +80,11 @@ export default function CreateChefForm() {
         "Creating a NFT collection to mint your trade plays as IP assets..",
     });
 
-    const { txHash } = await createSpgNftCollection(
+    const { txHash, spgNftContract } = await createSpgNftCollection(
       storyClient,
       nftName,
-      nftSymbol
+      nftSymbol,
+      user.address as string
     );
 
     toast("Story IP Collection Deployed", {
@@ -99,6 +104,10 @@ export default function CreateChefForm() {
     formData.append("image", image);
     formData.append("niches", JSON.stringify(niches));
     formData.append("subFee", subFee);
+    formData.append("ip_address", spgNftContract as string);
+    formData.append("nft_name", nftName);
+    formData.append("nft_symbol", nftSymbol);
+    formData.append("twitter", twitter);
 
     console.log("FormData");
     console.log(formData);
@@ -110,6 +119,7 @@ export default function CreateChefForm() {
 
     if (error) {
       setError(error);
+      setLoading(false);
       return;
     }
     setChef(chef);

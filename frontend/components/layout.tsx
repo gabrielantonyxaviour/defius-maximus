@@ -16,6 +16,7 @@ import { storyAeneid } from "viem/chains";
 import { formatEther, Hex } from "viem";
 import { setupStoryClient } from "@/lib/story";
 import { getChainBalance, getMultichainBalance } from "@/lib/balance";
+import { useWalletClient } from "wagmi";
 
 export default function Layout({
   children,
@@ -36,6 +37,7 @@ export default function Layout({
   const router = useRouter();
   const { open } = useAppKit();
   const { address, isConnected } = useAppKitAccount();
+  const { data: wallet } = useWalletClient();
 
   useEffect(() => {
     if (!isConnected) {
@@ -45,6 +47,10 @@ export default function Layout({
     }
   }, [isConnected]);
 
+  // useEffect(() => {
+  //   console.log("WALLET FROM WAGMI: ", wallet);
+  // }, [wallet]);
+
   useEffect(() => {
     (async () => {
       console.log(
@@ -53,9 +59,12 @@ export default function Layout({
         "address:",
         address
       );
-
-      if (isConnected && address && user == null) {
-        setStoryClient(await setupStoryClient());
+      if (!wallet) {
+        console.log("Wallet is not available yet");
+        return;
+      }
+      if (isConnected && address && wallet && user == null) {
+        setStoryClient(await setupStoryClient(wallet));
 
         console.log(
           "User is not set, fetching user data for address:",
@@ -128,7 +137,7 @@ export default function Layout({
         console.log("User is already set or not connected");
       }
     })();
-  }, [isConnected, address]);
+  }, [isConnected, address, wallet]);
 
   return (
     <div className="min-h-screen w-full">
