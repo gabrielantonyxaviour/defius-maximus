@@ -41,7 +41,7 @@ export type TradePlay = {
   chain: string;
   direction: string;
   entry_price: string;
-  trade_type: "spot" | "future";
+  trade_type: "spot" | "perps";
   take_profit: TakeProfit[];
   stop_loss: string;
   dca: DCA[];

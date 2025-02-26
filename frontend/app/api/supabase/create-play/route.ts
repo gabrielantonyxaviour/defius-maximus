@@ -14,6 +14,7 @@ export async function POST(request: Request) {
     const leverage = parseFloat(formData.get("leverage") as string);
     const timeFrame = parseFloat(formData.get("timeframe") as string);
     const researchDescription = formData.get("research_description") as string;
+    const type = formData.get("type") as string;
     const dex = formData.get("dex") as string;
     const image = formData.get("image") as File;
     const takeProfits = JSON.parse(formData.get("take_profit") as string);
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
       entry_price: entryPrice.toString(),
       stop_loss: stopLoss.toString(),
       leverage: leverage.toString(),
-      trade_type: "future",
+      trade_type: type,
       timeframe: timeFrame.toString(),
       status: "ongoing",
       pnl_percentage: null,
@@ -63,7 +64,7 @@ export async function POST(request: Request) {
             entry_price: entryPrice.toString(),
             stop_loss: stopLoss.toString(),
             leverage: leverage.toString(),
-            trade_type: "future",
+            trade_type: type,
             timeframe: timeFrame.toString(),
             status: "ongoing",
             pnl_percentage: null,

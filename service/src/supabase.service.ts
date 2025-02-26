@@ -4,6 +4,7 @@ import { TradePlay } from "./types";
 import { performSwap } from "./utils/sushiswap";
 import { sushiTokenList } from "./utils/constants";
 import { parseEther } from "viem";
+import { placeTrade } from "./utils/gmx";
 
 export class SupabaseService {
   private static instance: SupabaseService;
@@ -117,10 +118,10 @@ export class SupabaseService {
               );
               console.log("By passing for the sake of demo");
             }
-            let amount;
+            let amount: number;
             if (trade_type == "perps") {
               const rpcUrl =
-                chain == "421614"
+                chain == "arb"
                   ? "https://arb-sepolia.g.alchemy.com/v2/" +
                     process.env.ALCHMEY_API_KEY
                   : "https://avax-fuji.g.alchemy.com/v2/" +
@@ -193,6 +194,41 @@ export class SupabaseService {
                 );
                 amount = 0.005;
               }
+
+              const tx = await placeTrade(
+                "0x" + user.pkey,
+                chain == "arb" ? "ETH" : "AVAX",
+                asset,
+                chain == "arb" ? "421614" : "8453",
+                parseInt(leverage),
+                amount,
+                [],
+                [],
+                true
+              );
+
+              const { data: _createTrade, error: createTradeError } =
+                await this.supabase
+                  .from("executed_trades")
+                  .insert({
+                    trade_play_id: id,
+                    user_id: user.id,
+                    amount: amount,
+                    pnl_usdt: 0,
+                    tx_hash: tx,
+                    status: "open",
+                  })
+                  .select()
+                  .single();
+
+              if (createTradeError) {
+                console.error(
+                  `Error creating trade: ${createTradeError.message}`
+                );
+                return null;
+              }
+
+              console.log(`\n\nTrade created successfully!! ✅`);
             } else {
               const rpcUrl =
                 "https://rootstock-mainnet.g.alchemy.com/v2/" +
@@ -215,7 +251,7 @@ export class SupabaseService {
               if (btcData.result)
                 btcBalance = (parseInt(btcData.result, 16) / 1e18).toString();
               else {
-                console.error("Failed to fetch STORY Balance");
+                console.error("Failed to fetch Rootstock Balance");
                 return; // Modified to just return instead of using Response.json
               }
 

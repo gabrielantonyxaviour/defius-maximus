@@ -31,13 +31,12 @@ export async function placeTrade(
   native: string,
   asset: string,
   chain: string,
-  amount: string,
   leverage: number,
   positionSizeInNative: number,
   takeProfit: TakeProfit[],
   stopLoss: StopLoss[],
   isLong: boolean
-) {
+): Promise<string> {
   const dataStoreAbi = dataStore.abi;
   const rpcUrl =
     chain == "421614"
@@ -231,4 +230,5 @@ export async function placeTrade(
   const receipt = await tx.wait();
   console.log("Transaction receipt");
   console.log(receipt);
+  return tx;
 }
