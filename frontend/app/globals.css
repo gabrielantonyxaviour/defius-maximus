@@ -274,3 +274,14 @@ body {
   background: #bf4317;
   border-radius: 3px;
 }
+
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

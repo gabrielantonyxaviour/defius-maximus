@@ -9,9 +9,10 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useState } from "react";
 import { useEnvironmentStore } from "../context";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
-
+import { toast } from "sonner";
+import { createSpgNftCollection } from "@/lib/story";
 export default function CreateChefForm() {
-  const { user, setChef } = useEnvironmentStore((store) => store);
+  const { user, setChef, storyClient } = useEnvironmentStore((store) => store);
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [twitter, setTwitter] = useState("");
@@ -62,8 +63,33 @@ export default function CreateChefForm() {
       setError("Please upload a profile image");
       return;
     }
+    if (!storyClient) {
+      setError("Story client is not initialized");
+      return;
+    }
     // Handle form submission here
     console.log({ name, bio, image, niches });
+
+    toast("Deploying Story IP Collection", {
+      description:
+        "Creating a NFT collection to mint your trade plays as IP assets..",
+    });
+
+    const { txHash } = await createSpgNftCollection(
+      storyClient,
+      nftName,
+      nftSymbol
+    );
+
+    toast("Story IP Collection Deployed", {
+      description: `Creating your account. Finishing up...`,
+      action: {
+        label: "View Tx",
+        onClick: () => {
+          window.open(`https://aeneid.storyscan.xyz//tx/${txHash}`, "_blank");
+        },
+      },
+    });
 
     const formData = new FormData();
     formData.append("name", name);
@@ -87,6 +113,9 @@ export default function CreateChefForm() {
     }
     setChef(chef);
     setLoading(false);
+    toast("Chef Profile Created", {
+      description: `You are all set!`,
+    });
   };
 
   return (

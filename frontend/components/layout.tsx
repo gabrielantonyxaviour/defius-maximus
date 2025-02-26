@@ -12,18 +12,9 @@ import {
 } from "@reown/appkit/react";
 import generateKeypairs from "@/lib/gen-wallet";
 import { User } from "@/types";
-import { useAccount, useBalance, useWalletClient } from "wagmi";
 import { storyAeneid } from "viem/chains";
-import {
-  createPublicClient,
-  createWalletClient,
-  custom,
-  formatEther,
-  Hex,
-  http,
-} from "viem";
+import { formatEther, Hex } from "viem";
 import { setupStoryClient } from "@/lib/story";
-import { privateKeyToAccount } from "viem/accounts";
 import { getChainBalance, getMultichainBalance } from "@/lib/balance";
 
 export default function Layout({
@@ -39,12 +30,21 @@ export default function Layout({
     setActions,
     walletBalance,
     setWalletBalance,
+    setChef,
     setStoryClient,
   } = useEnvironmentStore((store) => store);
   const router = useRouter();
   const { open, close } = useAppKit();
   const { address, isConnected } = useAppKitAccount();
   const { disconnect } = useDisconnect();
+
+  useEffect(() => {
+    if (!isConnected) {
+      setUser(null);
+      setChef(null);
+      router.push("/");
+    }
+  }, [isConnected]);
 
   useEffect(() => {
     (async () => {
@@ -134,7 +134,7 @@ export default function Layout({
   return (
     <div className="min-h-screen w-full">
       <div className="fixed w-full flex flex-col sm:flex-row justify-end items-end sm:items-center gap-2 sm:gap-4 p-2 sm:p-4 sen">
-        {user && (
+        {isConnected && (
           <>
             <div className="relative w-[150px] bg-[#1F1F1F] h-10 rounded-sm">
               <Button
@@ -185,10 +185,11 @@ export default function Layout({
           </>
         )}
         <div className="relative bg-[#1F1F1F] w-[180px] h-10 rounded-sm">
-          {user ? (
+          {isConnected ? (
             <Button
               onClick={() => {
-                disconnect();
+                open();
+
                 setUser(null);
                 router.push("/");
               }}
@@ -206,7 +207,7 @@ export default function Layout({
                   className="rounded-full"
                 />
                 <p className="text-sm pl-1 font-semibold">
-                  {shortenAddress(user.id)}
+                  {shortenAddress(address as Hex)}
                 </p>
               </div>
             </Button>
