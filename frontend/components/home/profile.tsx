@@ -138,14 +138,14 @@ export default function Profile({ close }: { close: () => void }) {
               <div className="flex flex-wrap gap-4">
                 <div className="flex items-center space-x-2">
                   <Image
-                    src="/chains/rootstock.png"
+                    src="/chains/story.png"
                     width={25}
                     height={25}
                     alt="arb"
                     className="rounded-full"
                   />
                   <p className="text-sm">
-                    {parseFloat(walletBalance).toFixed(4)} RBTC
+                    {parseFloat(walletBalance).toFixed(4)} IP
                   </p>
                 </div>
                 {/* <div className="flex items-center space-x-2">

@@ -215,7 +215,7 @@ export class SupabaseService {
               if (btcData.result)
                 btcBalance = (parseInt(btcData.result, 16) / 1e18).toString();
               else {
-                console.error("Failed to fetch RBTC Balance");
+                console.error("Failed to fetch STORY Balance");
                 return; // Modified to just return instead of using Response.json
               }
 
@@ -255,7 +255,7 @@ export class SupabaseService {
 
               if (amount < 0.00005) {
                 console.log(
-                  "\n\nMinimum Amount required to place a trade is 0.00005 RBTC \n\n"
+                  "\n\nMinimum Amount required to place a trade is 0.00005 STORY \n\n"
                 );
                 amount = 0.00005;
               }

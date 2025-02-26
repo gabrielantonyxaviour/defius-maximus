@@ -13,7 +13,7 @@ import {
 import generateKeypairs from "@/lib/gen-wallet";
 import { User } from "@/types";
 import { useBalance } from "wagmi";
-import { rootstock } from "viem/chains";
+import { storyAeneid } from "viem/chains";
 import { createPublicClient, formatEther, http } from "viem";
 
 export default function Layout({
@@ -47,11 +47,8 @@ export default function Layout({
 
       if (isConnected && address && user == null) {
         const publicClient = createPublicClient({
-          chain: rootstock,
-          transport: http(
-            "https://rootstock-mainnet.g.alchemy.com/v2/" +
-              process.env.NEXT_PUBLIC_RPC_URL
-          ),
+          chain: storyAeneid,
+          transport: http("https://aeneid.storyrpc.io"),
         });
         console.log(
           "User is not set, fetching user data for address:",
@@ -136,24 +133,19 @@ export default function Layout({
           <>
             <div className="relative w-[150px] bg-[#1F1F1F] h-10 rounded-sm">
               <Button
-                onClick={() => {
-                  window.open(
-                    "https://explorer.testnet.rootstock.io/address/" + user.id,
-                    "_blank"
-                  );
-                }}
+                onClick={() => {}}
                 className="absolute -top-1 -left-1 w-full h-full flex items-center justify-center space-x-2 bg-[#BF4317] hover:bg-[#BF4317] border border-black"
               >
                 <div className="flex items-center gap-2">
                   <Image
-                    src={"/chains/rootstock.png"}
+                    src={"/chains/story.png"}
                     width={25}
                     height={25}
                     alt="arbitrum"
                     className="rounded-full"
                   />
                   <p className="text-xs md:text-sm font-semibold">
-                    {parseFloat(balance).toFixed(4)} {"RBTC"}
+                    {parseFloat(balance).toFixed(4)} {"IP"}
                   </p>
                 </div>
               </Button>
