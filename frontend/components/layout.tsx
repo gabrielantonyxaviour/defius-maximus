@@ -12,9 +12,17 @@ import {
 } from "@reown/appkit/react";
 import generateKeypairs from "@/lib/gen-wallet";
 import { User } from "@/types";
-import { useBalance } from "wagmi";
+import { useAccount, useBalance, useWalletClient } from "wagmi";
 import { storyAeneid } from "viem/chains";
-import { createPublicClient, formatEther, http } from "viem";
+import {
+  createPublicClient,
+  createWalletClient,
+  custom,
+  formatEther,
+  http,
+} from "viem";
+import { setupStoryClient } from "@/lib/story";
+import { privateKeyToAccount } from "viem/accounts";
 
 export default function Layout({
   children,
@@ -27,15 +35,15 @@ export default function Layout({
     setUser,
     setUserFollows,
     setActions,
-    balance,
-    setBalance,
     walletBalance,
     setWalletBalance,
+    setStoryClient,
   } = useEnvironmentStore((store) => store);
   const router = useRouter();
   const { open, close } = useAppKit();
   const { address, isConnected } = useAppKitAccount();
   const { disconnect } = useDisconnect();
+
   useEffect(() => {
     (async () => {
       console.log(
@@ -50,6 +58,15 @@ export default function Layout({
           chain: storyAeneid,
           transport: http("https://aeneid.storyrpc.io"),
         });
+        const walletClient = createWalletClient({
+          chain: storyAeneid,
+          account: privateKeyToAccount(
+            process.env.NEXT_PUBLIC_PRIVATE_KEY as `0x${string}`
+          ),
+          transport: http("https://aeneid.storyrpc.io"),
+        });
+        setStoryClient(await setupStoryClient(walletClient));
+
         console.log(
           "User is not set, fetching user data for address:",
           address
@@ -82,8 +99,10 @@ export default function Layout({
           console.log("Setting user data:", data);
           setUser(data);
           const fetchedWalletBalance = await publicClient.getBalance({
-            address: data.address as `0x${string}`,
+            address: address as `0x${string}`,
           });
+          console.log("Fetched address:", data.address);
+          console.log("Fetched wallet balance:", fetchedWalletBalance);
           setWalletBalance(formatEther(fetchedWalletBalance));
         } else {
           console.log("No user data found, generating new keypairs");
@@ -111,15 +130,10 @@ export default function Layout({
           console.log("Setting user data:", data);
           setUser(data);
           const fetchedWalletBalance = await publicClient.getBalance({
-            address: data.address as `0x${string}`,
+            address: address as `0x${string}`,
           });
           setWalletBalance(formatEther(fetchedWalletBalance));
         }
-
-        const fetchedBalance = await publicClient.getBalance({
-          address: address as `0x${string}`,
-        });
-        setBalance(formatEther(fetchedBalance));
       } else {
         console.log("User is already set or not connected");
       }
@@ -145,7 +159,7 @@ export default function Layout({
                     className="rounded-full"
                   />
                   <p className="text-xs md:text-sm font-semibold">
-                    {parseFloat(balance).toFixed(4)} {"IP"}
+                    {parseFloat(walletBalance).toFixed(4)} {"IP"}
                   </p>
                 </div>
               </Button>

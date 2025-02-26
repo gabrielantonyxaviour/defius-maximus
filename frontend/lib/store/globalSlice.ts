@@ -1,5 +1,6 @@
 import { StateCreator } from "zustand";
 import { Chef, ExecutedTrade, TradePlay, User } from "@/types";
+import { StoryClient } from "@story-protocol/core-sdk";
 
 interface GlobalState {
   user: User | null;
@@ -8,6 +9,7 @@ interface GlobalState {
   totalEquity: string;
   pnl: string;
   user_follows: string[];
+  storyClient: StoryClient | null;
   recipes: TradePlay[];
   actions: ExecutedTrade[];
 }
@@ -23,6 +25,7 @@ interface GlobalActions {
   setRecipes: (tradePlays: TradePlay[]) => void;
   setRecipe: (tradePlay: TradePlay) => void;
   setActions: (actions: ExecutedTrade[]) => void;
+  setStoryClient: (client: StoryClient) => void;
 }
 
 export type GlobalSlice = GlobalState & GlobalActions;
@@ -36,6 +39,7 @@ export const initialGlobalState: GlobalState = {
   recipes: [],
   user_follows: [],
   actions: [],
+  storyClient: null,
 };
 
 export const createGlobalSlice: StateCreator<
@@ -97,5 +101,8 @@ export const createGlobalSlice: StateCreator<
   },
   setWalletBalance: (walletBalance) => {
     set({ walletBalance });
+  },
+  setStoryClient: (client) => {
+    set({ storyClient: client });
   },
 });
