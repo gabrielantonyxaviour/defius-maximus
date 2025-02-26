@@ -1,3 +1,5 @@
+import { Hex } from "viem";
+
 export type User = {
   id: string;
   name: string;
@@ -86,11 +88,21 @@ export type ExecutedTrade = {
 
 export type NFTMetadata = {};
 
-export type IPMetadata = {};
+export type IPMetadata = {
+  ipMetadataUri: string;
+  ipMetadataHash: Hex;
+  nftMetadataURI: string;
+  nftMetadataHash: Hex;
+};
 
 export type CreateChefFormInput = {
   name: string;
   bio: string;
   twitter: string;
   website: string;
+};
+
+export type MintIpInputParams = {
+  nftAddress: `0x${string}`;
+  ipMetadata: IPMetadata;
 };
