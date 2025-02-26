@@ -14,7 +14,7 @@ async function bridgeNative(pkey: string, origin: string, assetAmount: string) {
     chains: {
       ArbitrumSepolia: {
         rpc:
-          "https://arb-mainnet.g.alchemy.com/v2/" + process.env.ALCHMEY_API_KEY,
+          "https://arb-sepolia.g.alchemy.com/v2/" + process.env.ALCHMEY_API_KEY,
       },
       BaseSepolia: {
         rpc:
@@ -40,26 +40,24 @@ async function bridgeNative(pkey: string, origin: string, assetAmount: string) {
   const amt = amount.units(
     amount.parse(assetAmount, ctx.config.nativeTokenDecimals)
   );
-  const transfer = sndTb.transfer(
-    sender.address.address,
-    receiver.address,
-    tokenId.address,
-    amt
-  );
-  const txids = await signSendWait(ctx, transfer, sender.signer);
-  console.log("Sent: ", txids);
+  // const transfer = sndTb.transfer(
+  //   sender.address.address,
+  //   receiver.address,
+  //   tokenId.address,
+  //   amt
+  // );
+  // const txids = await signSendWait(ctx, transfer, sender.signer);
+  // console.log("Sent: ", txids);
 
-  const [whm] = await ctx.parseTransaction(txids[0].txid);
+  const [whm] = await ctx.parseTransaction(
+    "0x19d41017c215746834b24f89ccb79fe133c31f1b146c225f6d2ad8ea2ab9ba1e"
+  );
   console.log("Wormhole Messages: ", whm);
 
   console.log("Wait a while for finality...");
   let vaa;
-  while (vaa == null) {
-    vaa = await wh.getVaa(whm!, "TokenBridge:Transfer", 2000);
-    console.log("VAA: ", vaa);
-    console.log("wating for 2 mins");
-    await new Promise((resolve) => setTimeout(resolve, 120000));
-  }
+  vaa = await wh.getVaa(whm!, "TokenBridge:Transfer", 2000);
+  console.log("VAA: ", vaa);
 
   // Now get the token bridge on the redeem side
   const rcvTb = await rcv.getTokenBridge();
