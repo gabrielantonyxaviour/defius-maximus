@@ -14,6 +14,7 @@ export default function CreateChefForm() {
   const { user, setChef } = useEnvironmentStore((store) => store);
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
+  const [twitter, setTwitter] = useState("");
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
   const [niches, setNiches] = useState<string[]>([]);
@@ -21,6 +22,9 @@ export default function CreateChefForm() {
   const [isPaidSubscription, setIsPaidSubscription] = useState(false);
   const [subFee, setSubFee] = useState<string>("0");
   const [loading, setLoading] = useState(false);
+  const [royaltyFee, setRoyaltyFee] = useState(0);
+  const [nftName, setNftName] = useState("");
+  const [nftSymbol, setNftSymbol] = useState("");
 
   const nicheOptions = [
     { id: "spot", label: "Spot Trading" },
@@ -94,121 +98,189 @@ export default function CreateChefForm() {
           <p className=" font-bold text-lg">Create Chef</p>
         </div>
         <ScrollArea className="w-full h-full">
-          <form onSubmit={handleSubmit} className="px-2 w-full space-y-6 py-6">
-            <div className=" flex">
-              <div className="w-1/2 space-y-2 pr-1">
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  required
-                  className="bg-white text-black"
-                />
-              </div>
-              <div className="space-y-2 w-1/2 pl-1">
-                <Label htmlFor="name">User Id</Label>
-                <Input
-                  id="user_id"
-                  value={user?.id}
-                  disabled
-                  required
-                  className="bg-white"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="bio">Bio</Label>
-              <Textarea
-                id="bio"
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-                required
-                className="h-32 bg-white text-black"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="image">Profile Image (Square format only)</Label>
-              <Input
-                id="image"
-                type="file"
-                accept="image/png,image/jpeg"
-                onChange={handleImageChange}
-                className="bg-white"
-              />
-              {imagePreview && (
-                <div className="mt-2">
-                  <img
-                    src={imagePreview}
-                    alt="Preview"
-                    className="w-32 h-32 object-cover rounded-md"
-                  />
-                </div>
-              )}
-            </div>
-
-            <div className="space-y-3">
-              <Label>Trading Niches (Select at least one)</Label>
-              <div className="space-y-2">
-                {nicheOptions.map((niche) => (
-                  <div key={niche.id} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={niche.id}
-                      checked={niches.includes(niche.id)}
-                      onCheckedChange={(checked) => {
-                        if (checked) {
-                          setNiches([...niches, niche.id]);
-                        } else {
-                          setNiches(niches.filter((n) => n !== niche.id));
-                        }
-                      }}
-                    />
-                    <Label htmlFor={niche.id}>{niche.label}</Label>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="space-y-3">
-              <Label htmlFor="isPaid">Paid Subscription</Label>
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="isPaid"
-                  checked={isPaidSubscription}
-                  onCheckedChange={(checked) => {
-                    setIsPaidSubscription(!!checked);
-                    if (!checked) setSubFee("0");
-                  }}
-                />
-                <p>Yes</p>
-                <Checkbox
-                  id="isNotPaid"
-                  checked={!isPaidSubscription}
-                  onCheckedChange={(checked) => {
-                    setIsPaidSubscription(!checked);
-                    if (!checked) setSubFee("0");
-                  }}
-                />
-                <p>No</p>
+          <form onSubmit={handleSubmit} className="px-2 w-full space-y-8 py-6">
+            {/* Section 1: Trader Profile */}
+            <div className="space-y-6">
+              <div className="border-b pb-2">
+                <h2 className="text-xl font-semibold">1 | Trader Profile</h2>
               </div>
 
-              {isPaidSubscription && (
-                <div className="space-y-2">
-                  <Label htmlFor="subFee">Subscription Fee (USDT)</Label>
+              <div className="flex">
+                <div className="w-1/2 space-y-2 pr-1">
+                  <Label htmlFor="name">Name</Label>
                   <Input
-                    id="subFee"
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    value={subFee}
-                    onChange={(e) => setSubFee(e.target.value)}
-                    className="bg-white text-black"
-                    required={isPaidSubscription}
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    className="bg-gray-300 text-black"
                   />
                 </div>
-              )}
+                <div className="space-y-2 w-1/2 pl-1">
+                  <Label htmlFor="twitter">Twitter</Label>
+                  <Input
+                    id="twitter"
+                    value={twitter}
+                    onChange={(e) => setTwitter(e.target.value)}
+                    required
+                    className="bg-gray-300 text-black"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="bio">Bio</Label>
+                <Textarea
+                  id="bio"
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  required
+                  className="h-32 bg-gray-300 text-black"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="image">
+                  Profile Image (Square format only)
+                </Label>
+                <Input
+                  id="image"
+                  type="file"
+                  accept="image/png,image/jpeg"
+                  onChange={handleImageChange}
+                  className="bg-gray-300"
+                />
+                {imagePreview && (
+                  <div className="mt-2">
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      className="w-32 h-32 object-cover rounded-md"
+                    />
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-3">
+                <Label>Trading Niches (Select at least one)</Label>
+                <div className="space-y-2">
+                  {nicheOptions.map((niche) => (
+                    <div key={niche.id} className="flex items-center space-x-2">
+                      <Checkbox
+                        id={niche.id}
+                        checked={niches.includes(niche.id)}
+                        onCheckedChange={(checked) => {
+                          if (checked) {
+                            setNiches([...niches, niche.id]);
+                          } else {
+                            setNiches(niches.filter((n) => n !== niche.id));
+                          }
+                        }}
+                      />
+                      <Label htmlFor={niche.id}>{niche.label}</Label>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
+
+            {/* Section 2: IP Configuration */}
+            <div className="space-y-6">
+              <div className="border-b pb-2">
+                <h2 className="text-xl font-semibold">2 | IP Configuration</h2>
+              </div>
+
+              <div className="flex">
+                <div className="w-1/2 space-y-2 pr-1">
+                  <Label htmlFor="nftName">NFT Name</Label>
+                  <Input
+                    id="nftName"
+                    value={nftName}
+                    onChange={(e) => setNftName(e.target.value)}
+                    required
+                    className="bg-gray-300 text-black"
+                  />
+                </div>
+                <div className="space-y-2 w-1/2 pl-1">
+                  <Label htmlFor="nftSymbol">NFT Symbol</Label>
+                  <Input
+                    id="nftSymbol"
+                    value={nftSymbol}
+                    onChange={(e) => setNftSymbol(e.target.value)}
+                    required
+                    className="bg-gray-300 text-black"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Section 3: Subscription Settings */}
+            <div className="space-y-6">
+              <div className="border-b pb-2">
+                <h2 className="text-xl font-semibold">
+                  3 | Subscription Settings
+                </h2>
+              </div>
+
+              <div className="space-y-3">
+                <Label htmlFor="isPaid">Subscription Type</Label>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="isPaid"
+                    checked={isPaidSubscription}
+                    onCheckedChange={(checked) => {
+                      setIsPaidSubscription(!!checked);
+                      if (!checked) setSubFee("0");
+                    }}
+                  />
+                  <p>Paid</p>
+                  <Checkbox
+                    id="isNotPaid"
+                    checked={!isPaidSubscription}
+                    onCheckedChange={(checked) => {
+                      setIsPaidSubscription(!checked);
+                      if (checked) setSubFee("0");
+                    }}
+                  />
+                  <p>Free</p>
+                </div>
+
+                {isPaidSubscription && (
+                  <div className="space-y-2">
+                    <Label htmlFor="subFee">Subscription Fee (USDT)</Label>
+                    <Input
+                      id="subFee"
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      value={subFee}
+                      onChange={(e) => setSubFee(e.target.value)}
+                      className="bg-gray-300 text-black"
+                      required={isPaidSubscription}
+                    />
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="royaltyFee">Royalty Fee (%)</Label>
+                <Input
+                  id="royaltyFee"
+                  type="number"
+                  step="0.1"
+                  min="0"
+                  max="50"
+                  value={royaltyFee}
+                  onChange={(e) => setRoyaltyFee(parseInt(e.target.value))}
+                  className="bg-gray-300 text-black"
+                  required
+                />
+                <p className="text-sm text-gray-500">
+                  Enter a value between 0 and 50%
+                </p>
+              </div>
+            </div>
+
             {error && (
               <Alert variant="destructive">
                 <AlertDescription>{error}</AlertDescription>

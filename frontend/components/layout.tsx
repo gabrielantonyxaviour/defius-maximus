@@ -150,7 +150,7 @@ export default function Layout({
                     className="rounded-full"
                   />
                   <p className="text-xs md:text-sm font-semibold">
-                    {parseFloat(walletBalance).toFixed(4)} {"IP"}
+                    {parseFloat(walletBalance).toFixed(2)} {"IP"}
                   </p>
                 </div>
               </Button>
@@ -176,7 +176,7 @@ export default function Layout({
               //         className="rounded-full"
               //       />
               //       {/* <p className="text-xs md:text-sm font-semibold">
-              //       {parseFloat(avaxPkpBalance).toFixed(4)} {"AVAX"}
+              //       {parseFloat(avaxPkpBalance).toFixed(2)} {"AVAX"}
               //     </p> */}
               //     </div>
               //   </Button>

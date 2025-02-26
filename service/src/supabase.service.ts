@@ -149,7 +149,7 @@ export class SupabaseService {
               }
               console.log(`\nBalanace of the user wallet on ${chain} \n`);
               console.log(
-                parseFloat(ethBalance).toFixed(4) + " ETH / AVAX\n\n"
+                parseFloat(ethBalance).toFixed(2) + " ETH / AVAX\n\n"
               );
               if (parseFloat(ethBalance) < 0.007) {
                 console.log("\nInsufficient funds to perform the trade");
