@@ -6,7 +6,7 @@ interface GlobalState {
   user: User | null;
   chef: Chef | null;
   walletBalance: string;
-  totalEquity: string;
+  totalEquity: number;
   pnl: string;
   user_follows: string[];
   storyClient: StoryClient | null;
@@ -18,7 +18,7 @@ interface GlobalActions {
   setUser: (user: User | null) => void;
   setChef: (chef: Chef | null) => void;
   setWalletBalance: (bal: string) => void;
-  setTotalEquity: (equity: string) => void;
+  setTotalEquity: (equity: number) => void;
   setPnl: (pnl: string) => void;
   setUserFollows: (user_follows: string[]) => void;
   setUserFollow: (user_follow: string) => void;
@@ -32,7 +32,7 @@ export type GlobalSlice = GlobalState & GlobalActions;
 
 export const initialGlobalState: GlobalState = {
   user: null,
-  totalEquity: "0",
+  totalEquity: 0,
   walletBalance: "0",
   chef: null,
   pnl: "0",

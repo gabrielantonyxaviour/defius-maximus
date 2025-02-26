@@ -9,17 +9,23 @@ import {
 
 export async function getMultichainBalance(
   address: `0x${string}`
-): Promise<Record<number, bigint>> {
+): Promise<Record<string, bigint>> {
   const supportedChains = [arbitrumSepolia, baseSepolia, avalancheFuji];
   const laterChains = [flowTestnet, zircuitTestnet];
 
-  const balances: Record<number, bigint> = {};
+  const balances: Record<string, bigint> = {};
   for (const chain of supportedChains) {
     const publicClient = createPublicClient({
       chain,
       transport: http(),
     });
-    balances[chain.id] = await publicClient.getBalance({
+    balances[
+      chain.id == arbitrumSepolia.id
+        ? "arb"
+        : chain.id == baseSepolia.id
+        ? "base"
+        : "avax"
+    ] = await publicClient.getBalance({
       address,
     });
   }
@@ -38,4 +44,13 @@ export async function getChainBalance(
   return await publicClient.getBalance({
     address,
   });
+}
+
+export async function getPrice(): Promise<{
+  ethPrice: string;
+  avaxPrice: string;
+}> {
+  const response = await fetch("/api/alchemy/prices");
+  const repsonseData = await response.json();
+  return repsonseData;
 }

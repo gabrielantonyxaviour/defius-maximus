@@ -96,7 +96,7 @@ export default function Profile({ close }: { close: () => void }) {
               <div className="flex flex-col items-center">
                 <p className="font-semibold text-base pb-1">Total Equity</p>
                 <p className="text-2xl nouns">
-                  {totalEquity}{" "}
+                  {totalEquity.toFixed(2)}{" "}
                   <span className="text-sm font-bold sen">USDT</span>
                 </p>
               </div>

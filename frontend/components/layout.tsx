@@ -15,7 +15,7 @@ import { User } from "@/types";
 import { storyAeneid } from "viem/chains";
 import { formatEther, Hex } from "viem";
 import { setupStoryClient } from "@/lib/story";
-import { getChainBalance, getMultichainBalance } from "@/lib/balance";
+import { getChainBalance, getMultichainBalance, getPrice } from "@/lib/balance";
 import { useWalletClient } from "wagmi";
 
 export default function Layout({
@@ -33,6 +33,7 @@ export default function Layout({
     setWalletBalance,
     setChef,
     setStoryClient,
+    setTotalEquity,
   } = useEnvironmentStore((store) => store);
   const router = useRouter();
   const { open } = useAppKit();
@@ -97,11 +98,6 @@ export default function Layout({
 
           console.log("Setting user data:", data);
           setUser(data);
-          const multiChainBalance = await getMultichainBalance(
-            address as `0x${string}`
-          );
-          const balance = await getChainBalance(storyAeneid, address as Hex);
-          setWalletBalance(formatEther(balance));
         } else {
           console.log("No user data found, generating new keypairs");
           const { evm } = await generateKeypairs();
@@ -127,12 +123,30 @@ export default function Layout({
           const { user: data } = await response.json();
           console.log("Setting user data:", data);
           setUser(data);
-          const fetchedWalletBalance = await getChainBalance(
-            storyAeneid,
-            address as Hex
-          );
-          setWalletBalance(formatEther(fetchedWalletBalance));
         }
+        console.log("Fetching Balances");
+        const fetchedWalletBalance = await getChainBalance(
+          storyAeneid,
+          address as Hex
+        );
+        setWalletBalance(formatEther(fetchedWalletBalance));
+        const { arb, avax, base } = await getMultichainBalance(address as Hex);
+        console.log("Arbitrum balance:", arb);
+        console.log("Avalanche balance:", avax);
+        console.log("Base balance:", base);
+        const { ethPrice, avaxPrice } = await getPrice();
+        console.log("ETH Price:", ethPrice);
+        console.log("AVAX Price:", avaxPrice);
+        console.log(
+          parseFloat(formatEther(arb)) * parseFloat(ethPrice) +
+            parseFloat(formatEther(avax)) * parseFloat(avaxPrice) +
+            parseFloat(formatEther(base)) * parseFloat(ethPrice)
+        );
+        setTotalEquity(
+          parseFloat(formatEther(arb)) * parseFloat(ethPrice) +
+            parseFloat(formatEther(avax)) * parseFloat(avaxPrice) +
+            parseFloat(formatEther(base)) * parseFloat(ethPrice)
+        );
       } else {
         console.log("User is already set or not connected");
       }
