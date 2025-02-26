@@ -200,7 +200,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
     formData.append("image", image);
     formData.append("take_profit", JSON.stringify(takeProfits));
     formData.append("dca", JSON.stringify(dcaPoints));
-    formData.append("type", selectedType.toLowerCase());
+    formData.append("trade_type", selectedType.toLowerCase());
     formData.append("expected_pnl", expectedPnl.length > 0 ? expectedPnl : "0");
     console.log("FormData");
     console.log(formData);

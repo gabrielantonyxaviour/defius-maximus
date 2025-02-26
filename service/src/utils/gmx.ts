@@ -71,6 +71,9 @@ export async function placeTrade(
     executionFee: executionFee,
   };
 
+  console.log("PARAMS!!!");
+  console.log(params);
+
   if (addresses.token == undefined) {
     console.log(
       "Token " +

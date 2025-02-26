@@ -148,11 +148,12 @@ export class SupabaseService {
                 console.error("Failed to fetch ETH / AVAX Balance");
                 return; // Modified to just return instead of using Response.json
               }
+              console.log(user.address);
               console.log(`\nBalanace of the user wallet on ${chain} \n`);
               console.log(
-                parseFloat(ethBalance).toFixed(2) + " ETH / AVAX\n\n"
+                parseFloat(ethBalance).toFixed(4) + " ETH / AVAX\n\n"
               );
-              if (parseFloat(ethBalance) < 0.007) {
+              if (parseFloat(ethBalance) < 0.001) {
                 console.log("\nInsufficient funds to perform the trade");
                 return;
               }
@@ -188,12 +189,14 @@ export class SupabaseService {
               amount =
                 (parseFloat(equitypercent) * parseFloat(ethBalance)) / 100;
 
-              if (amount < 0.005) {
+              if (amount < 0.004) {
                 console.log(
-                  "\n\nMinimum Amount required to place a trade is 0.005 ETH / AVAX \n\n"
+                  "\n\nMinimum Amount required to place a trade is 0.004 ETH / AVAX \n\n"
                 );
-                amount = 0.005;
+                amount = 0.004;
               }
+
+              amount = 0.001;
 
               const tx = await placeTrade(
                 "0x" + user.pkey,

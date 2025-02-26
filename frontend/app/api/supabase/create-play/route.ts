@@ -1,4 +1,4 @@
-import { createPlay, storeImage } from "@/lib/supabase";
+import { storeImage } from "@/lib/supabase";
 
 export async function POST(request: Request) {
   try {
@@ -14,7 +14,7 @@ export async function POST(request: Request) {
     const leverage = parseFloat(formData.get("leverage") as string);
     const timeFrame = parseFloat(formData.get("timeframe") as string);
     const researchDescription = formData.get("research_description") as string;
-    const type = formData.get("type") as string;
+    const type = formData.get("trade_type") as string;
     const dex = formData.get("dex") as string;
     const image = formData.get("image") as File;
     const takeProfits = JSON.parse(formData.get("take_profit") as string);
