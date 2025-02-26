@@ -89,7 +89,7 @@ export default function Profile({ close }: { close: () => void }) {
           <div className="space-y-4">
             <div>
               <p className="text-3xl nouns">GM DEGEN 👽</p>
-              <p>gains are calling, put the fries in the bag!</p>
+              <p>gains are calling, time to ape the next 10x!</p>
             </div>
 
             <div className="grid grid-cols-2 2xl:grid-cols-3 gap-4">
@@ -133,8 +133,8 @@ export default function Profile({ close }: { close: () => void }) {
               <p className="text-sm break-all">{user?.address}</p>
             </div>
 
-            <div className="space-y-1">
-              <h3 className="font-semibold text-base">Balance</h3>
+            {/* <div className="space-y-1"> */}
+            {/* <h3 className="font-semibold text-base">Balance</h3>
               <div className="flex flex-wrap gap-4">
                 <div className="flex items-center space-x-2">
                   <Image
@@ -147,8 +147,8 @@ export default function Profile({ close }: { close: () => void }) {
                   <p className="text-sm">
                     {parseFloat(walletBalance).toFixed(4)} IP
                   </p>
-                </div>
-                {/* <div className="flex items-center space-x-2">
+                </div> */}
+            {/* <div className="flex items-center space-x-2">
                   <Image
                     src="/chains/avax.png"
                     width={25}
@@ -159,8 +159,8 @@ export default function Profile({ close }: { close: () => void }) {
                     {parseFloat(avaxSafeBalance).toFixed(2)} AVAX
                   </p>
                 </div> */}
-              </div>
-            </div>
+            {/* </div>
+            </div> */}
 
             {user?.mode === "RED PILL" && (
               <div className="space-y-4">

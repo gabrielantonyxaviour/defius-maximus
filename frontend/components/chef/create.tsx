@@ -40,6 +40,7 @@ import { cn } from "@/lib/utils";
 import { Calendar } from "../ui/calendar";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { useEnvironmentStore } from "../context";
+import OverlappingCircles from "../ui/overlapping-circles";
 
 interface CreateRecipeProps {
   close: () => void;
@@ -272,7 +273,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                         Spot Trading
                       </p>
                     </div>
-
+                    <OverlappingCircles images={["/cow.png", "/sushi.png"]} />
                     <div className="px-4 mt-4 text-center">
                       <p className="text-sm font-medium mb-2">
                         Execute immediate trades or set limit orders for precise
@@ -293,7 +294,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                         Perpetual Trading
                       </p>
                     </div>
-
+                    <OverlappingCircles images={["/gmx.png", "/hype.png"]} />
                     <div className="px-4 mt-4 text-center">
                       <p className="text-sm font-medium mb-2">
                         Post Trade derivatives with leverage for enhanced
@@ -307,7 +308,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                     onClick={() => {
                       setSelectedType("Memecoins");
                     }}
-                    className={`absolute cursor-not-allowed w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-[#3A3A3A] py-2  bg-[#BF4317]  text-[#1F1F1F] `}
+                    className={`absolute cursor-not-allowed w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm text-stone-400 bg-[#3A3A3A] py-2   `}
                   >
                     <div className="flex flex-col space-x-1 items-center justify-center pt-2">
                       <p className="nouns spacing-2 tracking-wide text-xl">
@@ -331,7 +332,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                     onClick={() => {
                       setSelectedType("Stocks");
                     }}
-                    className={`absolute cursor-not-allowed w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-[#3A3A3A] py-2  bg-[#BF4317]  text-[#1F1F1F] `}
+                    className={`absolute cursor-not-allowed w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm py-2  text-stone-400 bg-[#3A3A3A] `}
                   >
                     <div className="flex flex-col space-x-1 items-center justify-center pt-2">
                       <p className="nouns spacing-2 tracking-wide text-xl">

@@ -52,7 +52,7 @@ export default function Mode({ close }: { close: () => void }) {
               }}
               className={`absolute cursor-pointer w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm py-2 ${
                 user?.mode == "RED PILL"
-                  ? "bg-[#BF4317]  text-[#1F1F1F] border border-[1px] border-gray-300"
+                  ? "bg-[#BF4317]  text-[#1F1F1F] border border-[1px] border-gray-400"
                   : "bg-[#1F1F1F] border border-[2px] border-[#3A3A3A] text-white"
               }`}
             >
@@ -116,7 +116,7 @@ export default function Mode({ close }: { close: () => void }) {
               }}
               className={`absolute cursor-pointer w-[250px] h-[250px] flex flex-col justify-between items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm  py-2 ${
                 user?.mode == "BLUE PILL"
-                  ? "bg-[#BF4317]  text-[#1F1F1F] border border-[1px] border-gray-300"
+                  ? "bg-[#BF4317]  text-[#1F1F1F] border border-[1px] border-gray-400"
                   : "bg-[#1F1F1F] border border-[2px] border-[#3A3A3A] text-white"
               }  `}
             >
