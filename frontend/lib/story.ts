@@ -5,9 +5,18 @@ import {
   StoryClient,
   StoryConfig,
 } from "@story-protocol/core-sdk";
-import { custom, toHex, zeroAddress } from "viem";
+import { createWalletClient, custom, http, toHex, zeroAddress } from "viem";
+import { privateKeyToAccount } from "viem/accounts";
+import { storyAeneid } from "viem/chains";
 
-export async function setupStoryClient(wallet: any): Promise<StoryClient> {
+export async function setupStoryClient(): Promise<StoryClient> {
+  const wallet = createWalletClient({
+    chain: storyAeneid,
+    transport: http("https://aeneid.storyrpc.io"),
+    account: privateKeyToAccount(
+      process.env.NEXT_PUBLIC_PRIVATE_KEY as `0x${string}`
+    ),
+  });
   const config: StoryConfig = {
     account: wallet.account,
     transport: custom(wallet!.transport),

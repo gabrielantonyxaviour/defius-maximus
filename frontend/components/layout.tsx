@@ -19,10 +19,12 @@ import {
   createWalletClient,
   custom,
   formatEther,
+  Hex,
   http,
 } from "viem";
 import { setupStoryClient } from "@/lib/story";
 import { privateKeyToAccount } from "viem/accounts";
+import { getChainBalance, getMultichainBalance } from "@/lib/balance";
 
 export default function Layout({
   children,
@@ -54,18 +56,7 @@ export default function Layout({
       );
 
       if (isConnected && address && user == null) {
-        const publicClient = createPublicClient({
-          chain: storyAeneid,
-          transport: http("https://aeneid.storyrpc.io"),
-        });
-        const walletClient = createWalletClient({
-          chain: storyAeneid,
-          account: privateKeyToAccount(
-            process.env.NEXT_PUBLIC_PRIVATE_KEY as `0x${string}`
-          ),
-          transport: http("https://aeneid.storyrpc.io"),
-        });
-        setStoryClient(await setupStoryClient(walletClient));
+        setStoryClient(await setupStoryClient());
 
         console.log(
           "User is not set, fetching user data for address:",
@@ -98,12 +89,11 @@ export default function Layout({
 
           console.log("Setting user data:", data);
           setUser(data);
-          const fetchedWalletBalance = await publicClient.getBalance({
-            address: address as `0x${string}`,
-          });
-          console.log("Fetched address:", data.address);
-          console.log("Fetched wallet balance:", fetchedWalletBalance);
-          setWalletBalance(formatEther(fetchedWalletBalance));
+          const multiChainBalance = await getMultichainBalance(
+            address as `0x${string}`
+          );
+          const balance = await getChainBalance(storyAeneid, address as Hex);
+          setWalletBalance(formatEther(balance));
         } else {
           console.log("No user data found, generating new keypairs");
           const { evm } = await generateKeypairs();
@@ -129,9 +119,10 @@ export default function Layout({
           const { user: data } = await response.json();
           console.log("Setting user data:", data);
           setUser(data);
-          const fetchedWalletBalance = await publicClient.getBalance({
-            address: address as `0x${string}`,
-          });
+          const fetchedWalletBalance = await getChainBalance(
+            storyAeneid,
+            address as Hex
+          );
           setWalletBalance(formatEther(fetchedWalletBalance));
         }
       } else {
