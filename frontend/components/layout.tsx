@@ -34,9 +34,8 @@ export default function Layout({
     setStoryClient,
   } = useEnvironmentStore((store) => store);
   const router = useRouter();
-  const { open, close } = useAppKit();
+  const { open } = useAppKit();
   const { address, isConnected } = useAppKitAccount();
-  const { disconnect } = useDisconnect();
 
   useEffect(() => {
     if (!isConnected) {

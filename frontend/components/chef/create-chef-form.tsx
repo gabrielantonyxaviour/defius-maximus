@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useEnvironmentStore } from "../context";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { toast } from "sonner";
@@ -32,6 +32,7 @@ export default function CreateChefForm() {
     { id: "perps", label: "Perps Trading" },
     { id: "memecoins", label: "Memecoins" },
   ];
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
