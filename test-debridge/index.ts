@@ -63,13 +63,7 @@ async function main() {
     const destinationChain = "42161";
     const amount = "1000000000000000"; // 0.001
 
-    const dlnSwapEndpoint = `https://dln.debridge.finance/v1.0/dln/order/create-tx?srcChainId=${sourceChain}&srcChainTokenIn=${"0x4200000000000000000000000000000000000006"}&srcChainTokenInAmount=${amount}&dstChainId=${destinationChain}&dstChainTokenOut=${zeroAddress}&dstChainTokenOutAmount=auto&dstChainTokenOutRecipient=${
-      account.address
-    }&senderAddress=${account.address}&srcChainOrderAuthorityAddress=${
-      account.address
-    }&affiliateFeePercent=0&dstChainOrderAuthorityAddress=${
-      account.address
-    }&prependOperatingExpenses=false&skipSolanaRecipientValidation=false`;
+    const dlnSwapEndpoint = `https://dln.debridge.finance/v1.0/dln/order/create-tx?srcChainId=${sourceChain}&srcChainTokenIn=${zeroAddress}&srcChainTokenInAmount=${amount}&dstChainId=${destinationChain}&dstChainTokenOut=${zeroAddress}&dstChainTokenOutAmount=auto&dstChainTokenOutRecipient=${account.address}&senderAddress=${account.address}&srcChainOrderAuthorityAddress=${account.address}&affiliateFeePercent=0&dstChainOrderAuthorityAddress=${account.address}&prependOperatingExpenses=false&skipSolanaRecipientValidation=false`;
 
     console.log(dlnSwapEndpoint);
     const response = await fetch(dlnSwapEndpoint);
@@ -89,65 +83,6 @@ async function main() {
     });
 
     console.log(txHash);
-
-    // console.log(txHash);
-
-    // // Create message object
-    // console.log("Creating deBridge message...");
-    // const message = new evm.Message({
-    //   tokenAddress: "0x0000000000000000000000000000000000000000", // Native token (ETH)
-    //   amount: transferAmount,
-    //   chainIdTo: "42161", // Arbitrum
-    //   receiver,
-    //   autoParams: new evm.SendAutoParams({
-    //     executionFee: "0",
-    //     fallbackAddress: receiver,
-    //     flags: new Flags(),
-    //     data: "0x", // No additional call data
-    //   }),
-    // });
-
-    // // Get encoded arguments for the send function
-    // console.log("Encoding message arguments...");
-    // const argsForSend = message.getEncodedArgs();
-    // console.log("Args encoded successfully");
-
-    // // Get the fixed native fee required by deBridge
-    // console.log("Fetching deBridge protocol fee...");
-    // const fee = await publicClient.readContract({
-    //   address: "0xc1656B63D9EEBa6d114f6bE19565177893e5bCBF", // deBridge Gate on Base
-    //   abi: DEBRIDGE_GATE_ABI,
-    //   functionName: "globalFixedNativeFee",
-    // });
-    // console.log(`deBridge protocol fee: ${fee} wei`);
-
-    // // Calculate total value to send (transfer amount + fee)
-    // const totalValue = BigInt(transferAmount) + (fee as bigint);
-    // console.log(
-    //   `Total transaction value: ${totalValue} wei (${
-    //     Number(totalValue) / 1e18
-    //   } ETH)`
-    // );
-
-    // // Simulate contract call
-    // console.log("Simulating contract call...");
-    // const { request } = await publicClient.simulateContract({
-    //   account,
-    //   address: "0xc1656B63D9EEBa6d114f6bE19565177893e5bCBF", // deBridge Gate on Base
-    //   abi: DEBRIDGE_GATE_ABI,
-    //   functionName: "send",
-    //   args: argsForSend,
-    //   value: totalValue,
-    // });
-    // console.log("Contract simulation successful");
-
-    // // Execute the transaction
-    // console.log("Sending transaction...");
-    // const tx = await walletClient.writeContract(request);
-    // console.log(`Transaction sent! Hash: ${tx}`);
-    // console.log(`View on explorer: https://basescan.org/tx/${tx}`);
-
-    // return tx;
   } catch (error) {
     console.error("Error in deBridge transfer:", error);
     throw error;
