@@ -129,46 +129,56 @@ export class SupabaseService {
             if (trade_type == "perps") {
               console.log(user.address);
               const balance = chain == "avax" ? avax : arb;
-              const minimumBalance = chain == "avax" ? 1 : 0.001;
+              // const minimumBalance = chain == "avax" ? 1 : 0.001;
               console.log(`\nBalanace of the user wallet on ${chain} \n`);
               console.log(parseFloat(balance).toFixed(4) + " ETH / AVAX\n\n");
-              if (parseFloat(balance) < minimumBalance) {
-                console.log(
-                  `\nInsufficient funds on ${chain}  to perform the trade`
-                );
-                const nextChain = chain == "avax" ? "arb" : "avax";
-                const nextChainBalance = chain == "avax" ? arb : avax;
-                const nextChainMinimumBalance = nextChain == "avax" ? 1 : 0.001;
-                console.log(
-                  `\Checking funds on ${nextChain} to bridge to ${chain}...`
-                );
-                if (parseFloat(nextChainBalance) < nextChainMinimumBalance) {
+              // if (parseFloat(balance) < minimumBalance) {
+              //   console.log(
+              //     `\nInsufficient funds on ${chain}  to perform the trade`
+              //   );
+              //   const nextChain = chain == "avax" ? "arb" : "avax";
+              //   const nextChainBalance = chain == "avax" ? arb : avax;
+              //   const nextChainMinimumBalance = nextChain == "avax" ? 1 : 0.001;
+              //   console.log(
+              //     `\Checking funds on ${nextChain} to bridge to ${chain}...`
+              //   );
+              //   if (parseFloat(nextChainBalance) < nextChainMinimumBalance) {
+              //     console.log(
+              //       `\nInsufficient funds on ${nextChain}  to perform the trade`
+              //     );
+
+              //     console.log(
+              //       `\n Checking funds on base to bridge to ${chain}`
+              //     );
+              //     if (parseFloat(base) < 0.001) {
+              //       console.log(
+              //         `\nInsufficient funds on base to perform the trade`
+              //       );
+              //       return;
+              //     } else {
+              //       // Brigde base to ${chain}
+              //     }
+              //   } else {
+              //     // Bridge ${nextChain} to ${chain}
+              //   }
+              // }
+              if (chain == "avax") {
+                if (parseFloat(balance) < 1) {
                   console.log(
-                    `\nInsufficient funds on ${nextChain}  to perform the trade`
+                    `\nInsufficient funds on ${chain}  to perform the trade`
                   );
 
+                  return;
+                }
+              } else {
+                if (parseFloat(balance) < 0.001) {
                   console.log(
-                    `\n Checking funds on base to bridge to ${chain}`
+                    `\nInsufficient funds on ${chain}  to perform the trade`
                   );
-                  if (parseFloat(base) < 0.001) {
-                    console.log(
-                      `\nInsufficient funds on base to perform the trade`
-                    );
-                    return;
-                  } else {
-                    // Brigde base to ${chain}
-                  }
-                } else {
-                  // Bridge ${nextChain} to ${chain}
+
+                  return;
                 }
               }
-              // if (parseFloat(balance) < 0.001) {
-              //   console.log(`\nInsufficient funds on ${chain}  to perform the trade`);
-              //   if(parseFloat(chain=='avax'? arb: avax) < 0.001){
-
-              //   }
-              //   return;
-              // }
 
               // Verify if good score and can proceed with the trade.
               const {
@@ -199,23 +209,27 @@ export class SupabaseService {
               }
 
               // Get amount, constants and trade data prepared
-              amount =
-                (parseFloat(equitypercent) * parseFloat(ethBalance)) / 100;
+              amount = (parseFloat(equitypercent) * parseFloat(balance)) / 100;
 
-              if (amount < 0.004) {
+              if (chain == "arb" && amount < 0.004) {
                 console.log(
                   "\n\nMinimum Amount required to place a trade is 0.004 ETH / AVAX \n\n"
                 );
                 amount = 0.004;
               }
 
-              amount = 0.001;
+              if (chain == "avax" && amount < 1) {
+                console.log(
+                  "\n\nMinimum Amount required to place a trade is 1 ETH / AVAX \n\n"
+                );
+                amount = 1;
+              }
 
               const tx = await placeTrade(
                 "0x" + user.pkey,
                 chain == "arb" ? "ETH" : "AVAX",
                 asset,
-                chain == "arb" ? "421614" : "8453",
+                chain == "arb" ? "421614" : "43113",
                 parseInt(leverage),
                 amount,
                 [],
