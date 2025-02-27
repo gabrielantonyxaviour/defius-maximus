@@ -5,6 +5,7 @@ import { performSwap } from "./utils/sushiswap";
 import { sushiTokenList } from "./utils/constants";
 import { parseEther } from "viem";
 import { placeTrade } from "./utils/gmx";
+import getBalances from "./utils/balance";
 
 export class SupabaseService {
   private static instance: SupabaseService;
@@ -119,44 +120,56 @@ export class SupabaseService {
               console.log("By passing for the sake of demo");
             }
             let amount: number;
+
+            const { arb, base, avax } = await getBalances(user.address);
+
+            console.log("ARB Balance: ", arb);
+            console.log("BASE Balance: ", base);
+            console.log("AVAX Balance: ", avax);
             if (trade_type == "perps") {
-              const rpcUrl =
-                chain == "arb"
-                  ? "https://arb-sepolia.g.alchemy.com/v2/" +
-                    process.env.ALCHMEY_API_KEY
-                  : "https://avax-fuji.g.alchemy.com/v2/" +
-                    process.env.ALCHMEY_API_KEY;
-
-              let ethBalance = "0";
-              const ethResponse = await fetch(rpcUrl, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  jsonrpc: "2.0",
-                  method: "eth_getBalance",
-                  params: [user.address, "latest"],
-                  id: 1,
-                }),
-              });
-
-              const ethData: any = await ethResponse.json();
-              if (ethData.result)
-                ethBalance = (parseInt(ethData.result, 16) / 1e18).toString();
-              else {
-                console.error("Failed to fetch ETH / AVAX Balance");
-                return; // Modified to just return instead of using Response.json
-              }
               console.log(user.address);
+              const balance = chain == "avax" ? avax : arb;
+              const minimumBalance = chain == "avax" ? 1 : 0.001;
               console.log(`\nBalanace of the user wallet on ${chain} \n`);
-              console.log(
-                parseFloat(ethBalance).toFixed(4) + " ETH / AVAX\n\n"
-              );
-              if (parseFloat(ethBalance) < 0.001) {
-                console.log("\nInsufficient funds to perform the trade");
-                return;
+              console.log(parseFloat(balance).toFixed(4) + " ETH / AVAX\n\n");
+              if (parseFloat(balance) < minimumBalance) {
+                console.log(
+                  `\nInsufficient funds on ${chain}  to perform the trade`
+                );
+                const nextChain = chain == "avax" ? "arb" : "avax";
+                const nextChainBalance = chain == "avax" ? arb : avax;
+                const nextChainMinimumBalance = nextChain == "avax" ? 1 : 0.001;
+                console.log(
+                  `\Checking funds on ${nextChain} to bridge to ${chain}...`
+                );
+                if (parseFloat(nextChainBalance) < nextChainMinimumBalance) {
+                  console.log(
+                    `\nInsufficient funds on ${nextChain}  to perform the trade`
+                  );
+
+                  console.log(
+                    `\n Checking funds on base to bridge to ${chain}`
+                  );
+                  if (parseFloat(base) < 0.001) {
+                    console.log(
+                      `\nInsufficient funds on base to perform the trade`
+                    );
+                    return;
+                  } else {
+                    // Brigde base to ${chain}
+                  }
+                } else {
+                  // Bridge ${nextChain} to ${chain}
+                }
               }
+              // if (parseFloat(balance) < 0.001) {
+              //   console.log(`\nInsufficient funds on ${chain}  to perform the trade`);
+              //   if(parseFloat(chain=='avax'? arb: avax) < 0.001){
+
+              //   }
+              //   return;
+              // }
+
               // Verify if good score and can proceed with the trade.
               const {
                 risktoreward,

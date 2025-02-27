@@ -11,6 +11,8 @@ import { useEnvironmentStore } from "../context";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { toast } from "sonner";
 import { createSpgNftCollection } from "@/lib/story";
+import { storeImage } from "@/lib/supabase";
+import { uploadImageToPinata } from "@/lib/pinata";
 export default function CreateChefForm() {
   const { user, setChef, storyClient } = useEnvironmentStore((store) => store);
   const [name, setName] = useState("");
@@ -80,10 +82,13 @@ export default function CreateChefForm() {
         "Creating a NFT collection to mint your trade plays as IP assets..",
     });
 
+    const imageUrl = await uploadImageToPinata(image);
+
     const { txHash, spgNftContract } = await createSpgNftCollection(
       storyClient,
       nftName,
       nftSymbol,
+      imageUrl,
       user.address as string
     );
 
@@ -92,7 +97,7 @@ export default function CreateChefForm() {
       action: {
         label: "View Tx",
         onClick: () => {
-          window.open(`https://aeneid.storyscan.xyz//tx/${txHash}`, "_blank");
+          window.open(`https://aeneid.storyscan.xyz/tx/${txHash}`, "_blank");
         },
       },
     });
@@ -101,7 +106,7 @@ export default function CreateChefForm() {
     formData.append("name", name);
     formData.append("user_id", user?.id || "");
     formData.append("bio", bio);
-    formData.append("image", image);
+    formData.append("image_url", imageUrl);
     formData.append("niches", JSON.stringify(niches));
     formData.append("subFee", subFee);
     formData.append("ip_address", spgNftContract as string);
@@ -115,6 +120,7 @@ export default function CreateChefForm() {
       method: "POST",
       body: formData,
     });
+
     const { chef, error } = await response.json();
 
     if (error) {

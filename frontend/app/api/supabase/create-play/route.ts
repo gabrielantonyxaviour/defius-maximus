@@ -16,18 +16,10 @@ export async function POST(request: Request) {
     const researchDescription = formData.get("research_description") as string;
     const type = formData.get("trade_type") as string;
     const dex = formData.get("dex") as string;
-    const image = formData.get("image") as File;
+    const imageUrl = formData.get("image_url") as string;
     const takeProfits = JSON.parse(formData.get("take_profit") as string);
     const dcaPoints = JSON.parse(formData.get("dca") as string);
     const expectedPnl = formData.get("expected_pnl") as string;
-    const fileExt = image.name.split(".").pop();
-    const fileName = `${chef_id}-${Math.floor(
-      Math.random() * 1000000000
-    )}.${fileExt}`;
-    console.log(timeFrame);
-    console.log("Storing image with filename:", fileName);
-    const imageUrl = await storeImage(fileName, image);
-    console.log("Image stored at URL:", imageUrl);
 
     console.log("Creating trade play with data:", {
       chef_id,

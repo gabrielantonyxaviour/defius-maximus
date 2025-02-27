@@ -36,3 +36,21 @@ export async function uploadJsonToPinata(
     hash: hash,
   };
 }
+
+export async function uploadImageToPinata(image: File): Promise<string> {
+  const pinata = new PinataSDK({
+    pinataJwt: process.env.NEXT_PUBLIC_PINATA_JWT,
+    pinataGateway: "amethyst-impossible-ptarmigan-368.mypinata.cloud",
+  });
+
+  const upload = await pinata.upload.file(image);
+  console.log("JSON Upload successful:", upload);
+  //   const data = await pinata.gateways.get(upload.cid);
+  //   console.log(data);
+  const url = await pinata.gateways.createSignedURL({
+    cid: upload.cid,
+    expires: 99999999999,
+  });
+  console.log(url);
+  return url;
+}

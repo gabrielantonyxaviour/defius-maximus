@@ -42,7 +42,7 @@ import { Calendar } from "../ui/calendar";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { useEnvironmentStore } from "../context";
 import OverlappingCircles from "../ui/overlapping-circles";
-import { uploadJsonToPinata } from "@/lib/pinata";
+import { uploadImageToPinata, uploadJsonToPinata } from "@/lib/pinata";
 import { createHash } from "crypto";
 import { mintAndRegisterIp } from "@/lib/story";
 import { Hex } from "viem";
@@ -175,16 +175,18 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
       description: "Storing on IPFS and publishing on chain...",
     });
 
+    const tradeImage = await uploadImageToPinata(image);
+
     const ipMetadata = {
       title: chef?.nft_name,
       description: chef?.bio,
-      image: chef?.image,
+      image: tradeImage,
       imageHash: createHash("sha256")
-        .update(chef?.image || "image")
+        .update(tradeImage || "image")
         .digest("hex"),
-      mediaUrl: chef?.image,
+      mediaUrl: tradeImage,
       mediaHash: createHash("sha256")
-        .update(chef?.image || "image")
+        .update(tradeImage || "image")
         .digest("hex"),
       mediaType: "image/png",
       creators: [
@@ -206,8 +208,8 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
     const nftMetadata = {
       name: chef?.nft_name,
       description: chef?.bio,
-      image: chef?.image,
-      external_url: "https://x.com/" + chef?.twitter,
+      image: tradeImage,
+      external_url: "https://x.com/DefiusMaximus",
       attributes: [
         {
           trait_type: "Creator",
@@ -217,11 +219,15 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
           trait_type: "Creator Address",
           value: user?.address,
         },
+        {
+          trait_type: "Creator X",
+          value: "http://x.com/" + chef?.twitter,
+        },
       ],
       properties: {
         files: [
           {
-            uri: chef?.image,
+            uri: tradeImage,
             type: "image/png",
           },
         ],
@@ -237,6 +243,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
         },
       },
     };
+
     const { uri: ipMetadataUri, hash: ipMetadataHash } =
       await uploadJsonToPinata(`ip-${chef?.id}-${Date.now()}`, ipMetadata);
 
@@ -275,7 +282,10 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
       action: {
         label: "View IP",
         onClick: () => {
-          window.open(`https://aeneid.storyscan.xyz/ipfs/${ipId}`, "_blank");
+          window.open(
+            `https://aeneid.explorer.story.foundation/ipa/${ipId}`,
+            "_blank"
+          );
         },
       },
     });
@@ -320,7 +330,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
     formData.append("timeframe", timeFrame.toString());
     formData.append("research_description", researchDescription);
     formData.append("dex", (selectedDex || "gmx").toUpperCase());
-    formData.append("image", image);
+    formData.append("image_url", tradeImage);
     formData.append("take_profit", JSON.stringify(takeProfits));
     formData.append("dca", JSON.stringify(dcaPoints));
     formData.append("trade_type", selectedType.toLowerCase());

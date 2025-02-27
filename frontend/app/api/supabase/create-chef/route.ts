@@ -4,7 +4,7 @@ export async function POST(request: Request) {
   try {
     console.log("Received request to create chef");
     const formData = await request.formData();
-    const image = formData.get("image") as File;
+    const imageUrl = formData.get("image_url") as string;
     const user_id = formData.get("user_id") as string;
     const name = formData.get("name") as string;
     const bio = formData.get("bio") as string;
@@ -14,13 +14,6 @@ export async function POST(request: Request) {
     const nftSymbol = formData.get("nft_symbol") as string;
     const ipAddress = formData.get("ip_address") as string;
     const twitter = formData.get("twitter") as string;
-
-    const fileExt = image.name.split(".").pop();
-    const fileName = `${user_id}.${fileExt}`;
-
-    console.log("Storing image with filename:", fileName);
-    const imageUrl = await storeImage(fileName, image);
-    console.log("Image stored at URL:", imageUrl);
 
     console.log("Creating chef with data:", {
       user_id,

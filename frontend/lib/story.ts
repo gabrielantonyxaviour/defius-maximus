@@ -40,6 +40,7 @@ export async function createSpgNftCollection(
   client: StoryClient,
   name: string,
   symbol: string,
+  contractURI: string,
   owner: string
 ): Promise<CreateNFTCollectionResponse> {
   const response = await client.nftClient.createNFTCollection({
@@ -48,7 +49,7 @@ export async function createSpgNftCollection(
     isPublicMinting: true,
     mintOpen: true,
     mintFeeRecipient: zeroAddress,
-    contractURI: "",
+    contractURI,
     owner: owner as Hex,
     txOptions: { waitForTransaction: true },
   });
