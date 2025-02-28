@@ -9,7 +9,7 @@ export async function POST(request: Request) {
     ip: ip as string,
     chef: nft as string,
     royalty: parseInt(royalty as string),
-    chefScore: parseInt(score as string),
+    chef_score: parseInt(score as string),
   };
   try {
     const credId = await issueCreds(credParams);

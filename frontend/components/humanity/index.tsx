@@ -50,7 +50,7 @@ export default function Humanity() {
                         <p>Address: {cred.address}</p>
                         <p>IP Account: {cred.ip}</p>
                         <p>Royalty: {cred.royalty}</p>
-                        <p>Chef Score: {cred.chefScore}</p>
+                        <p>Chef Score: {cred.chef_score}</p>
                       </div>
                     </div>
                     <Button
@@ -77,7 +77,7 @@ export default function Humanity() {
                           ip: chef.ip_address,
                           address: chef.user_id,
                           royalty: chef.royalty,
-                          chefScore: Math.floor(Math.random() * 100),
+                          chef_score: Math.floor(Math.random() * 100),
                         };
                         const response = await fetch(
                           "/api/humanity/create?address=" + chef.user_id,

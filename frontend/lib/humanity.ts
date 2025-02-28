@@ -27,7 +27,7 @@ type IsssueCredsParams = {
   ip: string;
   chef: string;
   royalty: number;
-  chefScore: number;
+  chef_score: number;
 };
 
 export async function issueCreds(params: IsssueCredsParams) {

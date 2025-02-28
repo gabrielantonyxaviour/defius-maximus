@@ -6,7 +6,7 @@ export type Cred = {
   address: string;
   ip: string;
   royalty: number;
-  chefScore: number;
+  chef_score: number;
 };
 
 export type User = {
@@ -39,7 +39,7 @@ export type Chef = {
   twitter: string;
   cred_id: string;
   royalty: number;
-  chefScore: number;
+  chef_score: number;
 };
 export interface AssetData {
   [ticker: string]: {
