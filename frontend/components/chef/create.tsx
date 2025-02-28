@@ -408,7 +408,9 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                         Spot Trading
                       </p>
                     </div>
-                    <OverlappingCircles images={["/cow.png", "/sushi.png"]} />
+                    <OverlappingCircles
+                      images={["/sushi.png", "circuit.png", "kitty.png"]}
+                    />
                     <div className="px-4 mt-4 text-center">
                       <p className="text-sm font-medium mb-2">
                         Execute immediate trades or set limit orders for precise
