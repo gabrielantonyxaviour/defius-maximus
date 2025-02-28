@@ -1,13 +1,15 @@
 import { StateCreator } from "zustand";
-import { Chef, ExecutedTrade, TradePlay, User } from "@/types";
+import { Chef, Cred, ExecutedTrade, TradePlay, User } from "@/types";
 import { StoryClient } from "@story-protocol/core-sdk";
 
 interface GlobalState {
   user: User | null;
   chef: Chef | null;
+  cred: Cred | null;
   walletBalance: string;
   totalEquity: number;
   pnl: string;
+  humanityRegistered: boolean;
   user_follows: string[];
   storyClient: StoryClient | null;
   recipes: TradePlay[];
@@ -17,6 +19,7 @@ interface GlobalState {
 interface GlobalActions {
   setUser: (user: User | null) => void;
   setChef: (chef: Chef | null) => void;
+  setCred: (cred: Cred | null) => void;
   setWalletBalance: (bal: string) => void;
   setTotalEquity: (equity: number) => void;
   setPnl: (pnl: string) => void;
@@ -26,6 +29,7 @@ interface GlobalActions {
   setRecipe: (tradePlay: TradePlay) => void;
   setActions: (actions: ExecutedTrade[]) => void;
   setStoryClient: (client: StoryClient) => void;
+  setHumanityRegistered: (humanityRegistered: boolean) => void;
 }
 
 export type GlobalSlice = GlobalState & GlobalActions;
@@ -35,11 +39,13 @@ export const initialGlobalState: GlobalState = {
   totalEquity: 0,
   walletBalance: "0",
   chef: null,
+  cred: null,
   pnl: "0",
   recipes: [],
   user_follows: [],
   actions: [],
   storyClient: null,
+  humanityRegistered: false,
 };
 
 export const createGlobalSlice: StateCreator<
@@ -104,5 +110,11 @@ export const createGlobalSlice: StateCreator<
   },
   setStoryClient: (client) => {
     set({ storyClient: client });
+  },
+  setHumanityRegistered: (humanityRegistered) => {
+    set({ humanityRegistered });
+  },
+  setCred: (cred) => {
+    set({ cred });
   },
 });

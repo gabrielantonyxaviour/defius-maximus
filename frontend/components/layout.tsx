@@ -32,9 +32,13 @@ export default function Layout({
     setActions,
     walletBalance,
     setWalletBalance,
+    chef,
+    humanityRegistered,
+    setHumanityRegistered,
     setChef,
     setStoryClient,
     setTotalEquity,
+    setCred,
   } = useEnvironmentStore((store) => store);
   const router = useRouter();
   const { open } = useAppKit();
@@ -160,6 +164,27 @@ export default function Layout({
       })();
     }
   }, [wallet, user]);
+
+  useEffect(() => {
+    (async function () {
+      if (chef && !humanityRegistered) {
+        const response = await fetch(
+          "/api/humanity/check?address=" + chef.user_id
+        );
+        const { isRegistered } = await response.json();
+        setHumanityRegistered(isRegistered);
+
+        if (isRegistered && chef.cred_id != null) {
+          const response = await fetch(
+            `/api/humanity/owns?address=${chef.user_id}&credId=${chef.cred_id}`
+          );
+          const { cred } = await response.json();
+          setCred(cred);
+        }
+      } else {
+      }
+    })();
+  }, []);
 
   return (
     <div className="min-h-screen w-full">

@@ -196,6 +196,26 @@ export async function updateUser(user: User): Promise<User | null> {
   return data;
 }
 
+export async function updateCredIdByUserId(
+  userId: string,
+  newCredId: string
+): Promise<void> {
+  try {
+    const { error } = await supabase
+      .from("chefs")
+      .update({ cred_id: newCredId })
+      .eq("user_id", userId);
+
+    if (error) {
+      console.error("Error updating cred_id:", error);
+      throw error;
+    }
+  } catch (error) {
+    console.error("Failed to update cred_id:", error);
+    throw error;
+  }
+}
+
 export async function storeImage(
   fileName: string,
   file: File

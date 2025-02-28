@@ -1,5 +1,14 @@
 import { Hex } from "viem";
 
+export type Cred = {
+  id: string;
+  chef_name: string;
+  address: string;
+  ip: string;
+  royalty: number;
+  chefScore: number;
+};
+
 export type User = {
   id: string;
   name: string;
@@ -28,6 +37,9 @@ export type Chef = {
   nft_symbol: string;
   ip_address: string;
   twitter: string;
+  cred_id: string;
+  royalty: number;
+  chefScore: number;
 };
 export interface AssetData {
   [ticker: string]: {

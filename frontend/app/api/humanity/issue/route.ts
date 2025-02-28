@@ -1,4 +1,5 @@
 import { getRegistered, issueCreds } from "@/lib/humanity";
+import { updateCredIdByUserId } from "@/lib/supabase";
 import { Hex } from "viem";
 export async function POST(request: Request) {
   const body = await request.json();
@@ -15,6 +16,7 @@ export async function POST(request: Request) {
     if (credId) {
       console.log("Credential ID:", credId);
       console.log("Credential issued successfully");
+      await updateCredIdByUserId(address, credId);
       return Response.json({
         credId,
       });
