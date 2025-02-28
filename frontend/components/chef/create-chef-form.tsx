@@ -82,8 +82,23 @@ export default function CreateChefForm() {
         "Creating a NFT collection to mint your trade plays as IP assets..",
     });
 
+    toast("Uploading Profile to Walrus", {
+      description: "Waiting for confirmation...",
+    });
     const imageUrl = await uploadImageToWalrus(image);
 
+    toast("Profile uploaded successfully", {
+      description: "View your trade image on Walrus",
+      action: {
+        label: "View",
+        onClick: () => {
+          window.open(imageUrl, "_blank");
+        },
+      },
+    });
+    toast("Creating Story IP Collection", {
+      description: "Waiting for confirmation...",
+    });
     const { txHash, spgNftContract } = await createSpgNftCollection(
       storyClient,
       nftName,

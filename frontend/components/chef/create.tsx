@@ -172,11 +172,23 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
     }
 
     toast("Minting an IP for your recipe", {
-      description: "Storing on IPFS and publishing on chain...",
+      description: "Storing on Walrus and publishing on chain...",
     });
 
+    toast("Uploading Trade Image to Walrus", {
+      description: "Waiting for confirmation...",
+    });
     const tradeImage = await uploadImageToWalrus(image);
 
+    toast("Trade Image uploaded successfully", {
+      description: "View your trade image on Walrus",
+      action: {
+        label: "View",
+        onClick: () => {
+          window.open(tradeImage, "_blank");
+        },
+      },
+    });
     const ipMetadata = {
       title: chef?.nft_name,
       description: chef?.bio,
@@ -244,13 +256,39 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
       },
     };
 
+    toast("Uploading IP Metadata to Walrus", {
+      description: "Waiting for confirmation...",
+    });
     const { uri: ipMetadataUri, hash: ipMetadataHash } =
       await uploadJsonToWalrus(`ip-${chef?.id}-${Date.now()}`, ipMetadata);
+
+    toast("IP Metadata uploaded successfully", {
+      description: "View your IP metadata on Walrus",
+      action: {
+        label: "View",
+        onClick: () => {
+          window.open(ipMetadataUri, "_blank");
+        },
+      },
+    });
+    console.log("IPFS Upload successful");
+    toast("Uploading NFT Metadata to Walrus", {
+      description: "Waiting for confirmation...",
+    });
 
     const { uri: nftMetadataUri, hash: nftMetadataHash } =
       await uploadJsonToWalrus(`nft-${chef?.id}-${Date.now()}`, nftMetadata);
 
     console.log("IPFS Upload successful");
+    toast("NFT Metadata uploaded successfully", {
+      description: "View your NFT metadata on Walrus",
+      action: {
+        label: "View",
+        onClick: () => {
+          window.open(nftMetadataUri, "_blank");
+        },
+      },
+    });
 
     console.log("INPUT");
     console.log({
@@ -261,6 +299,10 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
         nftMetadataURI: nftMetadataUri,
         nftMetadataHash: ("0x" + nftMetadataHash) as Hex,
       },
+    });
+
+    toast("Minting IP on Story", {
+      description: "Waiting for confirmation...",
     });
 
     const { txHash, ipId, tokenId } = await mintAndRegisterIp(storyClient, {
