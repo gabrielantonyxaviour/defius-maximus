@@ -17,6 +17,7 @@ import { formatEther, Hex } from "viem";
 import { setupStoryClient } from "@/lib/story";
 import { getChainBalance, getMultichainBalance, getPrice } from "@/lib/balance";
 import { useWalletClient } from "wagmi";
+import { ArrowUpRight } from "lucide-react";
 
 export default function Layout({
   children,
@@ -165,6 +166,22 @@ export default function Layout({
       <div className="fixed w-full flex flex-col sm:flex-row justify-end items-end sm:items-center gap-2 sm:gap-4 p-2 sm:p-4 sen">
         {isConnected && (
           <>
+            <div
+              className="pr-2 flex space-x-1 hover:font-semibold items-center cursor-pointer"
+              onClick={() => {
+                router.push("/humanity");
+              }}
+            >
+              <Image
+                src={"/uhm.png"}
+                width={25}
+                height={25}
+                alt="whm"
+                className="rounded-full "
+              />
+              <p className="sen text-white pl-2 ">Mint Credentials</p>
+              <ArrowUpRight className="text-white h-5 w-5" />
+            </div>
             <div className="relative w-[150px] bg-[#1F1F1F] h-10 rounded-sm">
               <Button
                 onClick={() => {}}

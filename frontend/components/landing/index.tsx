@@ -50,9 +50,9 @@ export default function Landing() {
                   variant: "outline",
                 })} ${
                   user
-                    ? "hover:border-2 hover:border-[#3A3A3A] hover:font-bold"
+                    ? "hover:border-2 hover:border-white hover:font-bold"
                     : "opacity-50 cursor-not-allowed"
-                } sen rounded-sm bg-transparent border-0 hover:bg-transparent text-white hover:text-white hover:border-[#3A3A3A] hover:border-[1px]`}
+                } sen rounded-sm bg-transparent border-0 hover:bg-transparent text-white hover:text-white  hover:border-[1px]`}
               >
                 Get Started
               </Link>

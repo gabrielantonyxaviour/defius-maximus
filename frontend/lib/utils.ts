@@ -1,10 +1,30 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { Chain } from "viem";
+import { sepolia } from "viem/chains";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const humanityTestnet: Chain = {
+  id: 1942999413,
+  name: "Humanity Testnet",
+  nativeCurrency: { name: "Test Humanity", symbol: "tHP", decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ["https://rpc.testnet.humanity.org"],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Blockscout",
+      url: "explorer.testnet.humanity.org",
+      apiUrl: "explorer.testnet.humanity.org/api",
+    },
+  },
+  testnet: true,
+};
 
 export function formattedNumber(num: number): string {
   if (Math.abs(num) >= 1_000_000) {
@@ -16,8 +36,8 @@ export function formattedNumber(num: number): string {
   }
 }
 export function shortenAddress(address: string): string {
-  console.log("[shorten address]")
-  console.log(address)
+  console.log("[shorten address]");
+  console.log(address);
   return `${address.slice(0, 6)}...${address.slice(-4)}`;
 }
 
