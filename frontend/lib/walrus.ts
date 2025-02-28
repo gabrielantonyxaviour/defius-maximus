@@ -12,7 +12,7 @@ export async function uploadJsonToWalrus(
     type: "application/json",
   });
   const response = await fetch(
-    `https://publisher.walrus-testnet.walrus.space/v1/blobs?epochs=100000`,
+    `https://publisher.walrus-testnet.walrus.space/v1/blobs`,
     {
       method: "PUT",
       body: file,
@@ -20,11 +20,12 @@ export async function uploadJsonToWalrus(
   );
 
   const info = await response.json();
-
+  console.log("WALRUS RESPONSE");
+  console.log(info);
   const url = `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${
     "alreadyCertified" in info
       ? info.alreadyCertified.blobId
-      : info.newlyCreated.blobId
+      : info.newlyCreated.blobObject.blobId
   }`;
   console.log(url);
 
@@ -39,7 +40,7 @@ export async function uploadJsonToWalrus(
 
 export async function uploadImageToWalrus(image: File): Promise<string> {
   const response = await fetch(
-    `https://publisher.walrus-testnet.walrus.space/v1/blobs?epochs=100000`,
+    `https://publisher.walrus-testnet.walrus.space/v1/blobs`,
     {
       method: "PUT",
       body: image,
@@ -47,11 +48,13 @@ export async function uploadImageToWalrus(image: File): Promise<string> {
   );
 
   const info = await response.json();
+  console.log("WALRUS RESPONSE");
+  console.log(info);
 
   const url = `https://aggregator.walrus-testnet.walrus.space/v1/blobs/${
     "alreadyCertified" in info
       ? info.alreadyCertified.blobId
-      : info.newlyCreated.blobId
+      : info.newlyCreated.blobObject.blobId
   }`;
   console.log(url);
   return url;

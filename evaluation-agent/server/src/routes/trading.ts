@@ -247,7 +247,7 @@ Please provide a risk assessment with these scores (0-100):
         headers: {
           "Content-Type": "application/json",
           accept: "application/json",
-          Authorization: `Bearer ${process.env.HEURIST_AI_API_KEY}`,
+          Authorization: `Bearer ${process.env.ORA_API_KEY}`,
         },
         body: JSON.stringify({
           model: "meta-llama/Llama-3.3-70B-Instruct",
@@ -264,8 +264,11 @@ Please provide a risk assessment with these scores (0-100):
         }),
       }
     );
+    const repsonseData = await analysisResponse.json();
 
-    const { choices, usage } = (await analysisResponse.json()) as {
+    console.log("AI response:", repsonseData);
+
+    const { choices, usage } = repsonseData as {
       choices: {
         index: number;
         message: {
