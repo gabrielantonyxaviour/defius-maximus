@@ -248,7 +248,7 @@ export class SupabaseService {
                     amount: amount,
                     pnl_usdt: 0,
                     tx_hash: tx,
-                    status: "open",
+                    status: "ongoing",
                   })
                   .select()
                   .single();
@@ -344,7 +344,7 @@ export class SupabaseService {
                       amount: amount,
                       pnl_usdt: 0,
                       tx_hash: tx,
-                      status: "open",
+                      status: "ongoing",
                     })
                     .select()
                     .single();

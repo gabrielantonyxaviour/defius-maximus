@@ -83,7 +83,7 @@ export default function Profile({ close }: { close: () => void }) {
     setRiskLevel(smoothedRisk);
   }, [expectedPNL, endDate]);
   return (
-    <div className="w-full max-w-md 2xl:max-w-lg bg-[#1F1F1F] rounded-sm relative">
+    <div className="max-w-lg 2xl:max-w-lg bg-[#1F1F1F] rounded-sm relative">
       <div className="absolute inset-0 -top-1 -left-1 sen rounded-sm border-2 border-[#3A3A3A] bg-[#1F1F1F] text-white p-6">
         <ScrollArea className="h-full w-full">
           <div className="space-y-4">
@@ -132,35 +132,6 @@ export default function Profile({ close }: { close: () => void }) {
               </div>
               <p className="text-sm break-all">{user?.address}</p>
             </div>
-
-            {/* <div className="space-y-1"> */}
-            {/* <h3 className="font-semibold text-base">Balance</h3>
-              <div className="flex flex-wrap gap-4">
-                <div className="flex items-center space-x-2">
-                  <Image
-                    src="/chains/story.png"
-                    width={25}
-                    height={25}
-                    alt="arb"
-                    className="rounded-full"
-                  />
-                  <p className="text-sm">
-                    {parseFloat(walletBalance).toFixed(2)} IP
-                  </p>
-                </div> */}
-            {/* <div className="flex items-center space-x-2">
-                  <Image
-                    src="/chains/avax.png"
-                    width={25}
-                    height={25}
-                    alt="avax"
-                  />
-                  <p className="text-sm">
-                    {parseFloat(avaxSafeBalance).toFixed(2)} AVAX
-                  </p>
-                </div> */}
-            {/* </div>
-            </div> */}
 
             {user?.mode === "RED PILL" && (
               <div className="space-y-4">

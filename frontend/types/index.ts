@@ -91,13 +91,13 @@ export type DCA = {
 };
 
 export type ExecutedTrade = {
+  amount: number;
+  created_at: string;
   id: string;
+  pnl_usdt: number;
   trade_play_id: string;
   trade_play: TradePlay;
-  created_at: string;
   user_id: string;
-  amount: number;
-  pnl_usdt: number;
   tx_hash: string;
   status: "ongoing" | "completed";
 };
