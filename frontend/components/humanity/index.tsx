@@ -2,9 +2,10 @@
 import Image from "next/image";
 import { useEnvironmentStore } from "../context";
 import { useEffect, useState } from "react";
-import { CircleDashedIcon } from "lucide-react";
+import { ArrowUpRightFromSquare, CircleDashedIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { Cred } from "@/types";
+import { shortenAddress } from "@/lib/utils";
 export default function Humanity() {
   const { chef, humanityRegistered, cred, setCred } = useEnvironmentStore(
     (store) => store
@@ -36,12 +37,19 @@ export default function Humanity() {
               </p>
             ) : humanityRegistered ? (
               <>
-                <p className="text-white text-center pb-2">
-                  You own a valid Humanity ID
+                <p className="text-white text-center">
+                  {cred
+                    ? "You hold a verified Trader Credential."
+                    : "You own a valid Humanity ID"}
                 </p>
+                {cred && (
+                  <p className="text-white text-center">
+                    You can create trade plays now 🎉
+                  </p>
+                )}
                 {cred ? (
                   <>
-                    <div className="grid grid-cols-5 w-[75%] h-[200px] rounded-xl border-2 border-[#a3a3a3] pt-4">
+                    <div className="grid grid-cols-5 w-[75%] h-[200px] rounded-xl border-2 border-[#a3a3a3] mt-4">
                       <div className="col-span-2 rounded-l-xl">
                         <Image
                           src={"/son.png"}
@@ -52,23 +60,44 @@ export default function Humanity() {
                         />
                       </div>
                       <div className="col-span-3 rounded-r-xl flex flex-col pl-3 justify-center">
-                        <p>Id: {cred.id}</p>
-                        <p>Address: {cred.address}</p>
-                        <p>IP Account: {cred.ip}</p>
-                        <p>Royalty: {cred.royalty}</p>
-                        <p>Chef Score: {cred.chef_score}</p>
+                        <p>
+                          Id:{" "}
+                          <span className="font-normal">
+                            {shortenAddress(cred.id)}
+                          </span>
+                        </p>
+                        <p>
+                          Address:{" "}
+                          <span className="font-normal">
+                            {shortenAddress(cred.address)}
+                          </span>
+                        </p>
+                        <p>
+                          IP Account:{" "}
+                          <span className="font-normal">
+                            {shortenAddress(cred.ip)}
+                          </span>
+                        </p>
+                        <p>
+                          Royalty:{" "}
+                          <span className="font-normal">{cred.royalty}</span>
+                        </p>
+                        <p>
+                          Chef Score:{" "}
+                          <span className="font-normal">{cred.chef_score}</span>
+                        </p>
                       </div>
                     </div>
                     <Button
                       onClick={() => {
                         window.open(
-                          `https://twitter.com/intent/tweet?text=I%20am%20a%20Verified%20Chef%20on%20%40DefiusMaximus%20%28powered%20by%20%40Humanityprot%29.%20Come%20follow%20me%20and%20start%20making%20real%20gains.`,
+                          `https://twitter.com/intent/tweet?text=👨‍🍳%20I%20am%20a%20Verified%20Chef%20on%20%40DefiusMaximus%20%28powered%20by%20%40Humanityprot%29.%20%F0%9F%94%A5%20Come%20follow%20me%20and%20start%20making%20real%20gains!%20%F0%9F%92%B0%20%F0%9F%93%88%20%0A%0ACheck%20out%20our%20app%3A%20https%3A%2F%2Fdefius-maximus.vercel.app%2F`,
                           "_blank"
                         );
                       }}
-                      className="font-semibold "
+                      className="font-semibold mt-4"
                     >
-                      Share on X
+                      Share on X <ArrowUpRightFromSquare />
                     </Button>
                   </>
                 ) : chef ? (
@@ -77,33 +106,39 @@ export default function Humanity() {
                     <Button
                       disabled={creating}
                       onClick={async () => {
-                        setCreating(true);
-                        console.log("Creating cred for chef:", chef);
-                        const customCred = {
-                          chef_name: chef.name,
-                          ip: chef.ip_address,
-                          address: chef.user_id,
-                          royalty: chef.royalty,
-                          chef_score: Math.floor(Math.random() * 100),
-                        };
-                        const response = await fetch(
-                          "/api/humanity/create?address=" + chef.user_id,
-                          {
-                            method: "POST",
-                            headers: {
-                              "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify(customCred),
-                          }
-                        );
-                        const { credId } = await response.json();
+                        try {
+                          setCreating(true);
 
-                        if (credId) {
-                          setCred({ ...customCred, id: credId });
-                        } else {
-                          console.log("Error creating cred");
+                          console.log("Creating cred for chef:", chef);
+                          const customCred = {
+                            chef_name: chef.name,
+                            ip: chef.ip_address,
+                            address: chef.user_id,
+                            royalty: chef.royalty,
+                            chef_score: Math.floor(70+ Math.random() * 30),
+                          };
+                          const response = await fetch(
+                            "/api/humanity/issue?address=" + chef.user_id,
+                            {
+                              method: "POST",
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                              body: JSON.stringify(customCred),
+                            }
+                          );
+                          const { credId } = await response.json();
+
+                          if (credId) {
+                            setCred({ ...customCred, id: credId });
+                          } else {
+                            console.log("Error creating cred");
+                          }
+                          setCreating(false);
+                        } catch (e) {
+                          console.log(e);
+                          setCreating(false);
                         }
-                        setCreating(false);
                       }}
                       className="font-semibold mt-4"
                     >

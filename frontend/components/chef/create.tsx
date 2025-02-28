@@ -366,7 +366,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
     console.log(timeFrame);
     const formData = new FormData();
     formData.append("chef_id", chef?.id || "");
-    formData.append("user_id", chef?.user_id || "");
+    formData.append("username", chef?.user_id || "");
     formData.append("asset", selectedAsset);
     formData.append("direction", direction);
     formData.append("chain", selectedChain);
@@ -546,7 +546,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                 <div className="flex-none w-32">
                   <Label>DEX</Label>
                   <Popover>
-                    <PopoverTrigger asChild>
+                    <PopoverTrigger asChild className="bg-gray-300">
                       <Button
                         variant="outline"
                         className="w-full mt-2 hover:bg-[#BF4317] text-black hover:text-white"
@@ -566,9 +566,12 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                         </p>
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="p-0 sen" align="start">
+                    <PopoverContent
+                      className="p-0 sen bg-gray-300"
+                      align="start"
+                    >
                       <Command>
-                        <CommandList>
+                        <CommandList className="bg-gray-300">
                           <CommandGroup>
                             <CommandItem
                               value="any"
@@ -625,7 +628,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                 <div className="flex-1">
                   <Label>Asset</Label>
                   <Popover>
-                    <PopoverTrigger asChild>
+                    <PopoverTrigger asChild className="bg-gray-300">
                       <Button
                         variant="outline"
                         className="w-full mt-2 justify-between hover:bg-[#BF4317] text-black hover:text-white"
@@ -665,12 +668,12 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="p-0" align="start">
-                      <Command>
+                      <Command className="bg-gray-300">
                         <CommandInput
                           placeholder="Search assets..."
-                          className="sen"
+                          className="sen "
                         />
-                        <CommandList>
+                        <CommandList className="bg-gray-300">
                           <CommandEmpty className="sen p-4 text-sm text-center">
                             No assets found.
                           </CommandEmpty>
@@ -773,7 +776,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                 <div className="flex-1">
                   <Label>Chain</Label>
                   <Popover>
-                    <PopoverTrigger asChild>
+                    <PopoverTrigger asChild className="bg-gray-300">
                       <Button
                         variant="outline"
                         className="w-full mt-2 hover:bg-[#BF4317] text-black hover:text-white font-semibold"
@@ -796,7 +799,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                     </PopoverTrigger>
                     <PopoverContent className="p-0 sen" align="start">
                       <Command>
-                        <CommandList>
+                        <CommandList className="bg-gray-300">
                           <CommandGroup>
                             {selectedAsset &&
                               (selectedType == "Spot"
@@ -891,7 +894,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                   type="number"
                   step="0.01"
                   value={entryPrice}
-                  className="text-black"
+                  className="text-black bg-gray-300"
                   onChange={(e) => {
                     setEntryPrice(Number(e.target.value));
                   }}
@@ -907,7 +910,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                       type="number"
                       placeholder="Price"
                       step="0.01"
-                      className="text-black"
+                      className="text-black bg-gray-300"
                       value={tp.price}
                       onChange={(e) => {
                         const newTakeProfits = [...takeProfits];
@@ -919,7 +922,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                       type="number"
                       placeholder="Percentage"
                       step="0.1"
-                      className="text-black"
+                      className="text-black bg-gray-300"
                       value={tp.percentage}
                       onChange={(e) => {
                         const newTakeProfits = [...takeProfits];
@@ -936,7 +939,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                       type="button"
                       variant="outline"
                       onClick={handleAddTakeProfit}
-                      className="flex items-center gap-1 hover:bg-black text-black hover:text-white"
+                      className="flex items-center gap-1 hover:bg-black text-black hover:text-white bg-gray-300"
                     >
                       <Plus className="h-4 w-4" /> Add Take Profit
                     </Button>
@@ -964,7 +967,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                       placeholder="Price"
                       step="0.01"
                       value={dca.price}
-                      className="text-black"
+                      className="text-black bg-gray-300"
                       onChange={(e) => {
                         const newDcaPoints = [...dcaPoints];
                         newDcaPoints[index].price = e.target.value;
@@ -975,7 +978,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                       type="number"
                       placeholder="Percentage"
                       step="0.1"
-                      className="text-black"
+                      className="text-black bg-gray-300"
                       value={dca.percentage}
                       onChange={(e) => {
                         const newDcaPoints = [...dcaPoints];
@@ -992,7 +995,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                       type="button"
                       variant="outline"
                       onClick={handleAddDCA}
-                      className="flex items-center gap-1 hover:bg-black text-black hover:text-white"
+                      className="flex items-center gap-1 hover:bg-black text-black hover:text-white bg-gray-300"
                     >
                       <Plus className="h-4 w-4" /> Add DCA points
                     </Button>
@@ -1016,7 +1019,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                 <Input
                   type="number"
                   step="0.01"
-                  className="text-black"
+                  className="text-black bg-gray-300"
                   value={stopLoss}
                   onChange={(e) => {
                     setStopLoss(Number(e.target.value));
@@ -1031,7 +1034,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                     type="number"
                     min="1"
                     max="20"
-                    className="text-black"
+                    className="text-black bg-gray-300"
                     step="1 "
                     value={leverage}
                     onChange={(e) => {
@@ -1045,7 +1048,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                 <Label>Timeframe</Label>
                 <div className="flex space-x-2">
                   <Popover>
-                    <PopoverTrigger asChild>
+                    <PopoverTrigger asChild className="bg-gray-300">
                       <Button
                         variant={"outline"}
                         className={cn(
@@ -1070,7 +1073,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                           date < new Date(new Date().setHours(0, 0, 0, 0))
                         }
                         initialFocus
-                        className="sen"
+                        className="sen bg-gray-300"
                       />
                     </PopoverContent>
                   </Popover>
@@ -1081,7 +1084,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                       "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
                       "hover:border-gray-300",
                       "text-gray-900 placeholder:text-gray-400",
-                      "transition-colors duration-200 w-[120px]"
+                      "transition-colors duration-200 w-[120px] bg-gray-300"
                     )}
                     value={selectedTime}
                     onChange={(e) => setSelectedTime(e.target.value)}
@@ -1096,7 +1099,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                   type="number"
                   step="0.05"
                   min="1"
-                  className="text-black"
+                  className="text-black bg-gray-300"
                   value={expectedPnl}
                   onChange={(e) => {
                     setExpectedPnl(e.target.value);
@@ -1107,7 +1110,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
               <div className="space-y-2">
                 <Label>Research Description</Label>
                 <Textarea
-                  className="h-32 resize-none text-black"
+                  className="h-32 resize-none text-black bg-gray-300"
                   placeholder="Enter your research description..."
                   value={researchDescription}
                   onChange={(e) => {
@@ -1130,7 +1133,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                     <img
                       src={imagePreview}
                       alt="Preview"
-                      className="w-32 h-32 object-cover rounded-md"
+                      className="w-32 h-32 object-cover rounded-md bg-gray-300"
                     />
                   </div>
                 )}

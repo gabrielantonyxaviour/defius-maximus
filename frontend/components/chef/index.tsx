@@ -17,7 +17,6 @@ export default function Chef() {
       router.push("/");
       return;
     }
-
     console.log(`Fetching chef data for user: ${user.id}`);
 
     if (!chef) {
@@ -41,6 +40,8 @@ export default function Chef() {
           console.error("Error fetching data:", error);
         }
       })();
+    } else {
+      setLoading(false);
     }
   }, []);
   return loading ? (
