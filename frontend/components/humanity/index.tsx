@@ -6,8 +6,9 @@ import { CircleDashedIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { Cred } from "@/types";
 export default function Humanity() {
-  const { chef, humanityRegistered, setHumanityRegistered, cred, setCred } =
-    useEnvironmentStore((store) => store);
+  const { chef, humanityRegistered, cred, setCred } = useEnvironmentStore(
+    (store) => store
+  );
   const [loading, setLoading] = useState(false);
   const [creating, setCreating] = useState(false);
 
@@ -28,6 +29,11 @@ export default function Humanity() {
                 <CircleDashedIcon className="animate-spin text-white" />
                 <p className="text-white">Loading...</p>
               </div>
+            ) : !chef ? (
+              <p className="text-center">
+                Credentials are only for Chefs. <br /> Create a chef profile to
+                claim creds if you are a trader.
+              </p>
             ) : humanityRegistered ? (
               <>
                 <p className="text-white text-center pb-6">

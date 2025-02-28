@@ -60,94 +60,103 @@ export default function CreateChefForm() {
     setLoading(true);
     if (niches.length === 0) {
       setError("Please select at least one trading niche");
+      setLoading(false);
       return;
     }
     if (!image) {
       setError("Please upload a profile image");
+      setLoading(false);
       return;
     }
     if (!storyClient) {
       setError("Story client is not initialized");
+      setLoading(false);
       return;
     }
     if (!user) {
       setError("User is not logged in");
+      setLoading(false);
       return;
     }
     // Handle form submission here
     console.log({ name, bio, image, niches });
 
-    toast("Deploying Story IP Collection", {
-      description:
-        "Creating a NFT collection to mint your trade plays as IP assets..",
-    });
+    try {
+      toast("Deploying Story IP Collection", {
+        description:
+          "Creating a NFT collection to mint your trade plays as IP assets..",
+      });
 
-    toast("Uploading Profile to Walrus", {
-      description: "Waiting for confirmation...",
-    });
-    const imageUrl = await uploadImageToWalrus(image);
+      toast("Uploading Profile to Walrus", {
+        description: "Waiting for confirmation...",
+      });
+      const imageUrl = await uploadImageToWalrus(image);
 
-    toast("Profile uploaded successfully", {
-      description: "View your trade image on Walrus",
-      action: {
-        label: "View",
-        onClick: () => {
-          window.open(imageUrl, "_blank");
+      toast("Profile uploaded successfully", {
+        description: "View your trade image on Walrus",
+        action: {
+          label: "View",
+          onClick: () => {
+            window.open(imageUrl, "_blank");
+          },
         },
-      },
-    });
-    toast("Creating Story IP Collection", {
-      description: "Waiting for confirmation...",
-    });
-    const { txHash, spgNftContract } = await createSpgNftCollection(
-      storyClient,
-      nftName,
-      nftSymbol,
-      imageUrl,
-      user.address as string
-    );
+      });
+      toast("Creating Story IP Collection", {
+        description: "Waiting for confirmation...",
+      });
+      const { txHash, spgNftContract } = await createSpgNftCollection(
+        storyClient,
+        nftName,
+        nftSymbol,
+        imageUrl,
+        user.address as string
+      );
 
-    toast("Story IP Collection Deployed", {
-      description: `Creating your account. Finishing up...`,
-      action: {
-        label: "View Tx",
-        onClick: () => {
-          window.open(`https://aeneid.storyscan.xyz/tx/${txHash}`, "_blank");
+      toast("Story IP Collection Deployed", {
+        description: `Creating your account. Finishing up...`,
+        action: {
+          label: "View Tx",
+          onClick: () => {
+            window.open(`https://aeneid.storyscan.xyz/tx/${txHash}`, "_blank");
+          },
         },
-      },
-    });
+      });
 
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("user_id", user?.id || "");
-    formData.append("bio", bio);
-    formData.append("image_url", imageUrl);
-    formData.append("niches", JSON.stringify(niches));
-    formData.append("subFee", subFee);
-    formData.append("ip_address", spgNftContract as string);
-    formData.append("nft_name", nftName);
-    formData.append("nft_symbol", nftSymbol);
-    formData.append("twitter", twitter);
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("user_id", user?.id || "");
+      formData.append("bio", bio);
+      formData.append("image_url", imageUrl);
+      formData.append("niches", JSON.stringify(niches));
+      formData.append("subFee", subFee);
+      formData.append("ip_address", spgNftContract as string);
+      formData.append("nft_name", nftName);
+      formData.append("nft_symbol", nftSymbol);
+      formData.append("twitter", twitter);
 
-    console.log("FormData");
-    console.log(formData);
-    const response = await fetch("/api/supabase/create-chef", {
-      method: "POST",
-      body: formData,
-    });
+      console.log("FormData");
+      console.log(formData);
+      const response = await fetch("/api/supabase/create-chef", {
+        method: "POST",
+        body: formData,
+      });
 
-    const { chef, error } = await response.json();
+      const { chef, error } = await response.json();
 
-    if (error) {
-      setError(error);
+      if (error) {
+        setError(error);
+        setLoading(false);
+        return;
+      }
+      setChef(chef);
       setLoading(false);
-      return;
+      toast("Chef Profile Created", {
+        description: `You are all set!`,
+      });
+    } catch (e) {
+      console.log(e);
+      setLoading(false);
     }
-    setChef(chef);
-    setLoading(false);
-    toast("Chef Profile Created", {
-      description: `You are all set!`,
-    });
   };
 
   return (

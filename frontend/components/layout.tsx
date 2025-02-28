@@ -168,6 +168,7 @@ export default function Layout({
   useEffect(() => {
     (async function () {
       if (chef && !humanityRegistered) {
+        console.log("Checking humanity");
         const response = await fetch(
           "/api/humanity/check?address=" + chef.user_id
         );
