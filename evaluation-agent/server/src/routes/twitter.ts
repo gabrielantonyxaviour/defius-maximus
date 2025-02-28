@@ -331,7 +331,7 @@ router.get(
       const { data } = await axios.post<
         IExecuteUserOpRequest,
         AxiosResponse<IExecuteUserOpResponse>
-      //Chain ID will be base, since Wow.XYZ is on base
+        //Chain ID will be base, since Wow.XYZ is on base
       >(
         `${apiUrl}/telegrambot/evm/submitUserOperation?chainId=${chainId}`,
         payload,
@@ -408,11 +408,15 @@ router.post("/tweetCard", async (req: Request, res: Response) => {
         },
       }
     );
+
     console.log("[Tweet Card] Tweet sent:", data);
+
     const tweetId = data.data.id;
     const txHash = _txHash;
     const replyMessage = `Transaction hash: https://basescan.org/tx/${txHash}`;
+
     console.log("[Tweet Card] Replying to tweet:", replyMessage);
+
     const { data: replyData } = await axios.post(
       "https://api.twitter.com/2/tweets",
       {
@@ -442,6 +446,7 @@ router.post("/tweetCard", async (req: Request, res: Response) => {
     if (error instanceof AxiosError) {
       console.error("[Tweet Card] Response:", error.response?.data);
     }
+
     res.status(400).json({
       success: false,
       error: "Failed to send tweet",

@@ -2,11 +2,12 @@ import { createPublicClient, Hex, http } from "viem";
 import { humanityTestnet } from "./utils";
 
 export async function getRegistered(address: Hex): Promise<boolean> {
+  console.log(`Checking registration for address: ${address}`);
   const publicClient = createPublicClient({
     chain: humanityTestnet,
     transport: http(),
   });
-  return await publicClient.readContract({
+  const result = await publicClient.readContract({
     address: "0x96c33CE8A28F76f24B83b156828A65Ccd0452CE7",
     abi: [
       {
@@ -20,6 +21,8 @@ export async function getRegistered(address: Hex): Promise<boolean> {
     functionName: "isRegistered",
     args: [address],
   });
+  console.log(`Registration status for address ${address}: ${result}`);
+  return result;
 }
 
 type IsssueCredsParams = {
@@ -31,6 +34,7 @@ type IsssueCredsParams = {
 };
 
 export async function issueCreds(params: IsssueCredsParams) {
+  console.log(`Issuing credentials for address: ${params.address}`);
   const response = await fetch(
     "https://issuer.humanity.org/credentials/issue",
     {
@@ -47,16 +51,26 @@ export async function issueCreds(params: IsssueCredsParams) {
   );
   const { credential } = await response.json();
   if (!credential) {
+    console.log(`Failed to issue credentials for address: ${params.address}`);
     return undefined;
   }
 
+  console.log(
+    `Issued credential ID: ${credential.id} for address: ${params.address}`
+  );
   return credential.id;
 }
 
 export async function ownsCreds(address: Hex, credId: string): Promise<any> {
+  console.log(
+    `Checking ownership of credential ID: ${credId} for address: ${address}`
+  );
   const isRegistered = await getRegistered(address);
 
-  if (!isRegistered) return undefined;
+  if (!isRegistered) {
+    console.log(`Address ${address} is not registered`);
+    return undefined;
+  }
   const response = await fetch(
     `https://issuer.humanity.org/credentials/list?holderDid=did:ethr:${address}`,
     {
@@ -69,11 +83,18 @@ export async function ownsCreds(address: Hex, credId: string): Promise<any> {
   );
   const { data } = await response.json();
   if (!data) {
+    console.log(`Failed to fetch credentials for address: ${address}`);
     throw new Error("Failed to fetch credentials");
   }
   const verifiedCred = (data as any[]).filter(
     (c: any) => c.credentialSubject.id == credId
   );
-  if (verifiedCred.length == 0) return undefined;
+  if (verifiedCred.length == 0) {
+    console.log(
+      `No credentials found with ID: ${credId} for address: ${address}`
+    );
+    return undefined;
+  }
+  console.log(`Found credential with ID: ${credId} for address: ${address}`);
   return verifiedCred[0];
 }

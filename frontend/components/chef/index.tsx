@@ -19,26 +19,29 @@ export default function Chef() {
     }
 
     console.log(`Fetching chef data for user: ${user.id}`);
-    (async () => {
-      try {
-        const response = await fetch(
-          `/api/supabase/get-chef?username=${user.id}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const { chef } = await response.json();
-        console.log("Data fetched successfully:", chef);
 
-        if (chef) setChef(chef);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    })();
+    if (!chef) {
+      (async () => {
+        try {
+          const response = await fetch(
+            `/api/supabase/get-chef?username=${user.id}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          const { chef } = await response.json();
+          console.log("Data fetched successfully:", chef);
+
+          if (chef) setChef(chef);
+          setLoading(false);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      })();
+    }
   }, []);
   return loading ? (
     <div className="h-screen w-screen flex justify-center items-center space-x-2">

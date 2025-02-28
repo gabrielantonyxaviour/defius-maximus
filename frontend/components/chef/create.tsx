@@ -366,7 +366,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
     console.log(timeFrame);
     const formData = new FormData();
     formData.append("chef_id", chef?.id || "");
-    formData.append("username", (chef as any).username || "");
+    formData.append("username", chef?.user_id || "");
     formData.append("asset", selectedAsset);
     formData.append("direction", direction);
     formData.append("chain", selectedChain);

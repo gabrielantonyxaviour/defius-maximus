@@ -32,7 +32,6 @@ export default function Layout({
     setActions,
     walletBalance,
     setWalletBalance,
-    chef,
     humanityRegistered,
     setHumanityRegistered,
     setChef,
@@ -166,26 +165,40 @@ export default function Layout({
   }, [wallet, user]);
 
   useEffect(() => {
+    if (!address) return;
     (async function () {
+      console.log("Fetching chef data for address:", address);
+      const response = await fetch(
+        "/api/supabase/get-chef?username=" + address
+      );
+      const { chef } = await response.json();
+      console.log("Fetched chef data:", chef);
+      setChef(chef);
+
       if (chef && !humanityRegistered) {
-        console.log("Checking humanity");
+        console.log("Checking humanity registration for chef:", chef.user_id);
         const response = await fetch(
           "/api/humanity/check?address=" + chef.user_id
         );
-        const { isRegistered } = await response.json();
-        setHumanityRegistered(isRegistered);
+        const responseData = await response.json();
 
-        if (isRegistered && chef.cred_id != null) {
+        console.log("Humanity registration status:", responseData);
+        setHumanityRegistered(responseData);
+
+        if (responseData && chef.cred_id != null) {
+          console.log("Fetching credential for cred_id:", chef.cred_id);
           const response = await fetch(
             `/api/humanity/owns?address=${chef.user_id}&credId=${chef.cred_id}`
           );
           const { cred } = await response.json();
+          console.log("Fetched credential:", cred);
           setCred(cred);
         }
       } else {
+        console.log("Chef is not set or humanity is already registered");
       }
     })();
-  }, []);
+  }, [address]);
 
   return (
     <div className="min-h-screen w-full">

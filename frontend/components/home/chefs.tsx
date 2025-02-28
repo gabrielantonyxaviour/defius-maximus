@@ -47,14 +47,14 @@ export default function Chefs({
           ) : (
             chefs.map((chef) => (
               <div
-                key={(chef as any).username}
+                key={chef.user_id}
                 className={`w-[90%] relative bg-[#1F1F1F] rounded-sm`}
               >
                 <div
                   className={`group cursor-pointer flex flex-col p-6 sen rounded-sm text-sm border border-[2px] border-[#3A3A3A] hover:bg-[#BF4317] bg-[#1F1F1F]  text-white`}
                   onClick={() => {
                     console.log("Clicked chef:", chef);
-                    setSearchUsername((chef as any).username);
+                    setSearchUsername(chef.user_id);
                   }}
                 >
                   <div className="flex items-start space-x-4">
