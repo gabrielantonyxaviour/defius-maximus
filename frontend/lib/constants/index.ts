@@ -300,6 +300,19 @@ export const spotExchanges = [
     id: "sushi",
     name: "Sushi Swap",
     image: "/sushi.png",
+    chain: "base",
+  },
+  {
+    id: "circuit",
+    name: "Circuit Money",
+    image: "/circuit.png",
+    chain: "zircuit",
+  },
+  {
+    id: "kitty",
+    name: "Kitty Punch",
+    image: "/kitty.png",
+    chain: "flow",
   },
 ];
 
@@ -424,3 +437,7 @@ export const sushiTokenList = [
     symbol: "XUSD",
   },
 ];
+
+export const circuitTokenList = [];
+
+export const kittyTokenList = [];

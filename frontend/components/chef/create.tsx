@@ -32,7 +32,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { DCA, TakeProfit } from "@/types";
 import {
   assets,
+  circuitTokenList,
   exchanges,
+  kittyTokenList,
   perpExchanges,
   spotExchanges,
   sushiTokenList,
@@ -54,7 +56,7 @@ type TradeType = "Choose" | "Spot" | "Perps" | "Memecoins" | "Stocks";
 
 type PerpsDex = "gmx";
 
-type SpotDex = "cow";
+type SpotDex = "sushi" | "circuit" | "kitty";
 
 const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
   const { chef, setRecipe, user, storyClient } = useEnvironmentStore(
@@ -128,7 +130,9 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
   const handleAssetChange = (asset: string) => {
     setSelectedAsset(asset);
     const chains =
-      selectedType == "Spot" ? ["rootstock"] : Object.keys(assets[asset]);
+      selectedType == "Spot"
+        ? [spotExchanges.filter((e) => e.id == selectedDex)[0].chain]
+        : Object.keys(assets[asset]);
     if (chains.length === 1) {
       setSelectedChain(chains[0]);
     } else {
@@ -632,7 +636,11 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                           {selectedAsset && (
                             <div className="flex space-x-1 flex-1 justify-end">
                               {(selectedType == "Spot"
-                                ? ["rootstock"]
+                                ? [
+                                    spotExchanges.filter(
+                                      (e) => e.id == selectedDex
+                                    )[0].chain,
+                                  ]
                                 : Object.keys(assets[selectedAsset]).filter(
                                     (chain: string) =>
                                       assets[selectedAsset][
@@ -664,7 +672,12 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                           </CommandEmpty>
                           <CommandGroup>
                             {selectedType == "Spot"
-                              ? sushiTokenList.map(
+                              ? (selectedDex == "sushi"
+                                  ? sushiTokenList
+                                  : selectedDex == "kitty"
+                                  ? kittyTokenList
+                                  : circuitTokenList
+                                ).map(
                                   (
                                     asset: {
                                       address: string;
@@ -692,16 +705,18 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                                           <Check className=" h-4 w-4" />
                                         )}
                                         <div className="flex space-x-1 flex-1 justify-end">
-                                          {["rootstock"].map(
-                                            (chain: string) => (
-                                              <img
-                                                key={chain}
-                                                src={`/chains/${chain}.png`}
-                                                className="rounded-full w-[24px] h-[24px]"
-                                                alt={chain}
-                                              />
-                                            )
-                                          )}
+                                          {[
+                                            spotExchanges.filter(
+                                              (e) => e.id == selectedDex
+                                            )[0].chain,
+                                          ].map((chain: string) => (
+                                            <img
+                                              key={chain}
+                                              src={`/chains/${chain}.png`}
+                                              className="rounded-full w-[24px] h-[24px]"
+                                              alt={chain}
+                                            />
+                                          ))}
                                         </div>
                                       </div>
                                     </CommandItem>
@@ -781,7 +796,11 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                           <CommandGroup>
                             {selectedAsset &&
                               (selectedType == "Spot"
-                                ? ["rootstock"]
+                                ? [
+                                    spotExchanges.filter(
+                                      (e) => e.id == selectedDex
+                                    )[0].chain,
+                                  ]
                                 : Object.values(assets[selectedAsset]).filter(
                                     (address) => address != ""
                                   )
@@ -799,7 +818,11 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                               )}
                             {selectedAsset &&
                               (selectedType == "Spot"
-                                ? ["rootstock"]
+                                ? [
+                                    spotExchanges.filter(
+                                      (e) => e.id == selectedDex
+                                    )[0].chain,
+                                  ]
                                 : Object.keys(assets[selectedAsset]).filter(
                                     (chain) =>
                                       assets[selectedAsset][
