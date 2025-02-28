@@ -225,6 +225,8 @@ export class SupabaseService {
                 amount = 1;
               }
 
+              amount = parseFloat(amount.toFixed(5));
+
               const tx = await placeTrade(
                 "0x" + user.pkey,
                 chain == "arb" ? "ETH" : "AVAX",

@@ -554,9 +554,12 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                             alt={selectedDex || "hj"}
                           />
                         )}
-                        {selectedDex
-                          ? exchanges.filter((e) => e.id == selectedDex)[0].name
-                          : "Select DEX"}
+                        <p className="group-hover:text-white">
+                          {selectedDex
+                            ? exchanges.filter((e) => e.id == selectedDex)[0]
+                                .name
+                            : "Select DEX"}
+                        </p>
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent className="p-0 sen" align="start">
@@ -571,11 +574,13 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                                 setSelectedAsset("");
                                 setSelectedChain("");
                               }}
-                              className="font-semibold"
+                              className="font-semibold group cursor-pointer"
                             >
-                              Select Dex
+                              <p className="group-hover:text-white ">
+                                Select Dex
+                              </p>
                               {selectedDex == null && (
-                                <Check className="ml-auto h-4 w-4" />
+                                <Check className="ml-auto h-4 w-4 group-hover:text-white" />
                               )}
                             </CommandItem>
                             {(selectedType == "Spot"
@@ -586,16 +591,18 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                                 key={idx}
                                 value={exch.id}
                                 onSelect={() => setSelectedDex(exch.id as any)}
-                                className="font-semibold"
+                                className="font-semibold group cursor-pointer"
                               >
                                 <img
                                   src={`/${exch.id}.png`}
                                   className="rounded-full w-[24px] h-[24px]"
                                   alt={exch.id}
                                 />
-                                {exch.name}
+                                <p className="group-hover:text-white">
+                                  {exch.name}
+                                </p>
                                 {selectedDex === exch.id && (
-                                  <Check className="ml-auto h-4 w-4" />
+                                  <Check className="ml-auto h-4 w-4 group-hover:text-white" />
                                 )}
                               </CommandItem>
                             ))}
@@ -675,7 +682,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                                       onSelect={() =>
                                         handleAssetChange(asset.symbol)
                                       }
-                                      className="w-full hover:bg-[#BF4317] cursor-pointer"
+                                      className="w-full hover:bg-[#BF4317] cursor-pointer hover:text-white"
                                     >
                                       <div className="ml-2 flex w-full items-center space-x-2">
                                         <p className="sen font-semibold ">
@@ -706,14 +713,14 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                                       key={asset}
                                       value={asset}
                                       onSelect={() => handleAssetChange(asset)}
-                                      className="w-full hover:bg-[#BF4317] cursor-pointer"
+                                      className="group w-full hover:bg-[#BF4317] cursor-pointer hover:text-white"
                                     >
                                       <div className="ml-2 flex w-full items-center space-x-2">
-                                        <p className="sen font-semibold ">
+                                        <p className="sen font-semibold group-hover:text-white">
                                           {asset}/USD
                                         </p>
                                         {selectedAsset === asset && (
-                                          <Check className=" h-4 w-4" />
+                                          <Check className=" h-4 w-4 group-hover:text-white" />
                                         )}
                                         <div className="flex space-x-1 flex-1 justify-end">
                                           {Object.keys(chains)
@@ -804,14 +811,14 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                                   key={chain}
                                   value={chain}
                                   onSelect={() => setSelectedChain(chain)}
-                                  className="font-semibold "
+                                  className="group font-semibold cursor-pointer"
                                 >
                                   <img
                                     src={`/chains/${chain}.png`}
                                     className="rounded-full w-[24px] h-[24px]"
                                     alt={chain}
                                   />
-                                  <p className="hover:text-white">
+                                  <p className="group-hover:text-white">
                                     {chain.toUpperCase()}
                                   </p>
                                   {selectedChain === chain && (
