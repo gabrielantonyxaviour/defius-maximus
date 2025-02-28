@@ -20,7 +20,7 @@ export default function Mode({ close }: { close: () => void }) {
         className={`absolute w-[600px] h-[400px] flex flex-col items-center -top-[1%] -left-[1%] w-full h-full space-y-2 sen rounded-sm text-sm border border-[2px] border-[#3A3A3A] py-2 bg-[#1F1F1F] text-white`}
       >
         <div className="flex justify-between items-center w-full px-2">
-          <p className="px-4 font-bold text-lg">Switch EGG Mode</p>
+          <p className="px-4 font-bold text-lg">Switch Mode</p>
           <X className="cursor-pointer" onClick={close} />
         </div>
         <div className="flex space-x-4 pt-6">

@@ -320,121 +320,634 @@ export const exchanges = [...perpExchanges, ...spotExchanges];
 
 export const sushiTokenList = [
   {
-    address: "0x440CD83C160De5C96Ddb20246815eA44C7aBBCa8",
-    chainId: 30,
+    address: "0x18A8BD1fe17A1BB9FFB39eCD83E9489cfD17a022",
+    chainId: 8453,
     decimals: 18,
     logoURI:
-      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/rootstock/0x440CD83C160De5C96Ddb20246815eA44C7aBBCa8.jpg",
-    name: "BitPRO",
-    symbol: "BITP",
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x18A8BD1fe17A1BB9FFB39eCD83E9489cfD17a022.jpg",
+    name: "Andy",
+    symbol: "ANDY",
   },
   {
-    address: "0xe700691dA7b9851F2F35f8b8182c69c53CcaD9Db",
-    chainId: 30,
+    address: "0xF9569cFb8FD265e91aa478d86ae8c78b8AF55Df4",
+    chainId: 8453,
     decimals: 18,
     logoURI:
-      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/rootstock/0xe700691dA7b9851F2F35f8b8182c69c53CcaD9Db.jpg",
-    name: "Dollar on Chain",
-    symbol: "DOC",
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xF9569cFb8FD265e91aa478d86ae8c78b8AF55Df4.jpg",
+    name: "Auki Token",
+    symbol: "AUKI",
   },
   {
-    address: "0x1D931Bf8656d795E50eF6D639562C5bD8Ac2B78f",
-    chainId: 30,
-    decimals: 18,
+    address: "0x23ee2343B892b1BB63503a4FAbc840E0e2C6810f",
+    chainId: 8453,
+    decimals: 6,
     logoURI:
-      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/rootstock/0x1D931Bf8656d795E50eF6D639562C5bD8Ac2B78f.jpg",
-    name: "ETHs",
-    symbol: "ETHs",
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x23ee2343B892b1BB63503a4FAbc840E0e2C6810f.jpg",
+    name: "Axelar",
+    symbol: "AXL",
   },
   {
-    address: "0x9AC7fE28967B30E3A4e6e03286d715b42B453D10",
-    chainId: 30,
+    address: "0x5C7e299CF531eb66f2A1dF637d37AbB78e6200C7",
+    chainId: 8453,
     decimals: 18,
     logoURI:
-      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/rootstock/0x9AC7fE28967B30E3A4e6e03286d715b42B453D10.jpg",
-    name: "MOC",
-    symbol: "MOC",
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/base/0x5C7e299CF531eb66f2A1dF637d37AbB78e6200C7.jpg",
+    name: "Axelar Wrapped DAI",
+    symbol: "axlDAI",
   },
   {
-    address: "0x6B1A73d547F4009a26B8485B63d7015d248Ad406",
-    chainId: 30,
-    decimals: 18,
+    address: "0xEB466342C4d449BC9f53A865D5Cb90586f405215",
+    chainId: 8453,
+    decimals: 6,
     logoURI:
-      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/rootstock/0x6B1A73d547F4009a26B8485B63d7015d248Ad406.jpg",
-    name: "rDAI",
-    symbol: "rDAI",
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/base/0xEB466342C4d449BC9f53A865D5Cb90586f405215.jpg",
+    name: "Axelar Wrapped USDC",
+    symbol: "axlUSDC",
   },
   {
-    address: "0x2AcC95758f8b5F583470ba265EB685a8F45fC9D5",
-    chainId: 30,
+    address: "0x7ED613AB8b2b4c6A781DDC97eA98a666c6437511",
+    chainId: 8453,
     decimals: 18,
     logoURI:
-      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/rootstock/0x2AcC95758f8b5F583470ba265EB685a8F45fC9D5.jpg",
-    name: "RIF",
-    symbol: "RIF",
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x7ED613AB8b2b4c6A781DDC97eA98a666c6437511.jpg",
+    name: "All Your Base",
+    symbol: "AYB",
   },
   {
-    address: "0xf4d27c56595Ed59B66cC7F03CFF5193e4bd74a61",
-    chainId: 30,
+    address: "0x7c6b91D9Be155A6Db01f749217d76fF02A7227F2",
+    chainId: 8453,
     decimals: 18,
     logoURI:
-      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/rootstock/0xf4d27c56595Ed59B66cC7F03CFF5193e4bd74a61.jpg",
-    name: "RIFPro",
-    symbol: "RIFP",
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/base/0x7c6b91D9Be155A6Db01f749217d76fF02A7227F2.jpg",
+    name: "Balancer",
+    symbol: "BAL",
   },
   {
-    address: "0x1BDA44fda023f2aF8280A16FD1b01d1a493BA6C4",
-    chainId: 30,
+    address: "0x27D2DECb4bFC9C76F0309b8E88dec3a601Fe25a8",
+    chainId: 8453,
     decimals: 18,
     logoURI:
-      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/rootstock/0x1BDA44fda023f2aF8280A16FD1b01d1a493BA6C4.jpg",
-    name: "rUSDC",
-    symbol: "rUSDC",
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/base/0x27D2DECb4bFC9C76F0309b8E88dec3a601Fe25a8.jpg",
+    name: "Bald",
+    symbol: "BALD",
   },
   {
-    address: "0xef213441A85dF4d7ACbDaE0Cf78004e1E486bB96",
-    chainId: 30,
-    decimals: 18,
+    address: "0x1443Cbca252D1ffAE56b4ee4cc904e9554E2F6aD",
+    chainId: 8453,
+    decimals: 8,
     logoURI:
-      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/rootstock/0xef213441A85dF4d7ACbDaE0Cf78004e1E486bB96.jpg",
-    name: "rUSDT",
-    symbol: "rUSDT",
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x1443Cbca252D1ffAE56b4ee4cc904e9554E2F6aD.jpg",
+    name: "Baldcat",
+    symbol: "baldcat",
   },
   {
-    address: "0xEFc78fc7d48b64958315949279Ba181c2114ABBd",
-    chainId: 30,
+    address: "0xBC45647eA894030a4E9801Ec03479739FA2485F0",
+    chainId: 8453,
     decimals: 18,
     logoURI:
-      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/rootstock/0xEFc78fc7d48b64958315949279Ba181c2114ABBd.jpg",
-    name: "Sovryn Token",
-    symbol: "SOV",
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xBC45647eA894030a4E9801Ec03479739FA2485F0.jpg",
+    name: "Basenji",
+    symbol: "BENJI",
   },
   {
-    address: "0x3A15461d8aE0F0Fb5Fa2629e9DA7D66A794a6e37",
-    chainId: 30,
-    decimals: 18,
+    address: "0x4e496c0256FB9D4CC7Ba2fdF931bC9CbB7731660",
+    chainId: 8453,
+    decimals: 9,
     logoURI:
-      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/rootstock/0x3A15461d8aE0F0Fb5Fa2629e9DA7D66A794a6e37.jpg",
-    name: "RIF US Dollar",
-    symbol: "USDRIF",
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x4e496c0256FB9D4CC7Ba2fdF931bC9CbB7731660.jpg",
+    name: "Boge",
+    symbol: "BOGE",
   },
   {
-    address: "0x542fDA317318eBF1d3DEAf76E0b632741A7e677d",
-    chainId: 30,
+    address: "0xB310C7D7428B95aD1B86ba4191704576150429B6",
+    chainId: 8453,
     decimals: 18,
     logoURI:
-      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/rootstock/0x542fDA317318eBF1d3DEAf76E0b632741A7e677d.jpg",
-    name: "Wrapped WBTC",
-    symbol: "WRBTC",
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xB310C7D7428B95aD1B86ba4191704576150429B6.jpg",
+    name: "BasedBomb",
+    symbol: "BOMB",
   },
   {
-    address: "0xb5999795BE0EbB5bAb23144AA5FD6A02D080299F",
-    chainId: 30,
+    address: "0x09DeB3CF353186E7A84aBfD7434BF643f77eB686",
+    chainId: 8453,
     decimals: 18,
     logoURI:
-      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/rootstock/0xb5999795BE0EbB5bAb23144AA5FD6A02D080299F.jpg",
-    name: "XUSD",
-    symbol: "XUSD",
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/base/0x09DeB3CF353186E7A84aBfD7434BF643f77eB686.jpg",
+    name: "BASE BOT",
+    symbol: "BOT",
+  },
+  {
+    address: "0xDa761A290e01c69325D12D82AC402E5a73D62E81",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xDa761A290e01c69325D12D82AC402E5a73D62E81.jpg",
+    name: "Base Pro Shops",
+    symbol: "BPS",
+  },
+  {
+    address: "0x532f27101965dd16442E59d40670FaF5eBB142E4",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x532f27101965dd16442E59d40670FaF5eBB142E4.jpg",
+    name: "Brett",
+    symbol: "BRETT",
+  },
+  {
+    address: "0xfEA9DcDc9E23a9068bF557AD5b186675C61d33eA",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xfEA9DcDc9E23a9068bF557AD5b186675C61d33eA.jpg",
+    name: "Based Shiba Inu",
+    symbol: "BSHIB",
+  },
+  {
+    address: "0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x2Ae3F1Ec7F1F5012CFEab0185bfc7aa3cf0DEc22.jpg",
+    name: "Coinbase Wrapped Staked ETH",
+    symbol: "cbETH",
+  },
+  {
+    address: "0xecaF81Eb42cd30014EB44130b89Bcd6d4Ad98B92",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xecaF81Eb42cd30014EB44130b89Bcd6d4Ad98B92.jpg",
+    name: "Based Chad",
+    symbol: "CHAD",
+  },
+  {
+    address: "0x9e1028F5F1D5eDE59748FFceE5532509976840E0",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x9e1028F5F1D5eDE59748FFceE5532509976840E0.jpg",
+    name: "Compound",
+    symbol: "COMP",
+  },
+  {
+    address: "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb.jpg",
+    name: "Dai Stablecoin",
+    symbol: "DAI",
+  },
+  {
+    address: "0x85E90a5430AF45776548ADB82eE4cD9E33B08077",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x85E90a5430AF45776548ADB82eE4cD9E33B08077.jpg",
+    name: "DINO",
+    symbol: "DINO",
+  },
+  {
+    address: "0x9D8a9aEc7aDcb2b203D285b9c6F91ABbcDF1D7e4",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x9D8a9aEc7aDcb2b203D285b9c6F91ABbcDF1D7e4.jpg",
+    name: "Dolp",
+    symbol: "DOLP",
+  },
+  {
+    address: "0xD08a2917653d4E460893203471f0000826fb4034",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xD08a2917653d4E460893203471f0000826fb4034.jpg",
+    name: "FARM Reward Token",
+    symbol: "FARM",
+  },
+  {
+    address: "0x122A3f185655847980639E8EdF0F0f66cd91C5fE",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x122A3f185655847980639E8EdF0F0f66cd91C5fE.jpg",
+    name: "FELLA",
+    symbol: "FELLA",
+  },
+  {
+    address: "0xFF0C532FDB8Cd566Ae169C1CB157ff2Bdc83E105",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xFF0C532FDB8Cd566Ae169C1CB157ff2Bdc83E105.jpg",
+    name: "Fren Pet",
+    symbol: "Fren Pet",
+  },
+  {
+    address: "0xd3a61a3A9b8E0dD8160C9bF5Ea79159e3E2452B8",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xd3a61a3A9b8E0dD8160C9bF5Ea79159e3E2452B8.jpg",
+    name: "HAM",
+    symbol: "HAM",
+  },
+  {
+    address: "0x9e5AAC1Ba1a2e6aEd6b32689DFcF62A509Ca96f3",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x9e5AAC1Ba1a2e6aEd6b32689DFcF62A509Ca96f3.jpg",
+    name: "HanChain",
+    symbol: "HAN",
+  },
+  {
+    address: "0x3e7eF8f50246f725885102E8238CBba33F276747",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x3e7eF8f50246f725885102E8238CBba33F276747.jpg",
+    name: "HANePlatform",
+    symbol: "HANeP",
+  },
+  {
+    address: "0x4d25E94291FE8dcFBfA572cbB2aAa7B755087c91",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x4d25E94291FE8dcFBfA572cbB2aAa7B755087c91.jpg",
+    name: "High",
+    symbol: "HIGH",
+  },
+  {
+    address: "0xE7798f023fC62146e8Aa1b36Da45fb70855a77Ea",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xE7798f023fC62146e8Aa1b36Da45fb70855a77Ea.jpg",
+    name: "iFARM",
+    symbol: "iFARM",
+  },
+  {
+    address: "0xeA930c80d8eac45993d127055E718555e7155fB1",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xeA930c80d8eac45993d127055E718555e7155fB1.jpg",
+    name: "Infinite",
+    symbol: "INF",
+  },
+  {
+    address: "0x895A26F67a8375D0419Cb7E4bd1109aC139ab741",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x895A26F67a8375D0419Cb7E4bd1109aC139ab741.jpg",
+    name: "Jelly",
+    symbol: "JELLY",
+  },
+  {
+    address: "0x64cc19A52f4D631eF5BE07947CABA14aE00c52Eb",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x64cc19A52f4D631eF5BE07947CABA14aE00c52Eb.jpg",
+    name: "Kibble",
+    symbol: "KIBBLE",
+  },
+  {
+    address: "0xbE3111856e4acA828593274eA6872f27968C8DD6",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/base/0xbE3111856e4acA828593274eA6872f27968C8DD6.jpg",
+    name: "KRAV",
+    symbol: "KRAV",
+  },
+  {
+    address: "0x8Fbd0648971d56f1f2c35Fa075Ff5Bc75fb0e39D",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x8Fbd0648971d56f1f2c35Fa075Ff5Bc75fb0e39D.jpg",
+    name: "MBS",
+    symbol: "MBS",
+  },
+  {
+    address: "0xe1f9ac62a2f34881f6Fe0F84322dE9d7024C2b8E",
+    chainId: 8453,
+    decimals: 8,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xe1f9ac62a2f34881f6Fe0F84322dE9d7024C2b8E.jpg",
+    name: "Mochi",
+    symbol: "MOCHI",
+  },
+  {
+    address: "0xF6e932Ca12afa26665dC4dDE7e27be02A7c02e50",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xF6e932Ca12afa26665dC4dDE7e27be02A7c02e50.jpg",
+    name: "Mochi",
+    symbol: "MOCHI",
+  },
+  {
+    address: "0x2228363213E6E16e8ccC556Aa270a05f1F1A4E02",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x2228363213E6E16e8ccC556Aa270a05f1F1A4E02.jpg",
+    name: "Mochi and Toshi",
+    symbol: "MOCHITOSHI",
+  },
+  {
+    address: "0x7771450EcE9C61430953D2646f995E33a06C91F5",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x7771450EcE9C61430953D2646f995E33a06C91F5.jpg",
+    name: "Monke",
+    symbol: "MONKE",
+  },
+  {
+    address: "0x2CcbEcc47D83eE80e27fd09c8e757B82F1fFad4C",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x2CcbEcc47D83eE80e27fd09c8e757B82F1fFad4C.jpg",
+    name: "Base Balloons",
+    symbol: "NANG",
+  },
+  {
+    address: "0xc2106ca72996e49bBADcB836eeC52B765977fd20",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xc2106ca72996e49bBADcB836eeC52B765977fd20.jpg",
+    name: "NFTEarthOFT",
+    symbol: "NFTE",
+  },
+  {
+    address: "0x47b464eDB8Dc9BC67b5CD4C9310BB87b773845bD",
+    chainId: 8453,
+    decimals: 9,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x47b464eDB8Dc9BC67b5CD4C9310BB87b773845bD.jpg",
+    name: "Normie",
+    symbol: "NORMIE",
+  },
+  {
+    address: "0xB166E8B140D35D9D8226E40C09f757BAC5A4d87d",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xB166E8B140D35D9D8226E40C09f757BAC5A4d87d.jpg",
+    name: "Non-Playable Coin",
+    symbol: "NPC",
+  },
+  {
+    address: "0x137A61B3311E967b0D1e79d5546167C9DC9E6B5B",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x137A61B3311E967b0D1e79d5546167C9DC9E6B5B.jpg",
+    name: "Pleasure Coin",
+    symbol: "NSFW",
+  },
+  {
+    address: "0xC48E605c7b722a57277e087a6170B9E227e5AC0A",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xC48E605c7b722a57277e087a6170B9E227e5AC0A.jpg",
+    name: "OmniCat",
+    symbol: "OMNI",
+  },
+  {
+    address: "0xbFd5206962267c7b4b4A8B3D76AC2E1b2A5c4d5e",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xbFd5206962267c7b4b4A8B3D76AC2E1b2A5c4d5e.jpg",
+    name: "Osaka Protocol",
+    symbol: "OSAK",
+  },
+  {
+    address: "0xba0Dda8762C24dA9487f5FA026a9B64b695A07Ea",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xba0Dda8762C24dA9487f5FA026a9B64b695A07Ea.jpg",
+    name: "OX Coin",
+    symbol: "OX",
+  },
+  {
+    address: "0x40468be13c4388D2AB68a09F56973fa95DB5bca0",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x40468be13c4388D2AB68a09F56973fa95DB5bca0.jpg",
+    name: "Pizza",
+    symbol: "PIZZA",
+  },
+  {
+    address: "0xC702b80a1bEBac118cab22Ce6F2978ef59563b3F",
+    chainId: 8453,
+    decimals: 8,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xC702b80a1bEBac118cab22Ce6F2978ef59563b3F.jpg",
+    name: "RAFL",
+    symbol: "RAFL",
+  },
+  {
+    address: "0x1C7a460413dD4e964f96D8dFC56E7223cE88CD85",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x1C7a460413dD4e964f96D8dFC56E7223cE88CD85.jpg",
+    name: "Seamless",
+    symbol: "SEAM",
+  },
+  {
+    address: "0xBa5B9B2D2d06a9021EB3190ea5Fb0e02160839A4",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xBa5B9B2D2d06a9021EB3190ea5Fb0e02160839A4.jpg",
+    name: "Sendit",
+    symbol: "Sendit",
+  },
+  {
+    address: "0xD1917629B3E6A72E6772Aab5dBe58Eb7FA3C2F33",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xD1917629B3E6A72E6772Aab5dBe58Eb7FA3C2F33.jpg",
+    name: "Settled ETHXY Token",
+    symbol: "SEXY",
+  },
+  {
+    address: "0x22DC834C3Ff3e45f484bF24B9B07b851B981900f",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x22DC834C3Ff3e45f484bF24B9B07b851B981900f.jpg",
+    name: "Smudge Cat",
+    symbol: "SMUDCAT",
+  },
+  {
+    address: "0x3124678D62D2aa1f615B54525310fbfDa6DcF7AE",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x3124678D62D2aa1f615B54525310fbfDa6DcF7AE.jpg",
+    name: "Sensay",
+    symbol: "SNSY",
+  },
+  {
+    address: "0x7D49a065D17d6d4a55dc13649901fdBB98B2AFBA",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x7D49a065D17d6d4a55dc13649901fdBB98B2AFBA.jpg",
+    name: "SushiToken",
+    symbol: "SUSHI",
+  },
+  {
+    address: "0xb8D98a102b0079B69FFbc760C8d857A31653e56e",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xb8D98a102b0079B69FFbc760C8d857A31653e56e.jpg",
+    name: "toby",
+    symbol: "toby",
+  },
+  {
+    address: "0x8544FE9D190fD7EC52860abBf45088E81Ee24a8c",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/base/0x8544FE9D190fD7EC52860abBf45088E81Ee24a8c.jpg",
+    name: "Toshi",
+    symbol: "TOSHI",
+  },
+  {
+    address: "0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4.jpg",
+    name: "Toshi",
+    symbol: "TOSHI",
+  },
+  {
+    address: "0xf7C1CEfCf7E1dd8161e00099facD3E1Db9e528ee",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xf7C1CEfCf7E1dd8161e00099facD3E1Db9e528ee.jpg",
+    name: "TOWER",
+    symbol: "TOWER",
+  },
+  {
+    address: "0x0d97F261b1e88845184f678e2d1e7a98D9FD38dE",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x0d97F261b1e88845184f678e2d1e7a98D9FD38dE.jpg",
+    name: "Base God",
+    symbol: "TYBG",
+  },
+  {
+    address: "0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA",
+    chainId: 8453,
+    decimals: 6,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/base/0xd9aAEc86B65D86f6A7B5B1b0c42FFA531710b6CA.jpg",
+    name: "USD Base Coin",
+    symbol: "USDbc",
+  },
+  {
+    address: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    chainId: 8453,
+    decimals: 6,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913.jpg",
+    name: "USD Coin",
+    symbol: "USDC",
+  },
+  {
+    address: "0x5A76A56ad937335168b30dF3AA1327277421C6Ae",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x5A76A56ad937335168b30dF3AA1327277421C6Ae.jpg",
+    name: "Vela Token",
+    symbol: "VELA",
+  },
+  {
+    address: "0x10c1B6f768e13c624A4A23337f1a5bA5c9BE0E4B",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x10c1B6f768e13c624A4A23337f1a5bA5c9BE0E4B.jpg",
+    name: "Warpie",
+    symbol: "WARPIE",
+  },
+  {
+    address: "0x4200000000000000000000000000000000000006",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/base/0x4200000000000000000000000000000000000006.jpg",
+    name: "Wrapped Ether",
+    symbol: "WETH",
+  },
+  {
+    address: "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452.jpg",
+    name: "Wrapped liquid staked Ether 2.0",
+    symbol: "wstETH",
+  },
+  {
+    address: "0x981D41C115a2d48Cb1215D13Bda8f989d407c9c5",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x981D41C115a2d48Cb1215D13Bda8f989d407c9c5.jpg",
+    name: "Xena",
+    symbol: "XEN",
+  },
+  {
+    address: "0x0FA70E156Cd3B03aC4080bfe55BD8AB50f5Bcb98",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x0FA70E156Cd3B03aC4080bfe55BD8AB50f5Bcb98.jpg",
+    name: "Youcoin",
+    symbol: "YOU",
+  },
+  {
+    address: "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/token-logos/network/base/0x6985884C4392D348587B19cb9eAAf157F13271cd.jpg",
+    name: "LayerZero",
+    symbol: "ZRO",
+  },
+  {
+    address: "0x3bB4445D30AC020a84c1b5A8A2C6248ebC9779D0",
+    chainId: 8453,
+    decimals: 18,
+    logoURI:
+      "https://raw.githubusercontent.com/sushiswap/list/master/logos/network/base/0x3bB4445D30AC020a84c1b5A8A2C6248ebC9779D0.jpg",
+    name: "0x Protocol Token",
+    symbol: "ZRX",
   },
 ];
 
