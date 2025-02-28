@@ -42,7 +42,7 @@ import { Calendar } from "../ui/calendar";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { useEnvironmentStore } from "../context";
 import OverlappingCircles from "../ui/overlapping-circles";
-import { uploadImageToPinata, uploadJsonToPinata } from "@/lib/pinata";
+import { uploadImageToWalrus, uploadJsonToWalrus } from "@/lib/walrus";
 import { createHash } from "crypto";
 import { mintAndRegisterIp } from "@/lib/story";
 import { Hex } from "viem";
@@ -175,7 +175,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
       description: "Storing on IPFS and publishing on chain...",
     });
 
-    const tradeImage = await uploadImageToPinata(image);
+    const tradeImage = await uploadImageToWalrus(image);
 
     const ipMetadata = {
       title: chef?.nft_name,
@@ -245,10 +245,10 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
     };
 
     const { uri: ipMetadataUri, hash: ipMetadataHash } =
-      await uploadJsonToPinata(`ip-${chef?.id}-${Date.now()}`, ipMetadata);
+      await uploadJsonToWalrus(`ip-${chef?.id}-${Date.now()}`, ipMetadata);
 
     const { uri: nftMetadataUri, hash: nftMetadataHash } =
-      await uploadJsonToPinata(`nft-${chef?.id}-${Date.now()}`, nftMetadata);
+      await uploadJsonToWalrus(`nft-${chef?.id}-${Date.now()}`, nftMetadata);
 
     console.log("IPFS Upload successful");
 

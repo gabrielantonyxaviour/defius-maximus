@@ -12,7 +12,7 @@ import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { toast } from "sonner";
 import { createSpgNftCollection } from "@/lib/story";
 import { storeImage } from "@/lib/supabase";
-import { uploadImageToPinata } from "@/lib/pinata";
+import { uploadImageToWalrus } from "@/lib/walrus";
 export default function CreateChefForm() {
   const { user, setChef, storyClient } = useEnvironmentStore((store) => store);
   const [name, setName] = useState("");
@@ -82,7 +82,7 @@ export default function CreateChefForm() {
         "Creating a NFT collection to mint your trade plays as IP assets..",
     });
 
-    const imageUrl = await uploadImageToPinata(image);
+    const imageUrl = await uploadImageToWalrus(image);
 
     const { txHash, spgNftContract } = await createSpgNftCollection(
       storyClient,

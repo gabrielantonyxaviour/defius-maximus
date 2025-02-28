@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Home from "@/components/home";
 import Humanity from "@/components/humanity";
 
 export const metadata: Metadata = {
@@ -8,6 +7,6 @@ export const metadata: Metadata = {
     "An autonomous AI agent that lets you click a button to print money.",
 };
 
-export default function HomePage() {
+export default function HumanityPage() {
   return <Humanity />;
 }
