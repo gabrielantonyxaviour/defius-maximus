@@ -114,7 +114,7 @@ export async function convertEthToAsset(
     BigInt(2);
   console.log("Asset Price");
   console.log(avgAssetPrice);
-  const usdAmount = expandDecimals(amount * 10 ** 6, 6) * avgEthPrice;
+  const usdAmount = BigInt(amount * 10 ** 12) * avgEthPrice;
 
   return {
     assetPriceInUSD:

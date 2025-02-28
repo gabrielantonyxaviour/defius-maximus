@@ -124,6 +124,15 @@ export default function Layout({
           console.log("Setting user data:", data);
           setUser(data);
         }
+      } else {
+        console.log("User is already set or not connected");
+      }
+    })();
+  }, [isConnected, address, wallet]);
+
+  useEffect(() => {
+    if (user && wallet) {
+      (async function () {
         console.log("Fetching Balances");
         const fetchedWalletBalance = await getChainBalance(
           storyAeneid,
@@ -147,11 +156,9 @@ export default function Layout({
             parseFloat(formatEther(avax)) * parseFloat(avaxPrice) +
             parseFloat(formatEther(base)) * parseFloat(ethPrice)
         );
-      } else {
-        console.log("User is already set or not connected");
-      }
-    })();
-  }, [isConnected, address, wallet]);
+      })();
+    }
+  }, [wallet, user]);
 
   return (
     <div className="min-h-screen w-full">
