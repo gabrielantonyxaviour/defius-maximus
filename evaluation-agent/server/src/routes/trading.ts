@@ -238,10 +238,10 @@ Please provide a risk assessment with these scores (0-100):
 
     console.log(
       "Sending request to AI endpoint:",
-      "https://llm-gateway.heurist.xyz/v1/chat/completions"
+      "https://api.ora.io/v1/chat/completions"
     );
     const analysisResponse = await fetch(
-      `https://llm-gateway.heurist.xyz/v1/chat/completions`,
+      `https://api.ora.io/v1/chat/completions`,
       {
         method: "POST",
         headers: {
@@ -250,7 +250,7 @@ Please provide a risk assessment with these scores (0-100):
           Authorization: `Bearer ${process.env.HEURIST_AI_API_KEY}`,
         },
         body: JSON.stringify({
-          model: "meta-llama/llama-3.3-70b-instruct",
+          model: "meta-llama/Llama-3.3-70B-Instruct",
           messages: [
             {
               role: "system",
