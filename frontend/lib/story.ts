@@ -1,6 +1,7 @@
 import { MintIpInputParams } from "@/types";
 import {
   CreateNFTCollectionResponse,
+  LicenseTerms,
   RegisterIpResponse,
   StoryClient,
   StoryConfig,
@@ -64,6 +65,28 @@ export async function mintAndRegisterIp(
   client: StoryClient,
   params: MintIpInputParams
 ): Promise<RegisterIpResponse> {
+  // const licenseTerms: LicenseTerms = {
+  //   defaultMintingFee: BigInt("0"),
+  //   // must be a whitelisted revenue token from https://docs.story.foundation/docs/deployed-smart-contracts
+  //   // in this case, we use $WIP
+  //   currency: "0x1514000000000000000000000000000000000000",
+  //   // RoyaltyPolicyLAP address from https://docs.story.foundation/docs/deployed-smart-contracts
+  //   royaltyPolicy: "0xBe54FB168b3c982b7AaE60dB6CF75Bd8447b390E",
+  //   transferable: false,
+  //   expiration: 0n,
+  //   commercialUse: false,
+  //   commercialAttribution: false,
+  //   commercializerChecker: zeroAddress,
+  //   commercializerCheckerData: "0x",
+  //   commercialRevShare: 0,
+  //   commercialRevCeiling: 0n,
+  //   derivativesAllowed: false,
+  //   derivativesAttribution: false,
+  //   derivativesApproval: false,
+  //   derivativesReciprocal: false,
+  //   derivativeRevCeiling: 0n,
+  //   uri: "",
+  // };
   const response = await client.ipAsset.mintAndRegisterIp({
     spgNftContract: params.nftAddress,
     allowDuplicates: true,
