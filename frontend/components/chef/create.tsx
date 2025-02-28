@@ -594,7 +594,11 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                               <CommandItem
                                 key={idx}
                                 value={exch.id}
-                                onSelect={() => setSelectedDex(exch.id as any)}
+                                onSelect={() => {
+                                  setSelectedDex(exch.id as any);
+                                  setSelectedAsset("");
+                                  setSelectedChain("");
+                                }}
                                 className="font-semibold group cursor-pointer"
                               >
                                 <img

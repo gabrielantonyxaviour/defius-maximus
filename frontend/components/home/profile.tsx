@@ -83,7 +83,7 @@ export default function Profile({ close }: { close: () => void }) {
     setRiskLevel(smoothedRisk);
   }, [expectedPNL, endDate]);
   return (
-    <div className="max-w-lg 2xl:max-w-lg bg-[#1F1F1F] rounded-sm relative">
+    <div className="w-full max-w-lg 2xl:max-w-lg bg-[#1F1F1F] rounded-sm relative">
       <div className="absolute inset-0 -top-1 -left-1 sen rounded-sm border-2 border-[#3A3A3A] bg-[#1F1F1F] text-white p-6">
         <ScrollArea className="h-full w-full">
           <div className="space-y-4">

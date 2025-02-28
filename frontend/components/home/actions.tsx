@@ -31,7 +31,7 @@ export default function Actions({
       </div>
       <Separator className="bg-[#1F1F1F]" />
 
-      <ScrollArea className="h-[450px] px-6">
+      {/* <ScrollArea className="h-[450px] px-6">
         <table className="w-full">
           <thead>
             <tr className="text-left border-b-[1px] border-[#2B2B2B] sticky top-0 bg-[#1F1F1F]">
@@ -108,7 +108,7 @@ export default function Actions({
             </p>
           </div>
         )}
-      </ScrollArea>
+      </ScrollArea> */}
     </div>
   );
 }
