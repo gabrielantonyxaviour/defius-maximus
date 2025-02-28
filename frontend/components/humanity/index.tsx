@@ -36,12 +36,12 @@ export default function Humanity() {
               </p>
             ) : humanityRegistered ? (
               <>
-                <p className="text-white text-center pb-6">
+                <p className="text-white text-center pb-2">
                   You own a valid Humanity ID
                 </p>
                 {cred ? (
                   <>
-                    <div className="grid grid-cols-5 w-[75%] h-[200px] rounded-xl border-2 border-[#a3a3a3]">
+                    <div className="grid grid-cols-5 w-[75%] h-[200px] rounded-xl border-2 border-[#a3a3a3] pt-4">
                       <div className="col-span-2 rounded-l-xl">
                         <Image
                           src={"/son.png"}
@@ -78,6 +78,7 @@ export default function Humanity() {
                       disabled={creating}
                       onClick={async () => {
                         setCreating(true);
+                        console.log("Creating cred for chef:", chef);
                         const customCred = {
                           chef_name: chef.name,
                           ip: chef.ip_address,
@@ -104,14 +105,17 @@ export default function Humanity() {
                         }
                         setCreating(false);
                       }}
-                      className="font-semibold "
+                      className="font-semibold mt-4"
                     >
-                      Mint now
+                      {creating ? (
+                        <div className="flex w-full justify-center space-x-2">
+                          <CircleDashedIcon className="animate-spin text-white" />
+                          <p className="text-white">Loading...</p>
+                        </div>
+                      ) : (
+                        <p>Mint Now</p>
+                      )}
                     </Button>
-                    <div className="flex w-full justify-center space-x-2">
-                      <CircleDashedIcon className="animate-spin text-white" />
-                      <p className="text-white">Loading...</p>
-                    </div>
                   </>
                 ) : (
                   <p>

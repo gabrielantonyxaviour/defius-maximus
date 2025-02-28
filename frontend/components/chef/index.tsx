@@ -24,7 +24,7 @@ export default function Chef() {
       (async () => {
         try {
           const response = await fetch(
-            `/api/supabase/get-chef?username=${user.id}`,
+            `/api/supabase/get-chef?user_id=${user.id}`,
             {
               method: "GET",
               headers: {

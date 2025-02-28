@@ -42,9 +42,7 @@ export default function ChefProfile({
 
     (async () => {
       console.log("Fetching chef data from API.");
-      const response = await fetch(
-        `/api/supabase/get-chef?username=${chef_id}`
-      );
+      const response = await fetch(`/api/supabase/get-chef?user_id=${chef_id}`);
       const { chef, error } = await response.json();
       if (error) {
         console.error("Failed to fetch chef data:", error);
@@ -128,7 +126,7 @@ export default function ChefProfile({
                               "Content-Type": "application/json",
                             },
                             body: JSON.stringify({
-                              username: user.id,
+                              user_id: user.id,
                               chef_id: chefData.id,
                               confidence_level: 80,
                             }),

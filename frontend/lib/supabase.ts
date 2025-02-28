@@ -60,7 +60,7 @@ export async function getChef(user_id: string): Promise<Chef | null> {
   const { data, error } = await supabase
     .from("chef_profile")
     .select("*")
-    .eq("username", user_id)
+    .eq("user_id", user_id)
     .single();
 
   if (error) {

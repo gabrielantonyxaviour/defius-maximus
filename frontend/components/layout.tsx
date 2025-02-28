@@ -76,7 +76,7 @@ export default function Layout({
           address
         );
         const response = await fetch(
-          `/api/supabase/get-user?username=${address}`
+          `/api/supabase/get-user?user_id=${address}`
         );
         const { user: data } = await response.json();
         console.log("DATA", data);
@@ -84,7 +84,7 @@ export default function Layout({
           console.log("User data found:", data);
           console.log("Fetching user follows for:", address);
           const responseFollows = await fetch(
-            `/api/supabase/get-follows?username=${address}`
+            `/api/supabase/get-follows?user_id=${address}`
           );
           const { follows, error } = await responseFollows.json();
           if (error) {
@@ -95,7 +95,7 @@ export default function Layout({
 
           console.log("Fetching user trades for:", address);
           const { trades } = await fetch(
-            `/api/supabase/get-executed-trades?username=${address}`
+            `/api/supabase/get-executed-trades?user_id=${address}`
           ).then((res) => res.json());
           console.log("Fetched user trades:", trades);
           setActions(trades);
@@ -168,9 +168,7 @@ export default function Layout({
     if (!address) return;
     (async function () {
       console.log("Fetching chef data for address:", address);
-      const response = await fetch(
-        "/api/supabase/get-chef?username=" + address
-      );
+      const response = await fetch("/api/supabase/get-chef?user_id=" + address);
       const { chef } = await response.json();
       console.log("Fetched chef data:", chef);
       setChef(chef);

@@ -48,7 +48,7 @@ export async function POST(request: Request) {
         },
         method: "POST",
         body: JSON.stringify({
-          username: name,
+          name: name,
           tradePlay: {
             chef_id,
             asset,

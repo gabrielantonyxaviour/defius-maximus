@@ -1,22 +1,22 @@
 import { followChef } from "@/lib/supabase";
 export async function POST(request: Request) {
   try {
-    const { chef_id, username, confidence_level } = await request.json();
+    const { chef_id, user_id, confidence_level } = await request.json();
 
-    if (!username || !chef_id) {
+    if (!user_id || !chef_id) {
       return Response.json(
-        { error: "username and chef_id is required" },
+        { error: "user_id and chef_id is required" },
         { status: 400 }
       );
     }
     console.log({
       chef_id,
-      username,
+      user_id,
       confidence_level,
     });
     const success = await followChef({
       chef_id,
-      user_id: username,
+      user_id: user_id,
       confidence_level,
     });
 
