@@ -15,7 +15,7 @@ export default function Humanity() {
 
   useEffect(() => {
     console.log(cred);
-  }, []);
+  }, [cred]);
 
   return (
     <div className="w-screen h-screen flex flex-col justify-center pt-2">
@@ -63,7 +63,7 @@ export default function Humanity() {
                           className="rounded-l-xl"
                         />
                       </div>
-                      {/* <div className="col-span-3 rounded-r-xl flex flex-col pl-3 justify-center">
+                      <div className="col-span-3 rounded-r-xl flex flex-col pl-3 justify-center">
                         <p>
                           Id:{" "}
                           <span className="font-normal">
@@ -87,17 +87,21 @@ export default function Humanity() {
                         </p>
                         <p>
                           Royalty:{" "}
-                          <span className="font-normal">{cred.royalty}</span>
+                          <span className="font-normal">
+                            {cred.royalty || "0"}
+                          </span>
                         </p>
                         <p>
                           Chef Score:{" "}
-                          <span className="font-normal">{cred.chef_score}</span>
+                          <span className="font-normal">
+                            {cred.chef_score || "75"}
+                          </span>
                         </p>
                         <p>
                           Twitter:{" "}
                           <span className="font-normal">{cred.twitter}</span>
                         </p>
-                      </div> */}
+                      </div>
                     </div>
                     <Button
                       onClick={() => {
