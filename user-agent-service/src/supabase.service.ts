@@ -355,18 +355,18 @@ export class SupabaseService {
               );
             } else {
               const flowBalance = balances[flowTestnet.id];
-              if (parseFloat(flowBalance) < 0.01) {
+              if (parseFloat(flowBalance) < 1.5) {
                 console.log("\nInsufficient funds to perform the trade");
                 return;
               }
               amount =
                 (parseFloat(equitypercent) * parseFloat(flowBalance)) / 100;
 
-              if (amount < 0.01) {
+              if (amount < 1) {
                 console.log(
                   "\n\nMinimum Amount required to place a trade is 0.00005 ETH \n\n"
                 );
-                amount = 0.01;
+                amount = 1;
               }
 
               await swapNativeToToken(
