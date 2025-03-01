@@ -1,0 +1,20 @@
+{
+  "name": "Defius Maximus",
+  "description": "A personalised leverage trading agent that increases your win rate with AI.",
+  "image": "https://pbs.twimg.com/profile_images/1893269519977848834/loEs9o9G_400x400.jpg",
+  "external_url": "https://x.com/defiusmaximus",
+  "attributes": [
+    {
+      "trait_type": "Creator",
+      "value": "Gabriel Antony Xaviour"
+    },
+    {
+      "trait_type": "Creator Address",
+      "value": "0xeE5C50573A8AF1B8Ee2D89CB9eB27dc298c5f75D"
+    },
+    {
+      "trait_type": "Creator X",
+      "value": "http://x.com/gabrielaxyeth"
+    }
+  ]
+}
