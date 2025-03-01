@@ -43,7 +43,7 @@ export default function Mode({ close }: { close: () => void }) {
                     mode: "RED PILL",
                   }),
                 });
-                await new Promise((resolve) => setTimeout(resolve, 2000));
+                await new Promise((resolve) => setTimeout(resolve, 1000));
                 setTransitioning(false);
                 setUser({
                   ...user,

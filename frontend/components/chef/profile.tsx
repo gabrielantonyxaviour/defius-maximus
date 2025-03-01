@@ -64,9 +64,7 @@ export default function ChefProfile({
         ) : (
           <>
             <div className="flex justify-between items-center w-full">
-              <p className="font-bold text-lg">
-                {chefData.id == chef?.id ? "Your Profile" : "Chef Profile"}
-              </p>
+              <p className="font-bold text-lg">{"Chef Profile"}</p>
               <X className="cursor-pointer hover:text-white" onClick={close} />
             </div>
 

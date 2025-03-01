@@ -39,7 +39,7 @@ async function main() {
     transport: http(),
   });
 
-  // const walletCliet
+  // const walletClient
 
   const FLOW_MAINNET_KITTY_ADDRESS = "";
   const FLOW_MAINNET_WRAPPED_FLOW = "";
