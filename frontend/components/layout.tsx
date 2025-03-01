@@ -193,9 +193,9 @@ export default function Layout({
               chef.user_id as string
             ).toLowerCase()}&cred_id=${chef.cred_id}`
           );
-          const { cred } = await response.json();
-          console.log("Fetched credential:", cred);
-          setCred(cred);
+          const fetchedCred = await response.json();
+          console.log("Fetched credential:", fetchedCred);
+          setCred(fetchedCred);
         }
       } else {
         console.log("Chef is not set or humanity is already registered");

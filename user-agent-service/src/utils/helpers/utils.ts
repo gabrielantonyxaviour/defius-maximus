@@ -114,13 +114,13 @@ export async function convertEthToAsset(
     BigInt(2);
   console.log("Asset Price");
   console.log(avgAssetPrice);
-  const usdAmount = BigInt(amount * 10 ** 12) * avgEthPrice;
+  const usdAmount = BigInt(0.0012 * 10 ** 12) * avgEthPrice;
 
   return {
     assetPriceInUSD:
       avgAssetPrice * 10n ** (asset == "SOL" || asset == "SUI" ? 9n : 10n),
     amountInUSD: usdAmount * 10n ** 6n,
-    amountInETH: expandDecimals(amount * 10 ** 6, 12),
+    amountInETH: expandDecimals(0.0012 * 10 ** 6, 12),
   };
 }
 

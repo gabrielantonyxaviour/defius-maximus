@@ -83,7 +83,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
     "buy_long"
   ); // Position type
   const [selectedDate, setSelectedDate] = useState<Date>(new Date()); // Trade date
-  const [selectedTime, setSelectedTime] = useState<string>("19:00"); // Trade time
+  const [selectedTime, setSelectedTime] = useState<string>("22:00"); // Trade time
   const [expectedPnl, setExpectedPnl] = useState<string>("12"); // Expected profit & loss
   const [selectedType, setSelectedType] = useState<TradeType>("Choose");
   const [selectedDex, setSelectedDex] = useState<PerpsDex | SpotDex | null>(

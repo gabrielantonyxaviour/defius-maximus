@@ -67,6 +67,9 @@ export default function Humanity() {
                           </span>
                         </p>
                         <p>
+                          Name: <span className="font-normal">{cred.name}</span>
+                        </p>
+                        <p>
                           Address:{" "}
                           <span className="font-normal">
                             {shortenAddress(cred.address)}
@@ -85,6 +88,10 @@ export default function Humanity() {
                         <p>
                           Chef Score:{" "}
                           <span className="font-normal">{cred.chef_score}</span>
+                        </p>
+                        <p>
+                          Twitter:{" "}
+                          <span className="font-normal">{cred.twitter}</span>
                         </p>
                       </div>
                     </div>
@@ -111,11 +118,12 @@ export default function Humanity() {
 
                           console.log("Creating cred for chef:", chef);
                           const customCred = {
-                            chef_name: chef.name,
+                            name: chef.name,
                             ip: chef.ip_address,
                             address: chef.user_id,
                             royalty: chef.royalty,
-                            chef_score: Math.floor(70+ Math.random() * 30),
+                            chef_score: Math.floor(70 + Math.random() * 30),
+                            twitter: chef.twitter,
                           };
                           const response = await fetch(
                             "/api/humanity/issue?address=" + chef.user_id,

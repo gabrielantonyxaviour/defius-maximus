@@ -2,11 +2,12 @@ import { Hex } from "viem";
 
 export type Cred = {
   id: string;
-  chef_name: string;
+  name: string;
   address: string;
   ip: string;
   royalty: number;
   chef_score: number;
+  twitter: string;
 };
 
 export type User = {

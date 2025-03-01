@@ -25,15 +25,16 @@ export async function getRegistered(address: Hex): Promise<boolean> {
   return result;
 }
 
-type IsssueCredsParams = {
+type IssueCredsParams = {
+  name: string;
   address: Hex;
   ip: string;
-  chef: string;
   royalty: number;
   chef_score: number;
+  twitter: string;
 };
 
-export async function issueCreds(params: IsssueCredsParams) {
+export async function issueCreds(params: IssueCredsParams) {
   console.log(`Issuing credentials for address: ${params.address}`);
   const response = await fetch(
     "https://issuer.humanity.org/credentials/issue",
