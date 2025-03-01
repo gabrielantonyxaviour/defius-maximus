@@ -623,7 +623,7 @@ export const models: Models = {
             [ModelClass.LARGE]: {
                 name:
                     settings.LARGE_HEURIST_MODEL ||
-                    "meta-llama/Llama-3.3-70B-Instruct",
+                    "mistralai/mixtral-8x22b-instruct",
                 stop: [],
                 maxInputTokens: 128000,
                 maxOutputTokens: 8192,
@@ -1140,7 +1140,7 @@ export const models: Models = {
             [ModelClass.SMALL]: {
                 name:
                     settings.SMALL_ATOMA_MODEL ||
-                    "meta-llama/Llama-3.3-70B-Instruct",
+                    "mistralai/mixtral-8x22b-instruct",
                 stop: [],
                 maxInputTokens: 128000,
                 maxOutputTokens: 8192,
@@ -1149,7 +1149,7 @@ export const models: Models = {
             [ModelClass.MEDIUM]: {
                 name:
                     settings.MEDIUM_ATOMA_MODEL ||
-                    "meta-llama/Llama-3.3-70B-Instruct",
+                    "mistralai/mixtral-8x22b-instruct",
                 stop: [],
                 maxInputTokens: 128000,
                 maxOutputTokens: 8192,
@@ -1158,7 +1158,7 @@ export const models: Models = {
             [ModelClass.LARGE]: {
                 name:
                     settings.LARGE_ATOMA_MODEL ||
-                    "meta-llama/Llama-3.3-70B-Instruct",
+                    "mistralai/mixtral-8x22b-instruct",
                 stop: [],
                 maxInputTokens: 128000,
                 maxOutputTokens: 8192,

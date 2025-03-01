@@ -151,28 +151,31 @@ IMPORTANT: Your entire response must be a valid, parseable JSON object with no a
 // Function to call the AI provider
 async function callAiProvider(systemPrompt: string, userPrompt: string) {
   try {
-    console.log(process.env.ORA_API_KEY);
-    const response = await fetch(`https://api.ora.io/v1/chat/completions`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        accept: "application/json",
-        Authorization: `Bearer ${process.env.ORA_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "meta-llama/Llama-3.3-70B-Instruct",
-        messages: [
-          {
-            role: "system",
-            content: systemPrompt,
-          },
-          {
-            role: "user",
-            content: userPrompt,
-          },
-        ],
-      }),
-    });
+    console.log(process.env.HEURIST_AI_API_KEY);
+    const response = await fetch(
+      `https://llm-gateway.heurist.xyz/v1/chat/completions`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          accept: "application/json",
+          Authorization: `Bearer ${process.env.HEURIST_AI_API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: "mistralai/mixtral-8x22b-instruct",
+          messages: [
+            {
+              role: "system",
+              content: systemPrompt,
+            },
+            {
+              role: "user",
+              content: userPrompt,
+            },
+          ],
+        }),
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json();

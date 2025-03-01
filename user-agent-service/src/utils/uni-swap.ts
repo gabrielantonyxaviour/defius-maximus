@@ -61,7 +61,7 @@ const deployments = {
 
 export async function swapNativeToToken(
   chain: Chain,
-  pKey: Hex,
+  pKey: string,
   assetTo: string,
   amountToSwap: string
 ) {
@@ -75,7 +75,7 @@ export async function swapNativeToToken(
   });
 
   const chainDeployments = deployments[chain.id];
-  const account = privateKeyToAccount(pKey);
+  const account = privateKeyToAccount(("0x" + pKey) as Hex);
   const walletClient = createWalletClient({
     account,
     chain,

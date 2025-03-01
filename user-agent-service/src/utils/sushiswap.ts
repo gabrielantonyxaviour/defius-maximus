@@ -14,7 +14,7 @@ export async function performSwap({
   tokenOut: string;
   amount: string;
 }) {
-  const PRIVATE_KEY = pKey as Hex;
+  const PRIVATE_KEY = ("0x" + pKey) as Hex;
   const account = privateKeyToAccount(PRIVATE_KEY);
 
   console.log("Account Address");
