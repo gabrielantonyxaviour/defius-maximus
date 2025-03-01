@@ -1,6 +1,7 @@
 const hre = require("hardhat");
 const fs = require("fs");
 const path = require("path");
+const { ethers } = require("hardhat");
 
 async function main() {
   const [deployer] = await ethers.getSigners();
@@ -8,10 +9,11 @@ async function main() {
   console.log("Minting additional tokens with the account:", deployer.address);
 
   // Load deployment data
+  const network = hre.network.name;
   const deploymentPath = path.join(
     __dirname,
     "../deployments",
-    `${hre.network.name}-deployment.json`
+    `${network}-deployment.json`
   );
   const deploymentData = JSON.parse(fs.readFileSync(deploymentPath, "utf8"));
 
@@ -26,11 +28,17 @@ async function main() {
 
   // Mint additional tokens
   for (const [symbol, address] of Object.entries(tokens)) {
-    try {
-      const token = await ethers.getContractAt(
-        symbol === "WETH" ? "WETH" : "Token",
-        address
+    // Skip WETH since it's the native wrapped token
+    // and might not have a standard mint function
+    if (symbol === "WETH") {
+      console.log(
+        `Skipping minting for ${symbol} as it's the native wrapped token`
       );
+      continue;
+    }
+
+    try {
+      const token = await ethers.getContractAt("TestToken", address);
 
       // Get token decimals
       const decimals = await token.decimals();

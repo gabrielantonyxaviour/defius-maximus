@@ -12,6 +12,37 @@ async function main() {
     (await deployer.provider.getBalance(deployer.address)).toString()
   );
 
+  // Get network-specific configuration
+  const network = hre.network.name;
+  console.log(`Deploying to ${network}...`);
+
+  // Determine the correct WETH address based on the network
+  let wrappedTokenAddress;
+  let factoryAddress;
+  let routerAddress;
+
+  if (network === "zircuit") {
+    wrappedTokenAddress = process.env.ZIRCUIT_WRAPPED;
+    factoryAddress = process.env.ZIRCUIT_FACTORY_ADDRESS;
+    routerAddress = process.env.ZIRCUIT_ROUTER_ADDRESS;
+  } else if (network === "flowEvm") {
+    wrappedTokenAddress = process.env.FLOW_WRAPPED;
+    factoryAddress = process.env.FLOW_FACTORY_ADDRESS;
+    routerAddress = process.env.FLOW_ROUTER_ADDRESS;
+  } else {
+    throw new Error(`Unsupported network: ${network}`);
+  }
+
+  if (!wrappedTokenAddress || !factoryAddress || !routerAddress) {
+    throw new Error(
+      `Missing configuration for ${network}. Please check your .env file.`
+    );
+  }
+
+  console.log(`Using existing wrapped token at: ${wrappedTokenAddress}`);
+  console.log(`Using UniswapV2 Factory at: ${factoryAddress}`);
+  console.log(`Using UniswapV2 Router at: ${routerAddress}`);
+
   // Deploy TokenFactory
   const TokenFactory = await ethers.getContractFactory("TokenFactory");
   const tokenFactory = await TokenFactory.deploy(deployer.address);
@@ -21,19 +52,13 @@ async function main() {
 
   console.log("TokenFactory deployed to:", tokenFactoryAddress);
 
-  // Deploy WETH
-  const WETH = await ethers.getContractFactory("WETH");
-  const weth = await WETH.deploy();
-  await weth.waitForDeployment();
-  const wethAddress = await weth.getAddress();
-
-  console.log("WETH deployed to:", wethAddress);
-
   // Save deployment information
   const deploymentData = {
-    network: hre.network.name,
+    network: network,
     tokenFactory: tokenFactoryAddress,
-    weth: wethAddress,
+    weth: wrappedTokenAddress,
+    router: routerAddress,
+    factory: factoryAddress,
     deployer: deployer.address,
   };
 
@@ -43,34 +68,13 @@ async function main() {
   }
 
   fs.writeFileSync(
-    path.join(deploymentDir, `${hre.network.name}-deployment.json`),
+    path.join(deploymentDir, `${network}-deployment.json`),
     JSON.stringify(deploymentData, null, 2)
   );
 
-  // Verify contracts on etherscan
+  // Verify TokenFactory contract
   console.log("Waiting for block confirmations...");
   await tokenFactory.deploymentTransaction().wait(5);
-  await weth.deploymentTransaction().wait(5);
-
-  console.log("Verifying TokenFactory...");
-  try {
-    await hre.run("verify:verify", {
-      address: tokenFactoryAddress,
-      constructorArguments: [deployer.address],
-    });
-  } catch (error) {
-    console.error("TokenFactory verification failed:", error);
-  }
-
-  console.log("Verifying WETH...");
-  try {
-    await hre.run("verify:verify", {
-      address: wethAddress,
-      constructorArguments: [],
-    });
-  } catch (error) {
-    console.error("WETH verification failed:", error);
-  }
 }
 
 main()

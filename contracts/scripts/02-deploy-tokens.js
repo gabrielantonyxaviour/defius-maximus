@@ -1,6 +1,7 @@
 const hre = require("hardhat");
 const fs = require("fs");
 const path = require("path");
+const { ethers } = require("hardhat");
 
 async function main() {
   const [deployer] = await ethers.getSigners();
@@ -8,10 +9,11 @@ async function main() {
   console.log("Deploying tokens with the account:", deployer.address);
 
   // Load deployment data
+  const network = hre.network.name;
   const deploymentPath = path.join(
     __dirname,
     "../deployments",
-    `${hre.network.name}-deployment.json`
+    `${network}-deployment.json`
   );
   const deploymentData = JSON.parse(fs.readFileSync(deploymentPath, "utf8"));
 
@@ -62,30 +64,13 @@ async function main() {
     addresses[token.symbol] = tokenAddress;
 
     console.log(`${token.symbol} deployed to:`, tokenAddress);
-
-    // Verify the token contract
-    console.log(`Verifying ${token.symbol}...`);
-    try {
-      await hre.run("verify:verify", {
-        address: tokenAddress,
-        constructorArguments: [
-          token.name,
-          token.symbol,
-          token.decimals,
-          token.initialSupply,
-          deployer.address,
-        ],
-      });
-    } catch (error) {
-      console.error(`${token.symbol} verification failed:`, error);
-    }
   }
-
-  // Get WETH from previous deployment
-  addresses["WETH"] = deploymentData.weth;
 
   // Save token addresses
   deploymentData.tokens = addresses;
+
+  // Add existing WETH from config
+  console.log(`Using existing Wrapped ETH at: ${deploymentData.weth}`);
 
   fs.writeFileSync(deploymentPath, JSON.stringify(deploymentData, null, 2));
 
