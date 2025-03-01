@@ -8,6 +8,7 @@ import {
   Zap,
   Check,
   ArrowUpRightFromSquare,
+  Coins,
 } from "lucide-react";
 import { useEnvironmentStore } from "../context";
 import { useEffect, useState } from "react";
@@ -183,7 +184,7 @@ export default function ChefProfile({
             <Separator className="bg-[#1F1F1F]" />
 
             {/* Stats */}
-            <div className="grid grid-cols-3 w-full gap-6 pl-6">
+            <div className="grid grid-cols-4 w-full gap-4 pl-6">
               <div className="space-y-1">
                 <div className="flex  items-center gap-2 text-white">
                   <TrendingUp className="h-4 w-4" />
@@ -212,6 +213,13 @@ export default function ChefProfile({
                 <p className="text-2xl font-bold">
                   {chefData.avg_calls_per_day.toFixed(2)}
                 </p>
+              </div>
+              <div className="space-y-1">
+                <div className="flex items-center gap-2 text-white">
+                  <Coins className="h-4 w-4" />
+                  <span className="text-sm">Royalty</span>
+                </div>
+                <p className="text-2xl font-bold">{chefData.royalty} %</p>
               </div>
             </div>
 
