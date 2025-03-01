@@ -317,18 +317,15 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({
       description: "Waiting for confirmation...",
     });
 
-    const { txHash, ipId, tokenId } = await mintAndRegisterDerivativeIp(
-      storyClient,
-      {
-        nftAddress: chef?.ip_address as Hex,
-        ipMetadata: {
-          ipMetadataUri,
-          ipMetadataHash: ("0x" + ipMetadataHash) as Hex,
-          nftMetadataURI: nftMetadataUri,
-          nftMetadataHash: ("0x" + nftMetadataHash) as Hex,
-        },
-      }
-    );
+    const { txHash, ipId, tokenId } = await mintAndRegisterIp(storyClient, {
+      nftAddress: chef?.ip_address as Hex,
+      ipMetadata: {
+        ipMetadataUri,
+        ipMetadataHash: ("0x" + ipMetadataHash) as Hex,
+        nftMetadataURI: nftMetadataUri,
+        nftMetadataHash: ("0x" + nftMetadataHash) as Hex,
+      },
+    });
 
     console.log("IP minted successfully");
     console.log("IP ID:", ipId);
