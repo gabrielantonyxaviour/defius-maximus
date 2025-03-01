@@ -36,6 +36,7 @@ import {
   assets,
   circuitTokenList,
   exchanges,
+  IS_TESTNET,
   kittyTokenList,
   perpExchanges,
   spotExchanges,
@@ -339,7 +340,9 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({
         label: "View IP",
         onClick: () => {
           window.open(
-            `https://aeneid.explorer.story.foundation/ipa/${ipId}`,
+            `https://${
+              IS_TESTNET ? "aeneid." : ""
+            }explorer.story.foundation/ipa/${ipId}`,
             "_blank"
           );
         },

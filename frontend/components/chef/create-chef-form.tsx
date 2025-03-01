@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { createSpgNftCollection } from "@/lib/story";
 import { storeImage } from "@/lib/supabase";
 import { uploadImageToWalrus } from "@/lib/walrus";
+import { IS_TESTNET } from "@/lib/constants";
 export default function CreateChefForm() {
   const { user, setChef, storyClient } = useEnvironmentStore((store) => store);
   const [name, setName] = useState("Gabriel Antony Xaviour");
@@ -117,7 +118,12 @@ export default function CreateChefForm() {
         action: {
           label: "View Tx",
           onClick: () => {
-            window.open(`https://aeneid.storyscan.xyz/tx/${txHash}`, "_blank");
+            window.open(
+              `https://${
+                IS_TESTNET ? "aeneid." : ""
+              }storyscan.xyz/tx/${txHash}`,
+              "_blank"
+            );
           },
         },
       });

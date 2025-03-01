@@ -15,6 +15,7 @@ import {
   WalletClient,
   zeroAddress,
 } from "viem";
+import { IS_TESTNET } from "./constants";
 
 export async function setupStoryClient(
   wallet: WalletClient
@@ -22,7 +23,7 @@ export async function setupStoryClient(
   const config = {
     wallet: wallet as WalletClient,
     transport: custom(wallet!.transport),
-    chainId: "1315" as any,
+    chainId: (IS_TESTNET ? "1315" : "1514") as any,
   };
   const client = StoryClient.newClientUseWallet(config);
   return client;
@@ -74,7 +75,9 @@ export async function mintAndRegisterDerivativeIp(
     `Root IPA created at transaction hash ${response.txHash}, IPA ID: ${response.ipId}`
   );
   console.log(
-    `View on the explorer: https://aeneid.explorer.story.foundation/ipa/${response.ipId}`
+    `View on the explorer: https://${
+      IS_TESTNET ? "aeneid." : ""
+    }explorer.story.foundation/ipa/${response.ipId}`
   );
   return response;
 }

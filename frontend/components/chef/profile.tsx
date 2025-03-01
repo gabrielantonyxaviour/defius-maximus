@@ -18,6 +18,7 @@ import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import { Chef } from "@/types";
 import Image from "next/image";
+import { IS_TESTNET } from "@/lib/constants";
 
 export default function ChefProfile({
   chef_id,
@@ -242,7 +243,9 @@ export default function ChefProfile({
                     className="h-4 w-4"
                     onClick={() => {
                       window.open(
-                        "https://aeneid.explorer.story.foundation/collections/" +
+                        `https://${
+                          IS_TESTNET ? "aeneid." : ""
+                        }.explorer.story.foundation/collections/` +
                           chefData?.ip_address,
                         "_blank"
                       );
