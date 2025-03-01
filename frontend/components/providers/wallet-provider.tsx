@@ -5,6 +5,7 @@ import { createAppKit } from "@reown/appkit/react";
 import { story, storyAeneid } from "@reown/appkit/networks";
 import React, { type ReactNode } from "react";
 import { cookieToInitialState, WagmiProvider, type Config } from "wagmi";
+import { IS_TESTNET } from "@/lib/constants";
 
 // Set up queryClient
 const queryClient = new QueryClient();
@@ -26,8 +27,8 @@ const metadata = {
 const modal = createAppKit({
   adapters: [wagmiAdapter],
   projectId,
-  networks: [storyAeneid, story],
-  defaultNetwork: storyAeneid,
+  networks: [story, storyAeneid],
+  defaultNetwork: IS_TESTNET ? storyAeneid : story,
   metadata: metadata,
   features: {
     analytics: true,

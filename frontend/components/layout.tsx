@@ -12,12 +12,13 @@ import {
 } from "@reown/appkit/react";
 import generateKeypairs from "@/lib/gen-wallet";
 import { User } from "@/types";
-import { storyAeneid } from "viem/chains";
+import { storyAeneid, story } from "viem/chains";
 import { formatEther, Hex } from "viem";
 import { setupStoryClient } from "@/lib/story";
 import { getChainBalance, getMultichainBalance, getPrice } from "@/lib/balance";
 import { useWalletClient } from "wagmi";
 import { ArrowUpRight } from "lucide-react";
+import { IS_TESTNET } from "@/lib/constants";
 
 export default function Layout({
   children,
@@ -139,7 +140,7 @@ export default function Layout({
       (async function () {
         console.log("Fetching Balances");
         const fetchedWalletBalance = await getChainBalance(
-          storyAeneid,
+          IS_TESTNET ? storyAeneid : story,
           address as Hex
         );
         setWalletBalance(formatEther(fetchedWalletBalance));

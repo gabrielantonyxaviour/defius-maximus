@@ -5,6 +5,8 @@ export const COLOR_2 = "#1F1F1F"; // BLACK
 export const COLOR_3 = "#ffffff"; // WHITE
 export const COLOR_4 = "#BF4317"; // DIM ORANGE
 
+export const IS_TESTNET = false;
+
 export const toolIpfsCids = [
   "QmW5KMbaKLVgh2oLegtWVSyY6rBkPCdJJHTGSF3q2qE4fr",
   "QmZJovPgBBBmuLKRtdVwdV47opNSmLiV2AZCNTtWzeog1Q",

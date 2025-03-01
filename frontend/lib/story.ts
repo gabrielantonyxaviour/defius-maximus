@@ -15,19 +15,10 @@ import {
   WalletClient,
   zeroAddress,
 } from "viem";
-import { privateKeyToAccount } from "viem/accounts";
-import { storyAeneid } from "viem/chains";
 
 export async function setupStoryClient(
   wallet: WalletClient
 ): Promise<StoryClient> {
-  // const wallet = createWalletClient({
-  //   chain: storyAeneid,
-  //   transport: http("https://aeneid.storyrpc.io"),
-  //   account: privateKeyToAccount(
-  //     process.env.NEXT_PUBLIC_PRIVATE_KEY as `0x${string}`
-  //   ),
-  // });
   const config = {
     wallet: wallet as WalletClient,
     transport: custom(wallet!.transport),
@@ -63,13 +54,13 @@ export async function createSpgNftCollection(
 
 export async function mintAndRegisterDerivativeIp(
   client: StoryClient,
-  params: MintDerivativeIpInputParams
+  params: MintIpInputParams
 ): Promise<RegisterIpResponse> {
   const response = await client.ipAsset.mintAndRegisterIpAndMakeDerivative({
     spgNftContract: params.nftAddress,
     allowDuplicates: true,
     derivData: {
-      parentIpIds: [params.parentIpAddress],
+      parentIpIds: ["0xf78938029dF78D307D4288BC6B11B7385F8f98d9"], // IP of Defius Maximus
       licenseTermsIds: ["3"],
       maxMintingFee: BigInt("0"), // disabled
       maxRts: 100_000_000, // default
