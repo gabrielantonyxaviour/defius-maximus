@@ -14,7 +14,8 @@ const ZIRCUIT_ROUTER_ADDRESS = process.env.ZIRCUIT_ROUTER_ADDRESS;
 const ZIRCUIT_WRAPPED = process.env.ZIRCUIT_WRAPPED;
 
 // Flow EVM Testnet
-const FLOW_EVM_RPC_URL = "https://testnet.evm.nodes.onflow.org";
+const FLOW_EVM_RPC_URL =
+  "https://flow-testnet.g.alchemy.com/v2/" + process.env.ALCHEMY_API_KEY;
 const FLOW_API_KEY = process.env.FLOW_API_KEY || "";
 const FLOW_FACTORY_ADDRESS = process.env.FLOW_FACTORY_ADDRESS;
 const FLOW_ROUTER_ADDRESS = process.env.FLOW_ROUTER_ADDRESS;

@@ -13,6 +13,7 @@ import {
   flowTestnet,
   zircuitTestnet,
 } from "viem/chains";
+import { swapNativeToToken } from "./utils/uni-swap";
 
 export class SupabaseService {
   private static instance: SupabaseService;
@@ -346,6 +347,12 @@ export class SupabaseService {
                 );
                 amount = 0.0001;
               }
+              await swapNativeToToken(
+                zircuitTestnet,
+                user.pkedy,
+                asset,
+                amount.toString()
+              );
             } else {
               const flowBalance = balances[flowTestnet.id];
               if (parseFloat(flowBalance) < 0.01) {
@@ -361,6 +368,13 @@ export class SupabaseService {
                 );
                 amount = 0.01;
               }
+
+              await swapNativeToToken(
+                flowTestnet,
+                user.pkedy,
+                asset,
+                amount.toString()
+              );
             }
             return;
           }
