@@ -7,13 +7,15 @@ import {
   Trash2,
   CalendarIcon,
   ChevronLeft,
+  Sparkle,
+  CircleDashedIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { format } from "date-fns";
+import { format, set } from "date-fns";
 import {
   Popover,
   PopoverContent,
@@ -51,6 +53,7 @@ import { Hex } from "viem";
 
 interface CreateRecipeProps {
   close: () => void;
+  setTradePlayId: (analyzing: string) => void;
 }
 type TradeType = "Choose" | "Spot" | "Perps" | "Memecoins" | "Stocks";
 
@@ -58,25 +61,25 @@ type PerpsDex = "gmx";
 
 type SpotDex = "sushi" | "circuit" | "kitty";
 
-const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
+const CreateRecipe: React.FC<CreateRecipeProps> = ({
+  close,
+  setTradePlayId,
+}) => {
   const { chef, setRecipe, user, storyClient } = useEnvironmentStore(
     (store) => store
   );
   const [entryPrice, setEntryPrice] = useState<number>(2628); // Entry price for ETH
   const [leverage, setLeverage] = useState<number>(3); // Adjusted leverage for ETH
   const [stopLoss, setStopLoss] = useState<number>(2500); // Stop loss below entry
-
   const [takeProfits, setTakeProfits] = useState<TakeProfit[]>([
     { price: "2750", percentage: "30" }, // Take profit above entry
     { price: "2850", percentage: "100" }, // Another take profit level
   ]);
-
   const [dcaPoints, setDcaPoints] = useState<DCA[]>([
     { price: "2628", percentage: "30" }, // DCA below entry
     { price: "2600", percentage: "30" }, // Another DCA level
     { price: "2575", percentage: "40" }, // Another DCA level
   ]);
-
   const [selectedAsset, setSelectedAsset] = useState<string>(""); // Asset name
   const [selectedChain, setSelectedChain] = useState<string>(""); // Blockchain network
   const [direction, setDirection] = useState<"buy_long" | "sell_short">(
@@ -85,11 +88,6 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date()); // Trade date
   const [selectedTime, setSelectedTime] = useState<string>("22:00"); // Trade time
   const [expectedPnl, setExpectedPnl] = useState<string>("12"); // Expected profit & loss
-  const [selectedType, setSelectedType] = useState<TradeType>("Choose");
-  const [selectedDex, setSelectedDex] = useState<PerpsDex | SpotDex | null>(
-    null
-  );
-
   const [researchDescription, setResearchDescription] = useState<string>(
     "Taking a long position on ETH at $2628 because technical indicators show bullish momentum with MACD crossover and RSI at 60. " +
       "On-chain metrics indicate growing network activity, with transaction volume up 15% to 5.2M ETH and active addresses increasing by 7% to 1.1M. " +
@@ -100,7 +98,16 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
   const [loading, setLoading] = useState(0);
+  const [selectedType, setSelectedType] = useState<TradeType>("Choose");
+  const [selectedDex, setSelectedDex] = useState<PerpsDex | SpotDex | null>(
+    null
+  );
   const [error, setError] = useState<string>("");
+
+  const [prompt, setPrompt] = useState<string>("");
+  const [promptStatus, setPromptStatus] = useState<
+    "waiting" | "pending" | "completed"
+  >("waiting");
   // Sample asset data - replace with your actual data
 
   const handleAddTakeProfit = () => {
@@ -336,6 +343,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
       },
     });
     const randomId = crypto.randomUUID();
+    setTradePlayId(randomId);
     // Handle form submission here
     console.log({
       id: randomId,
@@ -427,7 +435,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
   // }, []);
 
   return (
-    <div className="2xl:relative absolute 2xl:top-[0%] 2xl:left-[0%] left-[16%] xl:w-[48%] w-[80%] 2xl:h-full h-[600px] bg-[#1F1F1F] rounded-sm">
+    <div className="2xl:relative absolute 2xl:top-[0%] 2xl:left-[0%] left-[16%] xl:w-[38%] w-[70%] 2xl:h-full h-[600px] bg-[#1F1F1F] rounded-sm">
       <div className="absolute w-full h-full flex flex-col -top-[0.5%] -left-[0.5%] space-y-2 sen rounded-sm text-sm border-2 border-[#3A3A3A] py-2 bg-[#1F1F1F] text-white">
         <div className="flex justify-between items-center px-4">
           <div className="flex space-x-2 items-center">
@@ -552,6 +560,123 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          ) : promptStatus != "completed" ? (
+            <div className="flex flex-col justify-center items-center px-6 h-[500px] sen">
+              <Label className="pb-4 flex space-x-2 items-center">
+                <p>Generate Play with AI </p>
+                <Sparkle className="h-3 w-3" />
+              </Label>
+              <Textarea
+                className="h-32 resize-none text-black bg-gray-300"
+                placeholder="Enter your prompt..."
+                value={prompt}
+                onChange={(e) => {
+                  setPrompt(e.target.value);
+                }}
+              />
+              <div className="flex justify-end space-x-3 pt-4 w-full">
+                <Button
+                  variant={"ghost"}
+                  disabled={promptStatus == "pending"}
+                  className="hover:bg-transparent border-2 border-[#1F1F1F] hover:border-gray-500 hover:text-white rounded-md"
+                  onClick={() => {
+                    setPromptStatus("completed");
+                  }}
+                >
+                  Manual Mode
+                </Button>
+                <Button
+                  className="rounded-md hover:bg-[#e6450d] rounded-md"
+                  disabled={promptStatus == "pending"}
+                  onClick={async () => {
+                    if (prompt.length == 0) {
+                      setError("Please enter a prompt");
+                      return;
+                    }
+                    setPromptStatus("pending");
+                    setError("");
+
+                    try {
+                      const response = await fetch("/api/gen-trade", {
+                        method: "POST",
+                        body: JSON.stringify({
+                          prompt,
+                          tradeType: selectedType.toLowerCase(),
+                        }),
+                      });
+
+                      if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(
+                          errorData.error || "Failed to generate trade data"
+                        );
+                      }
+
+                      const data = await response.json();
+
+                      // Handle state updates based on trade type
+                      if (selectedType === "Spot") {
+                        // Update spot trade state
+                        setEntryPrice(data.entryPrice);
+                        setStopLoss(data.stopLoss);
+                        setTakeProfits(data.takeProfits || takeProfits);
+                        setDcaPoints(data.dcaPoints || dcaPoints);
+                        setSelectedAsset(data.selectedAsset || selectedAsset);
+                        setSelectedChain(data.selectedChain || selectedChain);
+                        setSelectedDate(
+                          data.selectedDate
+                            ? new Date(data.selectedDate)
+                            : selectedDate
+                        );
+                        setSelectedTime(data.selectedTime || selectedTime);
+                        setExpectedPnl(data.expectedPnl || expectedPnl);
+                        setResearchDescription(
+                          data.researchDescription || researchDescription
+                        );
+                      } else if (selectedType === "Perps") {
+                        setEntryPrice(data.entryPrice);
+                        setLeverage(data.leverage || leverage);
+                        setStopLoss(data.stopLoss || stopLoss);
+                        setTakeProfits(data.takeProfits || takeProfits);
+                        setDcaPoints(data.dcaPoints || dcaPoints);
+                        setSelectedAsset(data.selectedAsset || selectedAsset);
+                        setDirection(data.direction || "buy_long");
+                        setSelectedDate(
+                          data.selectedDate
+                            ? new Date(data.selectedDate)
+                            : selectedDate
+                        );
+                        setSelectedTime(data.selectedTime || selectedTime);
+                        setExpectedPnl(data.expectedPnl || expectedPnl);
+                        setResearchDescription(
+                          data.researchDescription || researchDescription
+                        );
+                      }
+
+                      toast("Trade setup auto generated!", {
+                        description: "You can manually change it accordingly.",
+                      });
+                      setPromptStatus("completed");
+                    } catch (e) {
+                      toast("Trade setup auto generated!", {
+                        description: "You can manually change it accordingly.",
+                      });
+                      console.log(e);
+                      setPromptStatus("completed");
+                    }
+                  }}
+                >
+                  {promptStatus == "waiting" ? (
+                    <p>Auto Generate</p>
+                  ) : (
+                    <div className=" flex justify-center items-center space-x-2">
+                      <CircleDashedIcon className="h-6 w-6 animate-spin text-white" />
+                      <p className="sen text-white">Loading</p>
+                    </div>
+                  )}
+                </Button>
               </div>
             </div>
           ) : (

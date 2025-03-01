@@ -238,7 +238,7 @@ export default function Layout({
                 alt="whm"
                 className="rounded-full "
               />
-              <p className="sen text-white pl-2 ">Mint Credentials</p>
+              <p className="sen text-white ">Mint Credentials</p>
               <ArrowUpRight className="text-white h-5 w-5" />
             </Button>
             <div className="relative w-[150px] bg-[#1F1F1F] h-10 rounded-sm">

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Chef from "./profile";
 import Recipes from "./recipes";
 import CreateRecipe from "./create";
+import TradingLogs from "./logs";
 
 export default function ChefHome() {
   const nav = [
@@ -36,6 +37,7 @@ export default function ChefHome() {
     false,
   ]);
   const router = useRouter();
+  const [tradePlayId, setTradePlayId] = useState("");
 
   useEffect(() => {
     if (user == undefined || chef == undefined) router.push("/");
@@ -81,6 +83,7 @@ export default function ChefHome() {
                 prev.map((val, index) => (index === 2 ? !val : val))
               );
             }}
+            setTradePlayId={setTradePlayId}
           />
         )}
         {showWindows[1] && (
@@ -101,6 +104,12 @@ export default function ChefHome() {
                 prev.map((val, index) => (index === 0 ? !val : val))
               );
             }}
+          />
+        )}
+        {tradePlayId != "" && (
+          <TradingLogs
+            tradePlayId={tradePlayId}
+            setTradePlayId={setTradePlayId}
           />
         )}
       </div>
