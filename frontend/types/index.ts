@@ -119,6 +119,12 @@ export type CreateChefFormInput = {
   website: string;
 };
 
+export type MintDerivativeIpInputParams = {
+  parentIpAddress: `0x${string}`;
+  nftAddress: `0x${string}`;
+  ipMetadata: IPMetadata;
+};
+
 export type MintIpInputParams = {
   nftAddress: `0x${string}`;
   ipMetadata: IPMetadata;

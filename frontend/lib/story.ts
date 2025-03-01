@@ -1,4 +1,4 @@
-import { MintIpInputParams } from "@/types";
+import { MintDerivativeIpInputParams, MintIpInputParams } from "@/types";
 import {
   CreateNFTCollectionResponse,
   LicenseTerms,
@@ -61,32 +61,37 @@ export async function createSpgNftCollection(
   return response;
 }
 
+export async function mintAndRegisterDerivativeIp(
+  client: StoryClient,
+  params: MintDerivativeIpInputParams
+): Promise<RegisterIpResponse> {
+  const response = await client.ipAsset.mintAndRegisterIpAndMakeDerivative({
+    spgNftContract: params.nftAddress,
+    allowDuplicates: true,
+    derivData: {
+      parentIpIds: [params.parentIpAddress],
+      licenseTermsIds: ["3"],
+      maxMintingFee: BigInt("0"), // disabled
+      maxRts: 100_000_000, // default
+      maxRevenueShare: 100, // default
+    },
+    ipMetadata: params.ipMetadata,
+    txOptions: { waitForTransaction: true },
+  });
+
+  console.log(
+    `Root IPA created at transaction hash ${response.txHash}, IPA ID: ${response.ipId}`
+  );
+  console.log(
+    `View on the explorer: https://aeneid.explorer.story.foundation/ipa/${response.ipId}`
+  );
+  return response;
+}
+
 export async function mintAndRegisterIp(
   client: StoryClient,
   params: MintIpInputParams
 ): Promise<RegisterIpResponse> {
-  // const licenseTerms: LicenseTerms = {
-  //   defaultMintingFee: BigInt("0"),
-  //   // must be a whitelisted revenue token from https://docs.story.foundation/docs/deployed-smart-contracts
-  //   // in this case, we use $WIP
-  //   currency: "0x1514000000000000000000000000000000000000",
-  //   // RoyaltyPolicyLAP address from https://docs.story.foundation/docs/deployed-smart-contracts
-  //   royaltyPolicy: "0xBe54FB168b3c982b7AaE60dB6CF75Bd8447b390E",
-  //   transferable: false,
-  //   expiration: 0n,
-  //   commercialUse: false,
-  //   commercialAttribution: false,
-  //   commercializerChecker: zeroAddress,
-  //   commercializerCheckerData: "0x",
-  //   commercialRevShare: 0,
-  //   commercialRevCeiling: 0n,
-  //   derivativesAllowed: false,
-  //   derivativesAttribution: false,
-  //   derivativesApproval: false,
-  //   derivativesReciprocal: false,
-  //   derivativeRevCeiling: 0n,
-  //   uri: "",
-  // };
   const response = await client.ipAsset.mintAndRegisterIp({
     spgNftContract: params.nftAddress,
     allowDuplicates: true,
