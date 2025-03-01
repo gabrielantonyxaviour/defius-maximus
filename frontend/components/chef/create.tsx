@@ -335,9 +335,10 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
         },
       },
     });
-
+    const randomId = crypto.randomUUID();
     // Handle form submission here
     console.log({
+      id: randomId,
       takeProfits,
       dcaPoints,
       selectedAsset,
@@ -365,6 +366,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
 
     console.log(timeFrame);
     const formData = new FormData();
+    formData.append("id", randomId);
     formData.append("chef_id", chef?.id || "");
     formData.append("username", chef?.user_id || "");
     formData.append("asset", selectedAsset);
@@ -406,6 +408,23 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({ close }) => {
       setLoading(3);
     }
   };
+
+  //   useEffect(() => {
+  //     const channel = supabase
+  //         .channel("realtime-table")
+  //         .on("postgres_changes",
+  //             { event: "INSERT", schema: "public", table: "your_table" },
+  //             (payload) => {
+  //                 console.log("New row inserted:", payload);
+  //                 setMessages((prev) => [...prev, payload.new]); // Update state
+  //             }
+  //         )
+  //         .subscribe();
+
+  //     return () => {
+  //         supabase.removeChannel(channel); // Clean up on unmount
+  //     };
+  // }, []);
 
   return (
     <div className="2xl:relative absolute 2xl:top-[0%] 2xl:left-[0%] left-[16%] xl:w-[48%] w-[80%] 2xl:h-full h-[600px] bg-[#1F1F1F] rounded-sm">

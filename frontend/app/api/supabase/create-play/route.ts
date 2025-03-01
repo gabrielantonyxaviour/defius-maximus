@@ -4,6 +4,7 @@ export async function POST(request: Request) {
   try {
     console.log("Received request to create play");
     const formData = await request.formData();
+    const id = formData.get("id") as string;
     const chef_id = formData.get("chef_id") as string;
     const name = formData.get("name") as string;
     const asset = formData.get("asset") as string;
@@ -22,6 +23,7 @@ export async function POST(request: Request) {
     const expectedPnl = formData.get("expected_pnl") as string;
 
     console.log("Creating trade play with data:", {
+      id,
       chef_id,
       asset,
       direction,
@@ -40,6 +42,7 @@ export async function POST(request: Request) {
       dca: dcaPoints,
       expected_pnl: expectedPnl,
     });
+
     const response = await fetch(
       "https://notable-honestly-urchin.ngrok-free.app/trading/play",
       {
@@ -50,6 +53,7 @@ export async function POST(request: Request) {
         body: JSON.stringify({
           name: name,
           tradePlay: {
+            id,
             chef_id,
             asset,
             direction,
