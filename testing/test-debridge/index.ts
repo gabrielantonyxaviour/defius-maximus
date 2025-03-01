@@ -7,10 +7,9 @@ import {
   http,
   zeroAddress,
 } from "viem";
-import { privateKeyToAccount, privateKeyToAddress } from "viem/accounts";
+import { privateKeyToAccount } from "viem/accounts";
 import { base, story } from "viem/chains";
 import dotenv from "dotenv";
-import { DEBRIDGE_GATE_ABI } from "./config";
 dotenv.config();
 
 const WIP_TOKEN_ADDRESS = "0x1514000000000000000000000000000000000000"; // Story WIP token
@@ -185,7 +184,7 @@ async function main(traderIp: string, caller_p_key: string) {
   }
 }
 
-main()
+main("", process.env.TRADER_PRIVATE_KEY || "")
   .then(() => {
     console.log("Process completed successfully!");
     process.exit(0);

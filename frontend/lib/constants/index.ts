@@ -953,6 +953,72 @@ export const sushiTokenList = [
   },
 ];
 
-export const circuitTokenList = [];
+export const circuitTokenList = [
+  {
+    address: "",
+    chainId: 48899,
+    decimals: 18,
+    logoURI: "/chains/btc.png",
+    name: "Wrapped BTC",
+    symbol: "WBTC",
+  },
+  {
+    address: "",
+    chainId: 48899,
+    decimals: 18,
+    logoURI: "/chains/solana.png",
+    name: "Wrapped SOL",
+    symbol: "WBTC",
+  },
+  {
+    address: "",
+    chainId: 48899,
+    decimals: 18,
+    logoURI: "/chains/eth.png",
+    name: "Wrapped ETH",
+    symbol: "WBTC",
+  },
+  {
+    address: "",
+    chainId: 48899,
+    decimals: 18,
+    logoURI: "/usdt.png",
+    name: "Tether USD",
+    symbol: "USDT",
+  },
+];
 
-export const kittyTokenList = [];
+export const kittyTokenList = [
+  {
+    address: "",
+    chainId: 545,
+    decimals: 18,
+    logoURI: "/chains/btc.png",
+    name: "Wrapped BTC",
+    symbol: "WBTC",
+  },
+  {
+    address: "",
+    chainId: 545,
+    decimals: 18,
+    logoURI: "/chains/solana.png",
+    name: "Wrapped SOL",
+    symbol: "WBTC",
+  },
+  {
+    address: "",
+    chainId: 545,
+    decimals: 18,
+    logoURI: "/chains/eth.png",
+    name: "Wrapped ETH",
+    symbol: "WBTC",
+  },
+  {
+    address: "",
+    chainId: 545,
+    decimals: 18,
+    logoURI: "/usdt.png",
+    name: "Tether USD",
+    symbol: "USDT",
+  },
+];
