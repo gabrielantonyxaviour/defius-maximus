@@ -17,7 +17,9 @@ import {
 import { privateKeyToAccount } from "viem/accounts";
 
 import { zircuitTestnet, flowTestnet } from "viem/chains";
+import dotenv from "dotenv";
 
+dotenv.config();
 const deployments = {
   [flowTestnet.id]: {
     network: "flowEvm",

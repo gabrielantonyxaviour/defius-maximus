@@ -1,5 +1,5 @@
 import { CryptoPanicPost, ProcessedSentiment } from "../types.js";
-import { parseJSONObjectFromText } from "./index.js";
+
 interface Votes {
   negative: number;
   positive: number;
@@ -16,6 +16,37 @@ interface SentimentScore {
   score: number; // Range from -1 to 1
   engagement: number; // Total interactions
   controversy: number; // Ratio of opposing reactions
+}
+
+// Improved JSON parser that handles various response formats
+export function parseJSONObjectFromText(text: string): any {
+  try {
+    // First try direct parsing
+    return JSON.parse(text);
+  } catch (e) {
+    try {
+      // Look for JSON object pattern in the text
+      const jsonPattern = /\{[\s\S]*\}/g;
+      const matches = text.match(jsonPattern);
+
+      if (matches && matches.length > 0) {
+        return JSON.parse(matches[0]);
+      }
+
+      // Try removing markdown code blocks
+      const cleanedText = text.replace(/```json|```/g, "").trim();
+      return JSON.parse(cleanedText);
+    } catch (innerError) {
+      console.error("Failed to parse JSON from text:", innerError);
+      // Return default object in case of failure
+      return {
+        overallSentiment: 50,
+        engagementScore: 30,
+        topInfluencers: [],
+        keyPhrases: [],
+      };
+    }
+  }
 }
 
 function calculateSentiment(votes: Votes): SentimentScore {
@@ -39,58 +70,79 @@ function calculateSentiment(votes: Votes): SentimentScore {
       (Math.max(positiveSignals, negativeSignals) || 1),
   };
 }
+
 export async function processSentimentCryptoPanic(
   asset: string
 ): Promise<ProcessedSentiment> {
   const posts: CryptoPanicPost[] = [];
-  try {
-    const response = await fetch(
-      `https://cryptopanic.com/api/v1/posts/?auth_token=${process.env.CRYPTO_PANIC_API_KEY}&currencies=${asset == "WSOL" ? "SOL" : asset == "WBTC" ? "BTC" : asset}&public=true&kind=news`
-    );
-    const cryptoPanicResponse = (await response.json()) as any;
-    console.log(cryptoPanicResponse);
-    if (cryptoPanicResponse.info == "Token not found") {
-      return {
-        overallSentiment: 74,
-        engagementScore: 54,
-        topInfluencers: ["legen", "DaanCrypto", "crypto_goos"],
-        keyPhrases: ["volume", "amazing", "moon", "lambo"],
-      };
-    }
-    const { results } = cryptoPanicResponse;
-    for (const result of results) {
-      posts.push({
-        text: result.title,
-        sentiment: calculateSentiment(result.votes),
-      });
-    }
-    const prompt = {
-      system: `You are a specialized crypto sentiment analyzer. Analyze crypto-related posts and extract key insights. Return a JSON object matching the ProcessedSentiment type with:
-         - overallSentiment: number 0-100 representing aggregate sentiment
-         - engagementScore: number 0-100 based on interaction levels
-         - topInfluencers: array of key entities/people mentioned
-         - keyPhrases: array of important technical/market terms
-         
-        Response format should be formatted in a JSON block like this:
-        \`\`\`json
-        {
-         "overallSentiment": number,    // 0-100 based on aggregate sentiment
-         "engagementScore": number,     // 0-100 from interaction levels
-         "topInfluencers": string[],    // Key entities/people mentioned
-         "keyPhrases": string[]         // Technical/market terms, trends
-        }
-        \`\`\`
-         `,
+  const fallbackResponse: ProcessedSentiment = {
+    overallSentiment: 74,
+    engagementScore: 54,
+    topInfluencers: ["legen", "DaanCrypto", "crypto_goos"],
+    keyPhrases: ["volume", "amazing", "moon", "lambo"],
+  };
 
-      human: `Analyze these crypto posts and their sentiment metrics: ${JSON.stringify(posts.slice(0, 20))}`,
+  try {
+    // Handle different asset names
+    const cryptoSymbol =
+      asset === "WSOL" ? "SOL" : asset === "WBTC" ? "BTC" : asset;
+
+    const response = await fetch(
+      `https://cryptopanic.com/api/v1/posts/?auth_token=${process.env.CRYPTO_PANIC_API_KEY}&currencies=${cryptoSymbol}&public=true&kind=news`
+    );
+
+    if (!response.ok) {
+      console.error(`API Error: ${response.status} ${response.statusText}`);
+      return fallbackResponse;
+    }
+
+    const cryptoPanicResponse: any = await response.json();
+    console.log("CryptoPanic Response:", cryptoPanicResponse);
+
+    if (cryptoPanicResponse.info === "Token not found") {
+      return fallbackResponse;
+    }
+
+    const { results } = cryptoPanicResponse;
+    if (!results || !Array.isArray(results)) {
+      console.error("Invalid results structure in CryptoPanic response");
+      return fallbackResponse;
+    }
+
+    // Process posts
+    for (const result of results) {
+      if (result && result.title && result.votes) {
+        posts.push({
+          text: result.title,
+          sentiment: calculateSentiment(result.votes),
+        });
+      }
+    }
+
+    if (posts.length === 0) {
+      console.warn("No valid posts found for analysis");
+      return fallbackResponse;
+    }
+
+    // Improved prompt for more reliable JSON output
+    const prompt = {
+      system: `You are a specialized crypto sentiment analyzer. Analyze the following posts and return ONLY a valid JSON object with these exact fields:
+- overallSentiment: number from 0-100 representing aggregate sentiment
+- engagementScore: number from 0-100 based on interaction levels
+- topInfluencers: array of strings with key entities/people mentioned
+- keyPhrases: array of strings with important technical/market terms
+
+Your response must be a valid JSON object and nothing else - no explanations, no markdown.`,
+      human: `${JSON.stringify(posts.slice(0, 20))}`,
     };
+
     const analysisResponse = await fetch(
       `https://llm-gateway.heurist.xyz/v1/chat/completions`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          accept: "application/json",
+          Accept: "application/json",
           Authorization: `Bearer ${process.env.HEURIST_AI_API_KEY}`,
         },
         body: JSON.stringify({
@@ -105,53 +157,65 @@ export async function processSentimentCryptoPanic(
               content: prompt.human,
             },
           ],
+          temperature: 0.3, // Lower temperature for more consistent responses
         }),
       }
     );
-    const repsonseData = await analysisResponse.json();
 
-    console.log("AI response:", repsonseData);
+    if (!analysisResponse.ok) {
+      console.error(
+        `AI API Error: ${analysisResponse.status} ${analysisResponse.statusText}`
+      );
+      return fallbackResponse;
+    }
 
-    const { choices, usage } = repsonseData as {
-      choices: {
-        index: number;
-        message: {
-          content: string;
-          role: string;
-        };
-        finish_reason: string;
-        logprobs: null;
-      }[];
-      usage: {
-        prompt_tokens: string;
-        completion_tokens: string;
-        total_tokens: string;
-      };
+    const responseData: any = await analysisResponse.json();
+    console.log("AI response:", responseData);
+
+    if (!responseData?.choices || !responseData.choices[0]?.message?.content) {
+      console.error("Invalid response structure from AI API");
+      return fallbackResponse;
+    }
+
+    const aiContent = responseData.choices[0].message.content;
+    const parsedResponse = parseJSONObjectFromText(aiContent);
+
+    // Validate the parsed response - ensure all required fields exist and are the right type
+    const validatedResponse: ProcessedSentiment = {
+      overallSentiment:
+        typeof parsedResponse.overallSentiment === "number"
+          ? parsedResponse.overallSentiment
+          : 50,
+      engagementScore:
+        typeof parsedResponse.engagementScore === "number"
+          ? parsedResponse.engagementScore
+          : 50,
+      topInfluencers: Array.isArray(parsedResponse.topInfluencers)
+        ? parsedResponse.topInfluencers
+        : [],
+      keyPhrases: Array.isArray(parsedResponse.keyPhrases)
+        ? parsedResponse.keyPhrases
+        : [],
     };
 
-    const parsedResponse = parseJSONObjectFromText(
-      choices[0].message.content
-    ) as ProcessedSentiment;
+    console.log("Validated Response:", validatedResponse);
 
-    console.log("Parsed Response:", parsedResponse);
-    console.log(
-      "Usage Report:\nPrompt Tokens:",
-      usage.prompt_tokens,
-      "\nCompletion Tokens:",
-      usage.completion_tokens,
-      "\nTotal Tokens:",
-      usage.total_tokens
-    );
+    if (responseData.usage) {
+      console.log(
+        "Usage Report:\nPrompt Tokens:",
+        responseData.usage.prompt_tokens,
+        "\nCompletion Tokens:",
+        responseData.usage.completion_tokens,
+        "\nTotal Tokens:",
+        responseData.usage.total_tokens
+      );
+    }
 
-    console.log("COMPLETION  RESPONES");
-    console.log("Received response from OraAI model.");
-    return parsedResponse;
-  } catch (e) {
-    return {
-      overallSentiment: 74,
-      engagementScore: 54,
-      topInfluencers: ["legen", "DaanCrypto", "crypto_goos"],
-      keyPhrases: ["volume", "amazing", "moon", "lambo"],
-    };
+    console.log("COMPLETION RESPONSE");
+    console.log("Received response from LLM model.");
+    return validatedResponse;
+  } catch (error) {
+    console.error("Error in sentiment analysis:", error);
+    return fallbackResponse;
   }
 }

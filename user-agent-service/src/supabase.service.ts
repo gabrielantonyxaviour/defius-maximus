@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import { TradePlay } from "./types";
 import { performSwap } from "./utils/sushiswap";
 import { sushiTokenList } from "./utils/constants";
-import { parseEther } from "viem";
+import { Hex, parseEther } from "viem";
 import { placeTrade } from "./utils/gmx";
 import getBalances from "./utils/balance";
 import {
@@ -303,7 +303,7 @@ export class SupabaseService {
               const tokenOut = sushiTokenList.find((t) => t.symbol == asset);
               if (tokenOut) {
                 const tx = await performSwap({
-                  pKey: "0x" + user.pkey,
+                  pKey: ("0x" + user.pkey) as Hex,
                   tokenOut: tokenOut.address,
                   amount: parseEther(amount.toString()).toString(),
                 });
@@ -349,7 +349,7 @@ export class SupabaseService {
               }
               await swapNativeToToken(
                 zircuitTestnet,
-                user.pkedy,
+                user.pkey,
                 asset,
                 amount.toString()
               );
@@ -371,7 +371,7 @@ export class SupabaseService {
 
               await swapNativeToToken(
                 flowTestnet,
-                user.pkedy,
+                user.pkey,
                 asset,
                 amount.toString()
               );
