@@ -112,77 +112,72 @@ export default function ChefProfile({
                 </div>
               </div>
 
-              {chefData.id != chef?.id && (
-                <div className="flex flex-col items-center space-y-1">
-                  <div className="relative bg-[#1F1F1F] w-[200px] h-[34px] rounded-sm mx-auto">
-                    {" "}
-                    <Button
-                      disabled={
-                        loading == 1 ||
-                        loading == 3 ||
-                        user_follows.includes(chefData.id)
-                      }
-                      onClick={async (e) => {
-                        setLoading(1);
-                        const followResponse = await fetch(
-                          "/api/supabase/follow-chef",
-                          {
-                            method: "POST",
-                            headers: {
-                              "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({
-                              user_id: user.id,
-                              chef_id: chefData.id,
-                              confidence_level: 80,
-                            }),
-                          }
-                        );
-
-                        const { success, error } = await followResponse.json();
-                        if (error) {
-                          console.error("Failed to follow chef:", error);
-                          setLoading(2);
-                          return;
+              <div className="flex flex-col items-center space-y-1">
+                <div className="relative bg-[#1F1F1F] w-[200px] h-[34px] rounded-sm mx-auto">
+                  <Button
+                    disabled={
+                      loading == 1 ||
+                      loading == 3 ||
+                      user_follows.includes(chefData.id)
+                    }
+                    onClick={async (e) => {
+                      setLoading(1);
+                      const followResponse = await fetch(
+                        "/api/supabase/follow-chef",
+                        {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({
+                            user_id: user.id,
+                            chef_id: chefData.id,
+                            confidence_level: 80,
+                          }),
                         }
-                        console.log("Followed chef:", success);
-                        setUserFollow(chefData.id);
-                        await new Promise((resolve) =>
-                          setTimeout(resolve, 2000)
-                        );
-                        setLoading(3);
-                      }}
-                      className="group absolute -top-[4px] -left-[2px] rounded-sm w-full h-[36px] flex py-4 px-6 bg-[#BF4317] hover:bg-[#BF4317] hover:text-white border-[1px] border-[#3A3A3A] mr-[2px]"
-                    >
-                      {loading == 1 ? (
-                        <>
-                          <CircleDashedIcon className="animate-spin" />
-                          <p>Following...</p>
-                        </>
-                      ) : loading == 2 ? (
-                        <>
-                          <X />
-                          <p>Error </p>
-                        </>
-                      ) : user_follows.includes(chefData.id) || loading == 3 ? (
-                        <>
-                          <Check className="h-6 w-6" />
-                          <p>Subscribed</p>
-                        </>
-                      ) : (
-                        <>
-                          <Zap className="h-6 w-6" />
-                          <p>Follow</p>
-                        </>
-                      )}
-                    </Button>
-                  </div>
+                      );
 
-                  {!user_follows.includes(chefData.id) && (
-                    <p className="text-xs">at {chefData.sub_fee} USDT/month</p>
-                  )}
+                      const { success, error } = await followResponse.json();
+                      if (error) {
+                        console.error("Failed to follow chef:", error);
+                        setLoading(2);
+                        return;
+                      }
+                      console.log("Followed chef:", success);
+                      setUserFollow(chefData.id);
+                      await new Promise((resolve) => setTimeout(resolve, 500));
+                      setLoading(3);
+                    }}
+                    className="group absolute -top-[4px] -left-[2px] rounded-sm w-full h-[36px] flex py-4 px-6 bg-[#BF4317] hover:bg-[#BF4317] hover:text-white border-[1px] border-[#3A3A3A] mr-[2px]"
+                  >
+                    {loading == 1 ? (
+                      <>
+                        <CircleDashedIcon className="animate-spin" />
+                        <p>Following...</p>
+                      </>
+                    ) : loading == 2 ? (
+                      <>
+                        <X />
+                        <p>Error </p>
+                      </>
+                    ) : user_follows.includes(chefData.id) || loading == 3 ? (
+                      <>
+                        <Check className="h-6 w-6" />
+                        <p>Subscribed</p>
+                      </>
+                    ) : (
+                      <>
+                        <Zap className="h-6 w-6" />
+                        <p>Follow</p>
+                      </>
+                    )}
+                  </Button>
                 </div>
-              )}
+
+                {!user_follows.includes(chefData.id) && (
+                  <p className="text-xs">at {chefData.sub_fee} USDT/month</p>
+                )}
+              </div>
             </div>
 
             <Separator className="bg-[#1F1F1F]" />
