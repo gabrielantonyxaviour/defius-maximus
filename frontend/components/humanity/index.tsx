@@ -122,7 +122,7 @@ export default function Humanity() {
                             ip: chef.ip_address,
                             address: chef.user_id,
                             royalty: chef.royalty,
-                            chef_score: Math.floor(70 + Math.random() * 30),
+                            chef_score: chef.chef_score,
                             twitter: chef.twitter,
                           };
                           const response = await fetch(
