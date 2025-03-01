@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import "./Token.sol";
+import "./TestToken.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract TokenFactory is Ownable {
@@ -27,7 +27,7 @@ contract TokenFactory is Ownable {
         uint8 decimals,
         uint256 initialSupply
     ) public returns (address) {
-        Token newToken = new Token(
+        TestToken newToken = new TestToken(
             name,
             symbol,
             decimals,
