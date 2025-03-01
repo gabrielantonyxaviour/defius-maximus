@@ -8,7 +8,7 @@ import { parseJSONObjectFromText } from "../utils/index.js";
 import { generateEmbeddings } from "../utils/supavec.js";
 import { getChef } from "../utils/chef.js";
 import { createPlay } from "../utils/createPlay.js";
-// import { processSentimentCryptoPanic } from "../utils/cryptopanic.js";
+import { processSentimentCryptoPanic } from "../utils/cryptopanic.js";
 
 const isProd = JSON.parse(process.env.IS_PROD || "false");
 
@@ -150,6 +150,7 @@ router.post("/play", async (req: Request, res: Response): Promise<void> => {
     console.log("Processed candles data:", proccessedCandlesData);
 
     console.log("Processing social sentiment data for asset:", tradePlay.asset);
+    // TODO: Disabled cookie.fun because of API Key termination
     // const processSocialSentimentData = await processSentiment([
     //     `%24${tradePlay.asset}%20news`,
     //     `%24${tradePlay.asset}%20analysis`,
@@ -158,15 +159,10 @@ router.post("/play", async (req: Request, res: Response): Promise<void> => {
     //     `%24${tradePlay.asset}%20degen`
     // ]);
 
-    // const processSocialSentimentData = await processSentimentCryptoPanic(
-    //   tradePlay.asset
-    // );
-    const processSocialSentimentData = {
-      overallSentiment: 74,
-      engagementScore: 54,
-      topInfluencers: ["elonmusk", "vitalikbuterin"],
-      keyPhrases: ["ethereum", "bullish", "bearish"],
-    };
+    const processSocialSentimentData = await processSentimentCryptoPanic(
+      tradePlay.asset
+    );
+
     console.log("Processed social sentiment data:", {
       overallSentiment: 74,
       engagementScore: 54,
@@ -187,7 +183,7 @@ router.post("/play", async (req: Request, res: Response): Promise<void> => {
     );
     console.log("Generated technical analysis:", processedTechincalAnalysis);
 
-    const eggAiSystemPrompt = `
+    const sytemPrompt = `
         You are an advanced crypto trade analyst and social sentiment expert. You have been asked to evaluate a future trading position for a user.`;
 
     const chefAnalysis = getChef(tradePlay.chef_id);
@@ -254,7 +250,7 @@ Please provide a risk assessment with these scores (0-100):
           messages: [
             {
               role: "system",
-              content: eggAiSystemPrompt,
+              content: sytemPrompt,
             },
             {
               role: "user",

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEnvironmentStore } from "../context";
 import { useEffect, useState } from "react";
-import { Copy, Save } from "lucide-react";
+import { Check, CircleDashedIcon, Copy, Save } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Calendar } from "@/components/ui/calendar";
 import { Progress } from "@/components/ui/progress";
@@ -17,6 +17,7 @@ export default function Profile({ close }: { close: () => void }) {
   const [expectedPNL, setExpectedPNL] = useState(5);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [riskLevel, setRiskLevel] = useState(0);
+  const [savingChanges, setSavingChanges] = useState(0);
 
   useEffect(() => {
     if (user) {
@@ -142,7 +143,11 @@ export default function Profile({ close }: { close: () => void }) {
                   </div>
                   <Slider
                     value={[expectedPNL]}
-                    onValueChange={(value) => setExpectedPNL(value[0])}
+                    onValueChange={(value) => {
+                      setExpectedPNL(value[0]);
+
+                      if (savingChanges != 0) setSavingChanges(0);
+                    }}
                     min={5}
                     max={500}
                     step={1}
@@ -157,7 +162,10 @@ export default function Profile({ close }: { close: () => void }) {
                       <Calendar
                         mode="single"
                         selected={endDate}
-                        onSelect={setEndDate}
+                        onSelect={(date) => {
+                          setEndDate(date);
+                          if (savingChanges != 0) setSavingChanges(0);
+                        }}
                         disabled={(date) => date < new Date()}
                         className="rounded-md sen"
                       />
@@ -175,7 +183,7 @@ export default function Profile({ close }: { close: () => void }) {
                   </div>
                 </div>
 
-                <div className="flex justify-center">
+                <div className="flex justify-center relative bottom-20">
                   <Button
                     onClick={async () => {
                       if (!user) return;
@@ -186,6 +194,8 @@ export default function Profile({ close }: { close: () => void }) {
                         return;
                       if (expectedPNL == 0) return;
                       if (!endDate) return;
+
+                      setSavingChanges(1);
 
                       await fetch("/api/supabase/update-user", {
                         method: "POST",
@@ -204,11 +214,28 @@ export default function Profile({ close }: { close: () => void }) {
                           ? endDate.getTime()
                           : undefined,
                       });
+                      setSavingChanges(2);
                     }}
+                    disabled={savingChanges != 0}
                     className="group rounded-sm py-2 px-4 bg-[#BF4317] hover:bg-[#BF4317] hover:text-white border border-[#BF4317] flex items-center space-x-2"
                   >
-                    <Save className="h-5 w-5" />
-                    <span>Save Changes</span>
+                    {savingChanges == 0 ? (
+                      <>
+                        {" "}
+                        <Save className="h-5 w-5" />
+                        <span>Save Changes</span>
+                      </>
+                    ) : savingChanges == 1 ? (
+                      <>
+                        <CircleDashedIcon className="h-5 w-5 animate-spin text-white" />
+                        <span>Saving...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Check className="h-5 w-5" />
+                        <span>Saved!</span>
+                      </>
+                    )}
                   </Button>
                 </div>
               </div>

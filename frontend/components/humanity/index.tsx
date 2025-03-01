@@ -13,6 +13,10 @@ export default function Humanity() {
   const [loading, setLoading] = useState(false);
   const [creating, setCreating] = useState(false);
 
+  useEffect(() => {
+    console.log(cred);
+  }, []);
+
   return (
     <div className="w-screen h-screen flex flex-col justify-center pt-2">
       <div className="relative bg-[#1F1F1F] w-[100%] md:w-[700px] 2xl:h-[50%] h-[75%] sm:h-[60%] rounded-xl mx-auto">
@@ -59,7 +63,7 @@ export default function Humanity() {
                           className="rounded-l-xl"
                         />
                       </div>
-                      <div className="col-span-3 rounded-r-xl flex flex-col pl-3 justify-center">
+                      {/* <div className="col-span-3 rounded-r-xl flex flex-col pl-3 justify-center">
                         <p>
                           Id:{" "}
                           <span className="font-normal">
@@ -93,7 +97,7 @@ export default function Humanity() {
                           Twitter:{" "}
                           <span className="font-normal">{cred.twitter}</span>
                         </p>
-                      </div>
+                      </div> */}
                     </div>
                     <Button
                       onClick={() => {

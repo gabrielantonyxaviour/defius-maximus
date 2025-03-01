@@ -71,9 +71,6 @@ export async function placeTrade(
     executionFee: executionFee,
   };
 
-  console.log("PARAMS!!!");
-  console.log(params);
-
   if (addresses.token == undefined) {
     console.log(
       "Token " +
@@ -103,8 +100,6 @@ export async function placeTrade(
     params.positionSizeInETH
   );
 
-  console.log({ assetPriceInUSD, amountInUSD, amountInETH });
-
   // Get Market Token Address
   const marketTokenAddress = await getMarketTokenAddress(
     dataStoreContract,
@@ -114,8 +109,6 @@ export async function placeTrade(
     "0x4bd5869a01440a9ac6d7bf7aa7004f402b52b845f20e2cec925101e13d84d075"
   );
 
-  console.log({ marketTokenAddress });
-
   const ethUsdMarket = await getMarketTokenAddress(
     dataStoreContract,
     addresses.wnt,
@@ -124,19 +117,9 @@ export async function placeTrade(
     "0x4bd5869a01440a9ac6d7bf7aa7004f402b52b845f20e2cec925101e13d84d075"
   );
 
-  console.log({ ethUsdMarket });
-
-  console.log({ executionFee: params.executionFee });
-
   // TODO: Implement Stop Loss and Take Profit
 
   const walletAddress = await wallet.getAddress();
-  console.log("ASSET PRICE WITH SLIPPAGE");
-  console.log(
-    (assetPriceInUSD + BigInt("1005699232234760000000000")).toString()
-  );
-  console.log("ASSET PRICE");
-  console.log(assetPriceInUSD.toString());
   const createOrderParams =
     params.chain == "421614"
       ? [
@@ -227,11 +210,13 @@ export async function placeTrade(
     ],
     { value: amountInETH + params.executionFee }
   );
-
-  console.log("Tx sent");
-  console.log(tx);
+  console.log("Transaction sent. Waiting for confirmation..");
   const receipt = await tx.wait();
-  console.log("Transaction receipt");
-  console.log(receipt);
+  console.log("Transaction Confirmed. View in explorer.");
+  console.log(
+    (params.chain == "421614"
+      ? "https://testnet.snowtrace.io/tx/"
+      : "https://sepolia.arbiscan.io/tx/") + receipt.transactionHash
+  );
   return tx;
 }

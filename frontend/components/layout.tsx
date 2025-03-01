@@ -193,9 +193,25 @@ export default function Layout({
               chef.user_id as string
             ).toLowerCase()}&cred_id=${chef.cred_id}`
           );
-          const fetchedCred = await response.json();
-          console.log("Fetched credential:", fetchedCred);
-          setCred(fetchedCred);
+          const { cred_id, address, ip, name, royalty, chef_score, twitter } =
+            await response.json();
+          console.log("Fetched credential:", {
+            cred_id,
+            address,
+            ip,
+            royalty,
+            chef_score,
+            twitter,
+          });
+          setCred({
+            id: cred_id,
+            name,
+            address,
+            ip,
+            royalty,
+            chef_score,
+            twitter,
+          });
         }
       } else {
         console.log("Chef is not set or humanity is already registered");
@@ -208,8 +224,9 @@ export default function Layout({
       <div className="fixed w-full flex flex-col sm:flex-row justify-end items-end sm:items-center gap-2 sm:gap-4 p-2 sm:p-4 sen">
         {isConnected && (
           <>
-            <div
-              className="pr-2 flex space-x-1 hover:font-semibold items-center cursor-pointer"
+            <Button
+              className="pr-2 flex space-x-1 hover:font-semibold items-center cursor-pointer bg-transparent border-none"
+              disabled={address == null || user == null}
               onClick={() => {
                 router.push("/humanity");
               }}
@@ -223,7 +240,7 @@ export default function Layout({
               />
               <p className="sen text-white pl-2 ">Mint Credentials</p>
               <ArrowUpRight className="text-white h-5 w-5" />
-            </div>
+            </Button>
             <div className="relative w-[150px] bg-[#1F1F1F] h-10 rounded-sm">
               <Button
                 onClick={() => {}}

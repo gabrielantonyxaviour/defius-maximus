@@ -15,19 +15,19 @@ import { storeImage } from "@/lib/supabase";
 import { uploadImageToWalrus } from "@/lib/walrus";
 export default function CreateChefForm() {
   const { user, setChef, storyClient } = useEnvironmentStore((store) => store);
-  const [name, setName] = useState("");
-  const [bio, setBio] = useState("");
-  const [twitter, setTwitter] = useState("");
+  const [name, setName] = useState("Gabriel Antony Xaviour");
+  const [bio, setBio] = useState("I am the one who calls");
+  const [twitter, setTwitter] = useState("gabrielaxyeth");
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
-  const [niches, setNiches] = useState<string[]>([]);
+  const [niches, setNiches] = useState<string[]>(["spot", "perps"]);
   const [error, setError] = useState("");
   const [isPaidSubscription, setIsPaidSubscription] = useState(false);
   const [subFee, setSubFee] = useState<string>("0");
   const [loading, setLoading] = useState(false);
-  const [royaltyFee, setRoyaltyFee] = useState(0);
-  const [nftName, setNftName] = useState("");
-  const [nftSymbol, setNftSymbol] = useState("");
+  const [royaltyFee, setRoyaltyFee] = useState(10);
+  const [nftName, setNftName] = useState("Gabriel");
+  const [nftSymbol, setNftSymbol] = useState("GB");
 
   const nicheOptions = [
     { id: "spot", label: "Spot Trading" },
