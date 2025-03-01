@@ -4,10 +4,10 @@ import { Hex } from "viem";
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const address = searchParams.get("address");
-  const credId = searchParams.get("credId");
+  const cred_id = searchParams.get("cred_id");
 
   try {
-    const cred = await ownsCreds(address as Hex, credId as string);
+    const cred = await ownsCreds(address as Hex, cred_id as string);
     if (!cred) {
       console.log("You dont own any credential");
       return Response.json({

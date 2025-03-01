@@ -25,7 +25,7 @@ export default function ChefProfile({
   chef_id: string;
   close: () => void;
 }) {
-  const { user, chef, user_follows, setUserFollow } = useEnvironmentStore(
+  const { user, chef, cred, user_follows, setUserFollow } = useEnvironmentStore(
     (store) => store
   );
   const [chefData, setChefData] = useState<Chef | null>(null);
@@ -82,10 +82,18 @@ export default function ChefProfile({
                   </AvatarFallback>
                 </Avatar>
                 <div className="space-y-2">
-                  <div>
+                  <div className="flex items-center space-x-2">
                     <h2 className="text-2xl font-bold">
                       {chefData.name || chefData.user_id}
                     </h2>
+                    {cred && (
+                      <Image
+                        src={"/verified.png"}
+                        width={25}
+                        height={25}
+                        alt="cred"
+                      />
+                    )}
                   </div>
                   <div className="flex flex-wrap gap-2 mt-1.5 ">
                     {chefData.niche.map((tag) => (

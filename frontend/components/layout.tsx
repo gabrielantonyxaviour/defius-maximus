@@ -178,15 +178,20 @@ export default function Layout({
         const response = await fetch(
           "/api/humanity/check?address=" + chef.user_id
         );
-        const responseData = await response.json();
+        const { isRegistered } = await response.json();
 
-        console.log("Humanity registration status:", responseData);
-        setHumanityRegistered(responseData);
+        console.log("Humanity registration status:", isRegistered);
+        setHumanityRegistered(isRegistered);
 
-        if (responseData && chef.cred_id != null) {
+        if (isRegistered && chef.cred_id != null) {
           console.log("Fetching credential for cred_id:", chef.cred_id);
+          console.log(
+            `/api/humanity/owns?address=${chef.user_id}&cred_id=${chef.cred_id}`
+          );
           const response = await fetch(
-            `/api/humanity/owns?address=${chef.user_id}&credId=${chef.cred_id}`
+            `/api/humanity/owns?address=${(
+              chef.user_id as string
+            ).toLowerCase()}&cred_id=${chef.cred_id}`
           );
           const { cred } = await response.json();
           console.log("Fetched credential:", cred);

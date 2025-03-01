@@ -65,12 +65,7 @@ export async function ownsCreds(address: Hex, credId: string): Promise<any> {
   console.log(
     `Checking ownership of credential ID: ${credId} for address: ${address}`
   );
-  const isRegistered = await getRegistered(address);
 
-  if (!isRegistered) {
-    console.log(`Address ${address} is not registered`);
-    return undefined;
-  }
   const response = await fetch(
     `https://issuer.humanity.org/credentials/list?holderDid=did:ethr:${address}`,
     {
@@ -86,6 +81,8 @@ export async function ownsCreds(address: Hex, credId: string): Promise<any> {
     console.log(`Failed to fetch credentials for address: ${address}`);
     throw new Error("Failed to fetch credentials");
   }
+  console.log("Fetched Data");
+  console.log(data);
   const verifiedCred = (data as any[]).filter(
     (c: any) => c.credentialSubject.id == credId
   );
