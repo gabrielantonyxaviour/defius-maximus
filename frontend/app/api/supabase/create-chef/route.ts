@@ -14,6 +14,8 @@ export async function POST(request: Request) {
     const nftSymbol = formData.get("nft_symbol") as string;
     const ipAddress = formData.get("ip_address") as string;
     const twitter = formData.get("twitter") as string;
+    const royalty = formData.get("royalty") as string;
+    const chefScore = formData.get("chef_score") as string;
 
     console.log("Creating chef with data:", {
       user_id,
@@ -26,6 +28,8 @@ export async function POST(request: Request) {
       nftSymbol,
       ipAddress,
       twitter,
+      royalty,
+      chefScore,
     });
     const chef = await createChef({
       user_id,
@@ -38,6 +42,8 @@ export async function POST(request: Request) {
       nftSymbol,
       ipAddress,
       twitter,
+      royalty,
+      chefScore,
     });
 
     if (!chef) {

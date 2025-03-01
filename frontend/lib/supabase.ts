@@ -94,6 +94,8 @@ export async function createChef({
   nftSymbol,
   ipAddress,
   twitter,
+  royalty,
+  chefScore,
 }: {
   user_id: string;
   name: string;
@@ -105,6 +107,8 @@ export async function createChef({
   nftSymbol: string;
   ipAddress: string;
   twitter: string;
+  royalty: string;
+  chefScore: string;
 }): Promise<Chef | null> {
   console.log(`Creating chef with user id: ${user_id}`);
   const { data, error } = await supabase
@@ -121,6 +125,8 @@ export async function createChef({
         nft_symbol: nftSymbol,
         ip_address: ipAddress,
         twitter,
+        royalty,
+        chef_score: chefScore,
       },
     ])
     .select()

@@ -133,6 +133,11 @@ export default function CreateChefForm() {
       formData.append("nft_name", nftName);
       formData.append("nft_symbol", nftSymbol);
       formData.append("twitter", twitter);
+      formData.append("royalty", royaltyFee.toString());
+      formData.append(
+        "chef_score",
+        Math.floor(70 + Math.random() * 30).toString()
+      );
 
       console.log("FormData");
       console.log(formData);
