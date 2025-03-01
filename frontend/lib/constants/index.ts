@@ -955,7 +955,7 @@ export const sushiTokenList = [
 
 export const circuitTokenList = [
   {
-    address: "",
+    address: "0xf8755ce313eD86FAE7EB495616e40A030ab1dF2B",
     chainId: 48899,
     decimals: 18,
     logoURI: "/chains/btc.png",
@@ -963,23 +963,23 @@ export const circuitTokenList = [
     symbol: "WBTC",
   },
   {
-    address: "",
+    address: "0x39E2f5cDca1558EeC341d72cD1ECa817235F3918",
     chainId: 48899,
     decimals: 18,
     logoURI: "/chains/solana.png",
     name: "Wrapped SOL",
-    symbol: "WBTC",
+    symbol: "WSOL",
   },
   {
-    address: "",
+    address: "0x4200000000000000000000000000000000000006",
     chainId: 48899,
     decimals: 18,
     logoURI: "/chains/eth.png",
     name: "Wrapped ETH",
-    symbol: "WBTC",
+    symbol: "WETH",
   },
   {
-    address: "",
+    address: "0xAE9e73353e43A99F08b9B96596cEbf77371800d8",
     chainId: 48899,
     decimals: 18,
     logoURI: "/usdt.png",
@@ -990,7 +990,7 @@ export const circuitTokenList = [
 
 export const kittyTokenList = [
   {
-    address: "",
+    address: "0x7e4Fbf6Ff02C955b73C90154a60D6a88CA849A8A",
     chainId: 545,
     decimals: 18,
     logoURI: "/chains/btc.png",
@@ -998,23 +998,23 @@ export const kittyTokenList = [
     symbol: "WBTC",
   },
   {
-    address: "",
+    address: "0xf789e57Ff25C65280B96E43d5d152bf3Ff00B7e6",
     chainId: 545,
     decimals: 18,
     logoURI: "/chains/solana.png",
     name: "Wrapped SOL",
-    symbol: "WBTC",
+    symbol: "WSOL",
   },
   {
-    address: "",
+    address: "0x02d055524613D23e10c17998C12B9427ba565DB5",
     chainId: 545,
     decimals: 18,
-    logoURI: "/chains/eth.png",
-    name: "Wrapped ETH",
-    symbol: "WBTC",
+    logoURI: "/chains/flow.png",
+    name: "Wrapped FLOW",
+    symbol: "WFLOW",
   },
   {
-    address: "",
+    address: "0xd3bF53DAC106A0290B0483EcBC89d40FcC961f3e",
     chainId: 545,
     decimals: 18,
     logoURI: "/usdt.png",

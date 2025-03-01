@@ -859,9 +859,11 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({
                                         )}
                                         <div className="flex space-x-1 flex-1 justify-end">
                                           {[
-                                            spotExchanges.filter(
-                                              (e) => e.id == selectedDex
-                                            )[0].chain,
+                                            selectedDex == "sushi"
+                                              ? "base"
+                                              : selectedDex == "kitty"
+                                              ? "flow"
+                                              : "zircuit",
                                           ].map((chain: string) => (
                                             <img
                                               key={chain}
