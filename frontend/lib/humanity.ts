@@ -76,22 +76,22 @@ export async function ownsCreds(address: Hex, credId: string): Promise<any> {
       },
     }
   );
-  const { data } = await response.json();
+  const { credentials } = await response.json();
+  const { data } = credentials;
   if (!data) {
     console.log(`Failed to fetch credentials for address: ${address}`);
     throw new Error("Failed to fetch credentials");
   }
-  console.log("Fetched Data");
-  console.log(data);
-  const verifiedCred = (data as any[]).filter(
-    (c: any) => c.credentialSubject.id == credId
-  );
-  if (verifiedCred.length == 0) {
-    console.log(
-      `No credentials found with ID: ${credId} for address: ${address}`
-    );
-    return undefined;
+  let cred;
+  for (let c of data) {
+    if (c.id == credId) {
+      console.log(
+        `Found credential with ID: ${credId} for address: ${address}`
+      );
+      cred = c;
+      break;
+    }
   }
-  console.log(`Found credential with ID: ${credId} for address: ${address}`);
-  return verifiedCred[0];
+  if (cred) return { id: cred.id, cred: cred.credentialSubject };
+  else return undefined;
 }

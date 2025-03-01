@@ -5,7 +5,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const address = searchParams.get("address");
   const cred_id = searchParams.get("cred_id");
-
+  console.log("Fetching creds for address:", address, "cred_id:", cred_id);
   try {
     const cred = await ownsCreds(address as Hex, cred_id as string);
     if (!cred) {
@@ -16,7 +16,8 @@ export async function GET(request: Request) {
     } else {
       console.log("You own the credential");
       return Response.json({
-        cred,
+        cred_id: cred.id,
+        ...cred.cred,
       });
     }
   } catch (e) {
