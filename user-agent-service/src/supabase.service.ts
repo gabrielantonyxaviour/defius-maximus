@@ -6,6 +6,13 @@ import { sushiTokenList } from "./utils/constants";
 import { parseEther } from "viem";
 import { placeTrade } from "./utils/gmx";
 import getBalances from "./utils/balance";
+import {
+  arbitrumSepolia,
+  avalancheFuji,
+  base as baseChain,
+  flowTestnet,
+  zircuitTestnet,
+} from "viem/chains";
 
 export class SupabaseService {
   private static instance: SupabaseService;
@@ -119,19 +126,62 @@ export class SupabaseService {
               );
               console.log("By passing for the sake of demo");
             }
+
+            // Verify if good score and can proceed with the trade.
+            const {
+              risktoreward,
+              longtermscore,
+              marketstrength,
+              chefreputation,
+              equitypercent,
+              explanation,
+            } = analysis;
+
+            const shouldTrade =
+              parseInt(risktoreward) > 15 &&
+              parseInt(longtermscore) > 70 &&
+              parseInt(marketstrength) > 50 &&
+              parseInt(chefreputation) > 60 &&
+              parseInt(equitypercent) > 5;
+
+            console.log("\nExplanation:\n" + explanation);
+
+            if (!shouldTrade) {
+              console.log(
+                "\n\nTrade analysis score is unfavourable. But performing to demo the flow...\n\n"
+              );
+            } else {
+              console.log(
+                "\nTrade anlaysis score is good, proceeding with the trade\n\n"
+              );
+            }
+
             let amount: number;
+            let balances: Record<number, string> = {};
+            if (dex.toLocaleLowerCase() == "gmx") {
+              balances = await getBalances(user.address, [
+                arbitrumSepolia,
+                avalancheFuji,
+              ]);
+            } else if (dex.toLocaleLowerCase() == "sushi") {
+              balances = await getBalances(user.address, [baseChain]);
+            } else if (dex.toLocaleLowerCase() == "circuit") {
+              balances = await getBalances(user.address, [zircuitTestnet]);
+            } else if (dex.toLocaleLowerCase() == "kitty") {
+              balances = await getBalances(user.address, [flowTestnet]);
+            }
 
-            const { arb, base, avax } = await getBalances(user.address);
-
-            console.log("ARB Balance: ", arb);
-            console.log("BASE Balance: ", base);
-            console.log("AVAX Balance: ", avax);
             if (trade_type == "perps") {
               console.log(user.address);
-              const balance = chain == "avax" ? avax : arb;
+              const balance =
+                chain == "avax"
+                  ? balances[avalancheFuji.id]
+                  : balances[arbitrumSepolia.id];
               // const minimumBalance = chain == "avax" ? 1 : 0.001;
               console.log(`\nBalanace of the user wallet on ${chain} \n`);
               console.log(parseFloat(balance).toFixed(4) + " ETH / AVAX\n\n");
+
+              // !REMOVED BRIDGING FLOW FOR PERPS TRADES
               // if (parseFloat(balance) < minimumBalance) {
               //   console.log(
               //     `\nInsufficient funds on ${chain}  to perform the trade`
@@ -180,34 +230,6 @@ export class SupabaseService {
                 }
               }
 
-              // Verify if good score and can proceed with the trade.
-              const {
-                risktoreward,
-                longtermscore,
-                marketstrength,
-                chefreputation,
-                equitypercent,
-                explanation,
-              } = analysis;
-
-              const shouldTrade =
-                parseInt(risktoreward) > 15 &&
-                parseInt(longtermscore) > 70 &&
-                parseInt(marketstrength) > 50 &&
-                parseInt(chefreputation) > 60 &&
-                parseInt(equitypercent) > 5;
-
-              console.log("\nExplanation:\n" + explanation);
-              if (!shouldTrade) {
-                console.log(
-                  "\n\nTrade analysis score is unfavourable. But performing to demo the flow...\n\n"
-                );
-              } else {
-                console.log(
-                  "\nTrade anlaysis score is good, proceeding with the trade\n\n"
-                );
-              }
-
               // Get amount, constants and trade data prepared
               amount = (parseFloat(equitypercent) * parseFloat(balance)) / 100;
 
@@ -218,11 +240,11 @@ export class SupabaseService {
                 amount = 0.004;
               }
 
-              if (chain == "avax" && amount < 1) {
+              if (chain == "avax" && amount < 0.3) {
                 console.log(
                   "\n\nMinimum Amount required to place a trade is 1 ETH / AVAX \n\n"
                 );
-                amount = 1;
+                amount = 0.3;
               }
 
               amount = parseFloat(amount.toFixed(5));
@@ -261,69 +283,19 @@ export class SupabaseService {
               }
 
               console.log(`\n\nTrade created successfully!! ✅`);
-            } else {
-              const rpcUrl =
-                "https://rootstock-mainnet.g.alchemy.com/v2/" +
-                process.env.ALCHMEY_API_KEY;
-              let btcBalance = "0";
-              const btcResponse = await fetch(rpcUrl, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  jsonrpc: "2.0",
-                  method: "eth_getBalance",
-                  params: [user.address, "latest"],
-                  id: 1,
-                }),
-              });
-
-              const btcData: any = await btcResponse.json();
-              if (btcData.result)
-                btcBalance = (parseInt(btcData.result, 16) / 1e18).toString();
-              else {
-                console.error("Failed to fetch Rootstock Balance");
-                return; // Modified to just return instead of using Response.json
-              }
-
-              if (parseFloat(btcBalance) < 0.00001) {
+            } else if (dex.toLocaleLowerCase() == "sushi") {
+              const baseBalance = balances[baseChain.id];
+              if (parseFloat(baseBalance) < 0.0001) {
                 console.log("\nInsufficient funds to perform the trade");
                 return;
               }
-              // Verify if good score and can proceed with the trade.
-              const {
-                risktoreward,
-                longtermscore,
-                marketstrength,
-                chefreputation,
-                equitypercent,
-                explanation,
-              } = analysis;
 
-              const shouldTrade =
-                parseInt(risktoreward) > 15 &&
-                parseInt(longtermscore) > 70 &&
-                parseInt(marketstrength) > 50 &&
-                parseInt(chefreputation) > 60 &&
-                parseInt(equitypercent) > 5;
-
-              console.log("\nExplanation:\n" + explanation);
-              if (!shouldTrade) {
-                console.log(
-                  "\n\nTrade analysis score is unfavourable. But performing to demo the flow...\n\n"
-                );
-              } else {
-                console.log(
-                  "\nTrade anlaysis score is good, proceeding with the trade\n\n"
-                );
-              }
               amount =
-                (parseFloat(equitypercent) * parseFloat(btcBalance)) / 100;
+                (parseFloat(equitypercent) * parseFloat(baseBalance)) / 100;
 
               if (amount < 0.00005) {
                 console.log(
-                  "\n\nMinimum Amount required to place a trade is 0.00005 STORY \n\n"
+                  "\n\nMinimum Amount required to place a trade is 0.00005 ETH \n\n"
                 );
                 amount = 0.00005;
               }
@@ -335,6 +307,7 @@ export class SupabaseService {
                   amount: parseEther(amount.toString()).toString(),
                 });
 
+                console.log("https://basescan.org/tx/" + tx);
                 const { data: _createTrade, error: createTradeError } =
                   await this.supabase
                     .from("executed_trades")
@@ -357,6 +330,36 @@ export class SupabaseService {
                 }
 
                 console.log(`\n\nTrade created successfully!! ✅`);
+              }
+            } else if (dex.toLocaleLowerCase() == "circuit") {
+              const ethBalance = balances[zircuitTestnet.id];
+              if (parseFloat(ethBalance) < 0.0001) {
+                console.log("\nInsufficient funds to perform the trade");
+                return;
+              }
+              amount =
+                (parseFloat(equitypercent) * parseFloat(ethBalance)) / 100;
+
+              if (amount < 0.0001) {
+                console.log(
+                  "\n\nMinimum Amount required to place a trade is 0.00005 ETH \n\n"
+                );
+                amount = 0.0001;
+              }
+            } else {
+              const flowBalance = balances[flowTestnet.id];
+              if (parseFloat(flowBalance) < 0.01) {
+                console.log("\nInsufficient funds to perform the trade");
+                return;
+              }
+              amount =
+                (parseFloat(equitypercent) * parseFloat(flowBalance)) / 100;
+
+              if (amount < 0.01) {
+                console.log(
+                  "\n\nMinimum Amount required to place a trade is 0.00005 ETH \n\n"
+                );
+                amount = 0.01;
               }
             }
             return;
