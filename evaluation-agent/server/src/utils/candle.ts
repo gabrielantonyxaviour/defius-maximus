@@ -43,7 +43,7 @@ async function processCandles(
   asset: string,
   chain: string
 ): Promise<ProcessedMarketData> {
-  const url = `https://${chain == "arb" ? "arbitrum" : "avalanche"}-api.gmxinfra.io/prices/candles?tokenSymbol=${trade_type == "spot" ? "ETH" : asset}&period=1d`;
+  const url = `https://${chain == "avax" ? "avalanche" : "arbitrum"}-api.gmxinfra.io/prices/candles?tokenSymbol=${asset == "WBTC" ? "BTC" : trade_type == "spot" ? "ETH" : asset}&period=1d`;
   console.log("Fetching candles data from:", url);
   const response = await fetch(url);
   const { candles: rawCandles }: { period: string; candles: RawCandle[] } =

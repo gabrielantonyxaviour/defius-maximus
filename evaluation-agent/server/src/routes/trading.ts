@@ -154,7 +154,7 @@ router.post("/play", async (req: Request, res: Response): Promise<void> => {
     const proccessedCandlesData = await processCandles(
       tradePlay.trade_type || "perps",
       tradePlay.asset,
-      tradePlay.chain || "arbitrum"
+      tradePlay.chain || "arb"
     );
     await createLog(
       tradePlayId,
@@ -217,10 +217,10 @@ router.post("/play", async (req: Request, res: Response): Promise<void> => {
       tradePlay,
       proccessedCandlesData,
       {
-        overallSentiment: 74,
-        engagementScore: 54,
-        topInfluencers: ["elonmusk", "vitalikbuterin"],
-        keyPhrases: ["ethereum", "bullish", "bearish"],
+        overallSentiment: processSocialSentimentData.overallSentiment,
+        engagementScore: processSocialSentimentData.engagementScore,
+        topInfluencers: processSocialSentimentData.topInfluencers || [],
+        keyPhrases: processSocialSentimentData.keyPhrases || [],
       }
     );
     await createLog(
