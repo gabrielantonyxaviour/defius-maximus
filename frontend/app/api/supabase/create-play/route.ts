@@ -76,17 +76,23 @@ export async function POST(request: Request) {
       }
     );
     const responseData = await response.json();
-    const { data: play, error } = responseData;
+    const { data, error } = responseData;
     if (error) {
       console.error("Error creating play");
       console.log(error);
-      return Response.json({ error: "Error creating play" }, { status: 500 });
+      return Response.json(
+        { success: false, error: "Error creating play" },
+        { status: 500 }
+      );
     }
 
-    console.log("Play created successfully:", play);
-    return Response.json({ play });
+    console.log("Play created successfully:");
+    return Response.json({ data });
   } catch (error) {
     console.error("Internal server error:", error);
-    return Response.json({ error: "Internal server error" }, { status: 500 });
+    return Response.json(
+      { success: false, error: "Internal server error" },
+      { status: 500 }
+    );
   }
 }

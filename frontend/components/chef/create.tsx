@@ -399,7 +399,7 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({
         method: "POST",
         body: formData,
       });
-      const { play, error } = await response.json();
+      const { data, error } = await response.json();
 
       if (error) {
         console.log(error);
@@ -409,9 +409,8 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({
       }
 
       console.log("Successfully created play");
-      console.log(play);
       setLoading(2);
-      setRecipe(play);
+      setRecipe(data);
     } catch (e) {
       setLoading(3);
     }

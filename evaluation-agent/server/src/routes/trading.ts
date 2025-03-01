@@ -9,6 +9,7 @@ import { generateEmbeddings } from "../utils/supavec.js";
 import { getChef } from "../utils/chef.js";
 import { createPlay } from "../utils/createPlay.js";
 import { processSentimentCryptoPanic } from "../utils/cryptopanic.js";
+import { LogType, createLog } from "../utils/pushLog.js";
 
 const isProd = JSON.parse(process.env.IS_PROD || "false");
 
@@ -129,12 +130,20 @@ export function verifyTradeUsername(
   }
 }
 router.post("/play", async (req: Request, res: Response): Promise<void> => {
+  console.log("Received trade play request:", req.body);
+  const { tradePlay, name } = req.body as {
+    tradePlay: TradePlay;
+    name: string;
+  };
+
+  const tradePlayId = tradePlay.id;
   try {
-    console.log("Received trade play request:", req.body);
-    const { tradePlay } = req.body as {
-      tradePlay: TradePlay;
-      username: string;
-    };
+    await createLog(
+      tradePlay.id,
+      "Trade Play Initiated",
+      `New trade play initiated for ${tradePlay.asset} (${tradePlay.direction}) by ${name}`,
+      LogType.INFO
+    );
 
     console.log(
       "Processing candles data for asset:",
@@ -147,8 +156,26 @@ router.post("/play", async (req: Request, res: Response): Promise<void> => {
       tradePlay.asset,
       tradePlay.chain || "arbitrum"
     );
-    console.log("Processed candles data:", proccessedCandlesData);
+    await createLog(
+      tradePlayId,
+      "Processing Candle Stick Data",
+      `Starting market data analysis for ${tradePlay.asset} on ${tradePlay.chain || "arbitrum"}`,
+      LogType.INFO
+    );
 
+    console.log("Processed candles data:", proccessedCandlesData);
+    await createLog(
+      tradePlayId,
+      "Candle Stick Data Analysis",
+      JSON.stringify(proccessedCandlesData, null, 2),
+      LogType.JSON
+    );
+    await createLog(
+      tradePlayId,
+      "Gathering Social Sentiment",
+      `Fetching social sentiment data for ${tradePlay.asset}`,
+      LogType.INFO
+    );
     console.log("Processing social sentiment data for asset:", tradePlay.asset);
     // TODO: Disabled cookie.fun because of API Key termination
     // const processSocialSentimentData = await processSentiment([
@@ -162,13 +189,28 @@ router.post("/play", async (req: Request, res: Response): Promise<void> => {
     const processSocialSentimentData = await processSentimentCryptoPanic(
       tradePlay.asset
     );
+    await createLog(
+      tradePlayId,
+      "Social Sentiment Results",
+      JSON.stringify(
+        {
+          overallSentiment: processSocialSentimentData.overallSentiment,
+          engagementScore: processSocialSentimentData.engagementScore,
+          topInfluencers: processSocialSentimentData.topInfluencers || [],
+          keyPhrases: processSocialSentimentData.keyPhrases || [],
+        },
+        null,
+        2
+      ),
+      LogType.JSON
+    );
 
-    console.log("Processed social sentiment data:", {
-      overallSentiment: 74,
-      engagementScore: 54,
-      topInfluencers: ["elonmusk", "vitalikbuterin"],
-      keyPhrases: ["ethereum", "bullish", "bearish"],
-    });
+    await createLog(
+      tradePlayId,
+      "Technical Analysis",
+      "Generating technical analysis embeddings...",
+      LogType.INFO
+    );
 
     console.log("Generating embeddings for trade play");
     const processedTechincalAnalysis = await generateEmbeddings(
@@ -181,86 +223,143 @@ router.post("/play", async (req: Request, res: Response): Promise<void> => {
         keyPhrases: ["ethereum", "bullish", "bearish"],
       }
     );
+    await createLog(
+      tradePlayId,
+      "Technical Analysis Results",
+      processedTechincalAnalysis,
+      LogType.DETAILED
+    );
+
+    const chefAnalysis = await getChef(tradePlay.chef_id);
+    await createLog(
+      tradePlayId,
+      "Chef Analysis",
+      `Chef Analysis from ID ${tradePlay.chef_id}:\n\n${chefAnalysis}`,
+      LogType.DETAILED
+    );
     console.log("Generated technical analysis:", processedTechincalAnalysis);
+    const playAnalysisData = {
+      setup: {
+        asset: tradePlay.asset,
+        direction: tradePlay.direction,
+        entry: tradePlay.entry_price,
+        targets: tradePlay.take_profit,
+        stopLoss: tradePlay.stop_loss,
+      },
+      market: {
+        price: proccessedCandlesData.currentPrice,
+        change24h: proccessedCandlesData.priceChange24h,
+        volatility: proccessedCandlesData.volatility24h,
+        trend: proccessedCandlesData.trendMetrics,
+      },
+      sentiment: {
+        score: processSocialSentimentData.overallSentiment,
+        engagement: processSocialSentimentData.engagementScore,
+        narrative: processSocialSentimentData.keyPhrases[0],
+      },
+    };
+    await createLog(
+      tradePlayId,
+      "AI Analysis Request",
+      JSON.stringify(playAnalysisData, null, 2),
+      LogType.JSON
+    );
+    await createLog(
+      tradePlayId,
+      "Requesting AI Analysis",
+      "Sending data to AI for comprehensive trade analysis...",
+      LogType.INFO
+    );
 
-    const sytemPrompt = `
-        You are an advanced crypto trade analyst and social sentiment expert. You have been asked to evaluate a future trading position for a user.`;
+    const systemPrompt = `You are an advanced crypto trade analyst and social sentiment expert. Your task is to evaluate a trading position and provide a structured risk assessment with numerical scores.`;
 
-    const chefAnalysis = getChef(tradePlay.chef_id);
+    const userPrompt = `Evaluate this trade opportunity:
+${JSON.stringify(playAnalysisData, null, 2)}
 
-    const playAnalysisPrompt = `
-Evaluate trade opportunity:
-${JSON.stringify(
-  {
-    setup: {
-      asset: tradePlay.asset,
-      direction: tradePlay.direction,
-      entry: tradePlay.entry_price,
-      targets: tradePlay.take_profit,
-      stopLoss: tradePlay.stop_loss,
-    },
-    market: {
-      price: proccessedCandlesData.currentPrice,
-      change24h: proccessedCandlesData.priceChange24h,
-      volatility: proccessedCandlesData.volatility24h,
-      trend: proccessedCandlesData.trendMetrics,
-    },
-    sentiment: {
-      score: processSocialSentimentData.overallSentiment,
-      engagement: processSocialSentimentData.engagementScore,
-      narrative: processSocialSentimentData.keyPhrases[0],
-    },
-  },
-  null,
-  2
-)}
-
+Chef Analysis:
 ${chefAnalysis}
 
+Technical Analysis:
 ${processedTechincalAnalysis}
 
-Please provide a risk assessment with these scores (0-100):
-\`\`\`json
+Provide a risk assessment with scores from 0-100 in this exact JSON format:
 {
-    "risktoreward": "number" // Based on TP/SL ratio, market volatility, and trend alignment
-    "longtermscore": "number" // Consider trend strength, social processSocialSentimentData, and macro factors
-    "marketstrength": "number" // Evaluate momentum, volume profile, and price action
-    "chefreputation": "number" // Based on historical accuracy and analysis quality
-    "equitypercent": "number" // Recommended position size considering all risk factors between 5% to 20%
-    "explanation": "string" // Your explanation for the your anlaysis
+    "risktoreward": 75,
+    "longtermscore": 60,
+    "marketstrength": 85,
+    "chefreputation": 70,
+    "equitypercent": 15,
+    "explanation": "Your detailed analysis explanation goes here."
 }
-\`\`\`
-`;
 
-    console.log(
-      "Sending request to AI endpoint:",
-      "https://api.ora.io/v1/chat/completions"
+The values should be numbers, not strings. Do not include any text outside the JSON structure.`;
+
+    // Log the exact prompts we're sending for debugging
+    await createLog(
+      tradePlayId,
+      "AI Request Details",
+      `System Prompt: ${systemPrompt}\n\nUser Prompt: ${userPrompt}`,
+      LogType.DETAILED
     );
-    const analysisResponse = await fetch(
-      `https://api.ora.io/v1/chat/completions`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          accept: "application/json",
-          Authorization: `Bearer ${process.env.ORA_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: "meta-llama/Llama-3.3-70B-Instruct",
-          messages: [
-            {
-              role: "system",
-              content: sytemPrompt,
-            },
-            {
-              role: "user",
-              content: playAnalysisPrompt,
-            },
-          ],
-        }),
-      }
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
+    const response = await fetch(`https://api.ora.io/v1/chat/completions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${process.env.ORA_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "meta-llama/Llama-3.3-70B-Instruct",
+        messages: [
+          {
+            role: "system",
+            content: systemPrompt,
+          },
+          {
+            role: "user",
+            content: userPrompt,
+          },
+        ],
+      }),
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
+
+    // Check for HTTP errors
+    if (!response.ok) {
+      const errorText = await response.text();
+
+      await createLog(
+        tradePlayId,
+        "AI Request Error",
+        `HTTP Error ${response.status}: ${errorText}`,
+        LogType.DETAILED
+      );
+
+      throw new Error(
+        `AI request failed with status ${response.status}: ${errorText}`
+      );
+    }
+
+    // Log the raw response headers for debugging
+    const responseHeaders: Record<string, string> = {};
+    response.headers.forEach((value, name) => {
+      responseHeaders[name] = value;
+    });
+
+    await createLog(
+      tradePlayId,
+      "AI Response Headers",
+      JSON.stringify(responseHeaders, null, 2),
+      LogType.JSON
     );
-    const repsonseData = await analysisResponse.json();
+
+    const repsonseData = await response.json();
 
     console.log("AI response:", repsonseData);
 
@@ -280,7 +379,6 @@ Please provide a risk assessment with these scores (0-100):
         total_tokens: string;
       };
     };
-
     const parsedResponse = parseJSONObjectFromText(
       choices[0].message.content
     ) as Analysis;
@@ -295,6 +393,13 @@ Please provide a risk assessment with these scores (0-100):
       usage.total_tokens
     );
 
+    await createLog(
+      tradePlayId,
+      "AI Message Content",
+      JSON.stringify(parsedResponse, null, 2),
+      LogType.DETAILED
+    );
+
     const { error } = await createPlay({
       ...tradePlay,
       analysis: parsedResponse,
@@ -304,6 +409,7 @@ Please provide a risk assessment with these scores (0-100):
       res.status(500).json({ error: "Failed to create trade play" });
       return;
     }
+
     console.log({
       data: { ...tradePlay, analysis: parsedResponse },
     });
@@ -311,8 +417,18 @@ Please provide a risk assessment with these scores (0-100):
       data: { ...tradePlay, analysis: parsedResponse },
     });
   } catch (error) {
-    console.error("Error processing trade play request:", error);
-    res.status(500).json({ error: "Internal server error" });
+    await createLog(
+      tradePlayId,
+      "AI Request Failed",
+      `Error occurred during AI request: ${error.message}\n\nStack: ${error.stack}`,
+      LogType.DETAILED
+    );
+
+    res.status(400).json({
+      success: true,
+      tradePlay,
+      error,
+    });
   }
 });
 

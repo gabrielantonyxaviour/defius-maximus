@@ -232,6 +232,11 @@ export default function TradingLogs({
       <div className="absolute w-full h-full flex flex-col -top-[0.5%] -left-[0.5%] space-y-2 sen rounded-sm text-sm border-2 border-[#3A3A3A] py-2 bg-[#1F1F1F] text-white">
         <div className="flex justify-between items-center px-4">
           <div className="flex justify-between items-center w-full">
+            {!loading && (
+              <span className="text-xs text-gray-400">
+                {logs.length} log{logs.length !== 1 ? "s" : ""}
+              </span>
+            )}
             <h2 className="text-xl font-bold text-center flex-grow">
               Trade Analysis
             </h2>
@@ -246,12 +251,6 @@ export default function TradingLogs({
               <X className="h-4 w-4 hover:text-white" />
             </Button>
           </div>
-
-          {!loading && logs.length > 0 && (
-            <span className="text-xs text-gray-400">
-              {logs.length} log{logs.length !== 1 ? "s" : ""}
-            </span>
-          )}
         </div>
 
         <ScrollArea className="max-h-[calc(100vh-100px)] w-full">
