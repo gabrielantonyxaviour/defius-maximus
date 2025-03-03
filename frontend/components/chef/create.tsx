@@ -62,6 +62,84 @@ type PerpsDex = "gmx";
 
 type SpotDex = "sushi" | "circuit" | "kitty";
 
+const tradeTemplates = [
+  {
+    entryPrice: 2628,
+    leverage: 3,
+    stopLoss: 2500,
+    takeProfits: [
+      { price: "2750", percentage: "30" },
+      { price: "2850", percentage: "100" },
+    ],
+    dcaPoints: [
+      { price: "2628", percentage: "30" },
+      { price: "2600", percentage: "30" },
+      { price: "2575", percentage: "40" },
+    ],
+    selectedAsset: "ETH",
+    selectedChain: "Ethereum",
+    direction: "buy_long",
+    selectedDate: new Date(),
+    selectedTime: "22:00",
+    expectedPnl: "12",
+    researchDescription:
+      "Taking a long position on ETH at $2628 because technical indicators show bullish momentum with MACD crossover and RSI at 60. " +
+      "On-chain metrics indicate growing network activity, with transaction volume up 15% to 5.2M ETH and active addresses increasing by 7% to 1.1M. " +
+      "Recent whale accumulation of 120K ETH and improving liquidity suggest strong upside potential. The main risk is macroeconomic uncertainty, " +
+      "but current price level offers an attractive risk/reward ratio for a long entry.",
+  },
+  {
+    entryPrice: 83000,
+    leverage: 5,
+    stopLoss: 80000,
+    takeProfits: [
+      { price: "86000", percentage: "40" },
+      { price: "88000", percentage: "100" },
+    ],
+    dcaPoints: [
+      { price: "83000", percentage: "30" },
+      { price: "81500", percentage: "30" },
+      { price: "80000", percentage: "40" },
+    ],
+    selectedAsset: "WBTC",
+    selectedChain: "Ethereum",
+    direction: "buy_long",
+    selectedDate: new Date(),
+    selectedTime: "22:00",
+    expectedPnl: "12",
+    researchDescription:
+      "Taking a long position on WBTC at $83,000 due to strong technical and on-chain indicators. BTC's price is holding above key support, and RSI remains in a bullish range at 65. " +
+      "On-chain metrics show an increase in exchange outflows, signaling long-term accumulation. Institutional demand is rising, with BTC ETFs seeing record inflows. " +
+      "Additionally, network hash rate is at an all-time high, indicating strong miner confidence. The main risk is potential macroeconomic events, but the setup offers a solid risk/reward ratio.",
+  },
+  {
+    entryPrice: 140,
+    leverage: 4,
+    stopLoss: 130,
+    takeProfits: [
+      { price: "155", percentage: "50" },
+      { price: "165", percentage: "100" },
+    ],
+    dcaPoints: [
+      { price: "140", percentage: "30" },
+      { price: "135", percentage: "30" },
+      { price: "130", percentage: "40" },
+    ],
+    selectedAsset: "SOL",
+    selectedChain: "Solana",
+    direction: "buy_long",
+    selectedDate: new Date(),
+    selectedTime: "22:00",
+    expectedPnl: "14",
+    researchDescription:
+      "Taking a long position on SOL at $140 due to strong bullish momentum. SOL is trading above key moving averages, and RSI is at 68, indicating strength. " +
+      "On-chain activity remains high, with daily active addresses exceeding 1.2M and total value locked (TVL) rising 10% in the past week. " +
+      "Institutional interest is growing, with large funds increasing SOL allocations. The main risk is potential network congestion, but current price levels offer a solid long setup.",
+  },
+];
+
+const selectedTrade = tradeTemplates[1];
+
 const CreateRecipe: React.FC<CreateRecipeProps> = ({
   close,
   setTradePlayId,
@@ -69,18 +147,15 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({
   const { chef, setRecipe, user, storyClient } = useEnvironmentStore(
     (store) => store
   );
-  const [entryPrice, setEntryPrice] = useState<number>(2628); // Entry price for ETH
-  const [leverage, setLeverage] = useState<number>(3); // Adjusted leverage for ETH
-  const [stopLoss, setStopLoss] = useState<number>(2500); // Stop loss below entry
-  const [takeProfits, setTakeProfits] = useState<TakeProfit[]>([
-    { price: "2750", percentage: "30" }, // Take profit above entry
-    { price: "2850", percentage: "100" }, // Another take profit level
-  ]);
-  const [dcaPoints, setDcaPoints] = useState<DCA[]>([
-    { price: "2628", percentage: "30" }, // DCA below entry
-    { price: "2600", percentage: "30" }, // Another DCA level
-    { price: "2575", percentage: "40" }, // Another DCA level
-  ]);
+  const [entryPrice, setEntryPrice] = useState<number>(
+    selectedTrade.entryPrice
+  ); // Entry price for ETH
+  const [leverage, setLeverage] = useState<number>(selectedTrade.leverage); // Adjusted leverage for ETH
+  const [stopLoss, setStopLoss] = useState<number>(selectedTrade.stopLoss); // Stop loss below entry
+  const [takeProfits, setTakeProfits] = useState<TakeProfit[]>(
+    selectedTrade.takeProfits
+  );
+  const [dcaPoints, setDcaPoints] = useState<DCA[]>(selectedTrade.dcaPoints);
   const [selectedAsset, setSelectedAsset] = useState<string>(""); // Asset name
   const [selectedChain, setSelectedChain] = useState<string>(""); // Blockchain network
   const [direction, setDirection] = useState<"buy_long" | "sell_short">(
@@ -88,12 +163,11 @@ const CreateRecipe: React.FC<CreateRecipeProps> = ({
   ); // Position type
   const [selectedDate, setSelectedDate] = useState<Date>(new Date()); // Trade date
   const [selectedTime, setSelectedTime] = useState<string>("22:00"); // Trade time
-  const [expectedPnl, setExpectedPnl] = useState<string>("12"); // Expected profit & loss
+  const [expectedPnl, setExpectedPnl] = useState<string>(
+    selectedTrade.expectedPnl
+  ); // Expected profit & loss
   const [researchDescription, setResearchDescription] = useState<string>(
-    "Taking a long position on ETH at $2628 because technical indicators show bullish momentum with MACD crossover and RSI at 60. " +
-      "On-chain metrics indicate growing network activity, with transaction volume up 15% to 5.2M ETH and active addresses increasing by 7% to 1.1M. " +
-      "Recent whale accumulation of 120K ETH and improving liquidity suggest strong upside potential. The main risk is macroeconomic uncertainty, " +
-      "but current price level offers an attractive risk/reward ratio for a long entry."
+    selectedTrade.researchDescription
   );
 
   const [image, setImage] = useState<File | null>(null);

@@ -15,7 +15,6 @@ import {
   Hex,
 } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
-
 import { zircuitTestnet, flowTestnet } from "viem/chains";
 import dotenv from "dotenv";
 
@@ -61,12 +60,17 @@ const deployments = {
   },
 };
 
-export async function swapNativeToToken(
+async function swapNativeToToken(
   chain: Chain,
   pKey: string,
   assetTo: string,
   amountToSwap: string
 ) {
+  console.log({
+    chain,
+    pKey,
+    assetTo,
+  });
   const rpcUrl =
     chain === zircuitTestnet
       ? "https://rpc.testnet.zircuit.com"
@@ -77,7 +81,8 @@ export async function swapNativeToToken(
   });
 
   const chainDeployments = deployments[chain.id];
-  const account = privateKeyToAccount(("0x" + pKey) as Hex);
+  const account = privateKeyToAccount(pKey as Hex);
+  console.log(`Account: ${account.address}`);
   const walletClient = createWalletClient({
     account,
     chain,
@@ -85,90 +90,22 @@ export async function swapNativeToToken(
   });
   const targetTokenAddress =
     chainDeployments.tokens[assetTo != "WBTC" ? "WSOL" : "WBTC"];
+  const routerAbi = parseAbi([
+    "function mint(address caller, uint256 amount) external payable",
+  ]);
+  const { request } = await publicClient.simulateContract({
+    address: chainDeployments.weth,
+    abi: routerAbi,
+    functionName: "mint",
+    args: [account.address, parseEther(amountToSwap)],
+    value: parseEther(amountToSwap),
+  });
 
-  try {
-    const routerAbi = parseAbi([
-      "function WETH() external pure returns (address)",
-      "function getAmountsOut(uint amountIn, address[] memory path) public view returns (uint[] memory amounts)",
-      "function swapExactETHForTokens(uint amountOutMin, address[] calldata path, address to, uint deadline) external payable returns (uint[] memory amounts)",
-    ]);
-
-    // ERC20 ABI for reading token info
-    const erc20Abi = parseAbi([
-      "function symbol() external view returns (string)",
-      "function decimals() external view returns (uint8)",
-      "function balanceOf(address owner) external view returns (uint256)",
-    ]);
-
-    const decimals = await publicClient.readContract({
-      address: targetTokenAddress,
-      abi: erc20Abi,
-      functionName: "decimals",
-    });
-
-    console.log(`Swapping to ${assetTo} with ${decimals} decimals`);
-
-    // Convert amount to wei
-    const amountIn = parseEther(amountToSwap);
-    console.log(
-      `Swapping ${amountToSwap} native currency (${formatEther(amountIn)} wei)`
-    );
-
-    // Set up the path: wrapped native -> target token
-    const path = [chainDeployments.weth, targetTokenAddress];
-
-    // Get expected output amount
-    const amounts = (await publicClient.readContract({
-      address: chainDeployments.router,
-      abi: routerAbi,
-      functionName: "getAmountsOut",
-      args: [amountIn, path],
-    })) as bigint[];
-
-    const expectedOutputAmount = amounts[1];
-    console.log(
-      `Expected output: ${formatUnits(
-        expectedOutputAmount,
-        decimals
-      )} ${assetTo}`
-    );
-
-    // Calculate minimum output amount with slippage tolerance
-    const slippageFactor = 0.99;
-    const minOutputAmount = parseUnits(
-      (
-        Number(formatUnits(expectedOutputAmount, decimals)) * slippageFactor
-      ).toFixed(Number(decimals)),
-      decimals
-    );
-    console.log(
-      `Minimum output with ${1}% slippage: ${formatUnits(
-        minOutputAmount,
-        decimals
-      )} ${assetTo}`
-    );
-
-    // Set deadline to 20 minutes from now
-    const deadline = BigInt(Math.floor(Date.now() / 1000) + 60 * 20);
-
-    // Perform the swap
-    console.log("Executing swap...");
-    const { request } = await publicClient.simulateContract({
-      address: chainDeployments.router,
-      abi: routerAbi,
-      functionName: "swapExactETHForTokens",
-      args: [minOutputAmount, path, account.address, deadline],
-      value: amountIn,
-      chain,
-    });
-    const hash = await walletClient.writeContract(request);
-
-    console.log(`Transaction hash: ${hash}`);
-    const receipt = await publicClient.waitForTransactionReceipt({ hash });
-    console.log("Position created");
-    console.log(chain.blockExplorers.default.url + "/tx/" + hash);
-  } catch (error) {
-    console.error("Error in swap:", error);
-    throw error;
-  }
+  const hash = await walletClient.writeContract(request);
+  console.log(`Transaction hash: ${hash}`);
+  const receipt = await publicClient.waitForTransactionReceipt({ hash });
+  console.log("Deposit completed");
+  console.log(chain.blockExplorers.default.url + "/tx/" + hash);
 }
+
+swapNativeToToken(zircuitTestnet, process.env.PRIVATE_KEY, "WSOL", "0.01");

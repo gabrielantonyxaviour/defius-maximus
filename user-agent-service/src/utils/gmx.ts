@@ -214,7 +214,7 @@ export async function placeTrade(
   const receipt = await tx.wait();
   console.log("Transaction Confirmed. View in explorer.");
   console.log(
-    (params.chain == "421614"
+    (params.chain != "421614"
       ? "https://testnet.snowtrace.io/tx/"
       : "https://sepolia.arbiscan.io/tx/") + receipt.transactionHash
   );
