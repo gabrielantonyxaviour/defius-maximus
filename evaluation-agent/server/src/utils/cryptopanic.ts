@@ -137,16 +137,16 @@ Your response must be a valid JSON object and nothing else - no explanations, no
     };
 
     const analysisResponse = await fetch(
-      `https://llm-gateway.heurist.xyz/v1/chat/completions`,
+      `https://api.ora.io/v1/chat/completions`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          Authorization: `Bearer ${process.env.HEURIST_AI_API_KEY}`,
+          Authorization: `Bearer ${process.env.ORA_API_KEY}`,
         },
         body: JSON.stringify({
-          model: "mistralai/mixtral-8x22b-instruct",
+          model: "meta-llama/Llama-3.3-70B-Instruct",
           messages: [
             {
               role: "system",

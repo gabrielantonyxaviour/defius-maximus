@@ -288,31 +288,28 @@ The values should be numbers, not strings. Do not include any text outside the J
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
-    const response = await fetch(
-      `https://llm-gateway.heurist.xyz/v1/chat/completions`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          Authorization: `Bearer ${process.env.HEURIST_AI_API_KEY}`,
-        },
-        body: JSON.stringify({
-          model: "mistralai/mixtral-8x22b-instruct",
-          messages: [
-            {
-              role: "system",
-              content: systemPrompt,
-            },
-            {
-              role: "user",
-              content: userPrompt,
-            },
-          ],
-        }),
-        signal: controller.signal,
-      }
-    );
+    const response = await fetch(`https://api.ora.io/v1/chat/completions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Authorization: `Bearer ${process.env.ORA_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: "meta-llama/Llama-3.3-70B-Instruct",
+        messages: [
+          {
+            role: "system",
+            content: systemPrompt,
+          },
+          {
+            role: "user",
+            content: userPrompt,
+          },
+        ],
+      }),
+      signal: controller.signal,
+    });
 
     clearTimeout(timeoutId);
 
