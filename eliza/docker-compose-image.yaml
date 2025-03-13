@@ -1,15 +1,17 @@
 services:
     eliza:
+        platform: linux/amd64
         command: ["pnpm", "start", "--character=./characters/eliza.character.json"]
-        build:
-            context: .
-            dockerfile: Dockerfile
+        image: eliza-starter:v1
         stdin_open: true
         tty: true
         volumes:
             - ./data:/app/data
         environment:
-            - OPENROUTER_API_KEY=
+            - DISCORD_APPLICATION_ID=
+            - DISCORD_API_TOKEN=
+            - REDPILL_API_KEY=
+            - REDPILL_MODEL=
             - ELEVENLABS_XI_API_KEY=
             - ELEVENLABS_MODEL_ID=eleven_multilingual_v2
             - ELEVENLABS_VOICE_ID=21m00Tcm4TlvDq8ikWAM
