@@ -11,3 +11,5 @@ db.sqlite
 .tee-cloud
 
 etn-patron-ai.character.json
+
+cache
