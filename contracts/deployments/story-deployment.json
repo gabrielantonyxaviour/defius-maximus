@@ -1,0 +1,187 @@
+{
+  "network": "story",
+  "relayer": {
+    "target": "0xa4b83a29904e61A50C5fE5eCA42a61A23CFa36e1",
+    "interface": {
+      "fragments": [
+        {
+          "type": "event",
+          "inputs": [
+            {
+              "name": "previousOwner",
+              "type": "address",
+              "baseType": "address",
+              "indexed": true,
+              "components": null,
+              "arrayLength": null,
+              "arrayChildren": null
+            },
+            {
+              "name": "newOwner",
+              "type": "address",
+              "baseType": "address",
+              "indexed": true,
+              "components": null,
+              "arrayLength": null,
+              "arrayChildren": null
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "anonymous": false
+        },
+        {
+          "type": "event",
+          "inputs": [
+            {
+              "name": "receiverIpId",
+              "type": "address",
+              "baseType": "address",
+              "indexed": false,
+              "components": null,
+              "arrayLength": null,
+              "arrayChildren": null
+            },
+            {
+              "name": "payerIpId",
+              "type": "address",
+              "baseType": "address",
+              "indexed": false,
+              "components": null,
+              "arrayLength": null,
+              "arrayChildren": null
+            },
+            {
+              "name": "amount",
+              "type": "uint256",
+              "baseType": "uint256",
+              "indexed": false,
+              "components": null,
+              "arrayLength": null,
+              "arrayChildren": null
+            }
+          ],
+          "name": "RoyaltySettled",
+          "anonymous": false
+        },
+        {
+          "type": "function",
+          "inputs": [],
+          "name": "DLN_DESTINATION",
+          "constant": true,
+          "outputs": [
+            {
+              "name": "",
+              "type": "address",
+              "baseType": "address",
+              "components": null,
+              "arrayLength": null,
+              "arrayChildren": null
+            }
+          ],
+          "stateMutability": "view",
+          "payable": false,
+          "gas": null
+        },
+        {
+          "type": "function",
+          "inputs": [],
+          "name": "MULTICALL",
+          "constant": true,
+          "outputs": [
+            {
+              "name": "",
+              "type": "address",
+              "baseType": "address",
+              "components": null,
+              "arrayLength": null,
+              "arrayChildren": null
+            }
+          ],
+          "stateMutability": "view",
+          "payable": false,
+          "gas": null
+        },
+        {
+          "type": "function",
+          "inputs": [],
+          "name": "ROYALTY_MODULE",
+          "constant": true,
+          "outputs": [
+            {
+              "name": "",
+              "type": "address",
+              "baseType": "address",
+              "components": null,
+              "arrayLength": null,
+              "arrayChildren": null
+            }
+          ],
+          "stateMutability": "view",
+          "payable": false,
+          "gas": null
+        },
+        {
+          "type": "function",
+          "inputs": [],
+          "name": "WIP",
+          "constant": true,
+          "outputs": [
+            {
+              "name": "",
+              "type": "address",
+              "baseType": "address",
+              "components": null,
+              "arrayLength": null,
+              "arrayChildren": null
+            }
+          ],
+          "stateMutability": "view",
+          "payable": false,
+          "gas": null
+        },
+        {
+          "type": "function",
+          "inputs": [
+            {
+              "name": "receiverIpId",
+              "type": "address",
+              "baseType": "address",
+              "components": null,
+              "arrayLength": null,
+              "arrayChildren": null
+            },
+            {
+              "name": "payerIpId",
+              "type": "address",
+              "baseType": "address",
+              "components": null,
+              "arrayLength": null,
+              "arrayChildren": null
+            }
+          ],
+          "name": "settleRoyalties",
+          "constant": false,
+          "outputs": [],
+          "stateMutability": "payable",
+          "payable": true,
+          "gas": null
+        },
+        {
+          "type": "fallback",
+          "inputs": [],
+          "payable": true
+        }
+      ],
+      "deploy": {
+        "type": "constructor",
+        "inputs": [],
+        "payable": false,
+        "gas": null
+      },
+      "fallback": null,
+      "receive": true
+    },
+    "runner": "<SignerWithAddress 0xeE5C50573A8AF1B8Ee2D89CB9eB27dc298c5f75D>",
+    "filters": {}
+  }
+}

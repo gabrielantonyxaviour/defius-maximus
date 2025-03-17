@@ -66,7 +66,7 @@ contract DebridgeRoyaltyRelayer {
     function settleRoyalties(
         address receiverIpId,
         address payerIpId
-    ) external payable onlyDeBridgeGate {
+    ) external payable {
         uint256 amount = msg.value;
         require(amount > 0, "DebridgeRoyaltyRelayer: zero amount");
 
