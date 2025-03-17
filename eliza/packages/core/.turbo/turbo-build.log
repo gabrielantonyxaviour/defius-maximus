@@ -1,0 +1,30 @@
+
+
+> @elizaos/core@0.25.8 build /Users/gabrielantonyxaviour/Developer/defius-maximus/eliza/packages/core
+> tsup --format esm --dts
+
+[34mCLI[39m Building entry: src/index.ts
+[34mCLI[39m Using tsconfig: tsconfig.json
+[34mCLI[39m tsup v8.3.5
+[34mCLI[39m Using tsup config: /Users/gabrielantonyxaviour/Developer/defius-maximus/eliza/packages/core/tsup.config.ts
+[34mCLI[39m Target: node18
+[34mCLI[39m Cleaning output folder
+[34mESM[39m Build start
+[32mESM[39m [1mdist/ccip-3UWHPADM.js          [22m[32m290.00 B[39m
+[32mESM[39m [1mdist/chunk-LOF3UYFD.js         [22m[32m165.50 KB[39m
+[32mESM[39m [1mdist/chunk-PR4QN5HX.js         [22m[32m1.87 KB[39m
+[32mESM[39m [1mdist/index.js                  [22m[32m487.42 KB[39m
+[32mESM[39m [1mdist/_esm-34ZFAN5D.js          [22m[32m132.97 KB[39m
+[32mESM[39m [1mdist/secp256k1-POFHGYGH.js     [22m[32m237.00 B[39m
+[32mESM[39m [1mdist/chunk-3M76AWJP.js         [22m[32m80.13 KB[39m
+[32mESM[39m [1mdist/ccip-3UWHPADM.js.map      [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/chunk-PR4QN5HX.js.map     [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/secp256k1-POFHGYGH.js.map [22m[32m71.00 B[39m
+[32mESM[39m [1mdist/_esm-34ZFAN5D.js.map      [22m[32m212.40 KB[39m
+[32mESM[39m [1mdist/chunk-LOF3UYFD.js.map     [22m[32m418.18 KB[39m
+[32mESM[39m [1mdist/chunk-3M76AWJP.js.map     [22m[32m203.10 KB[39m
+[32mESM[39m [1mdist/index.js.map              [22m[32m1.30 MB[39m
+[32mESM[39m ⚡️ Build success in 228ms
+DTS Build start
+DTS ⚡️ Build success in 2277ms
+DTS dist/index.d.ts 111.99 KB

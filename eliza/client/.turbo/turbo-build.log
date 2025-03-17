@@ -1,0 +1,22 @@
+
+
+> client@ build /Users/gabrielantonyxaviour/Developer/defius-maximus/eliza/client
+> pnpm run extract-version && tsc -b && vite build
+
+
+> client@ extract-version /Users/gabrielantonyxaviour/Developer/defius-maximus/eliza/client
+> bash ./version.sh
+
+info.json created with version: 0.25.8
+[36mvite v6.2.0 [32mbuilding for production...[36m[39m
+[2K[1Gtransforming (1) [2msrc/main.tsx[22m[2K[1Gtransforming (8) [2msrc/components/ui/tooltip.tsx[22m[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1Gtransforming (56) [2m../node_modules/.pnpm/@tanstack+query-core@5.67.1/node_modules/@tanstack/query-core/build/mode[2K[1Gtransforming (57) [2m../node_modules/.pnpm/@tanstack+query-core@5.67.1/node_modules/@tanstack/query-core/build/mode[2K[1G[2K[1G[2K[1G[2K[1G[2K[1Gtransforming (186) [2msrc/components/ui/toast.tsx[22m[2K[1G[2K[1Gtransforming (499) [2m../node_modules/.pnpm/lucide-react@0.469.0_react@19.0.0/node_modules/lucide-react/dist/esm/ic[2K[1Gtransforming (1198) [2m../node_modules/.pnpm/lucide-react@0.469.0_react@19.0.0/node_modules/lucide-react/dist/esm/i[2K[1Gtransforming (1668) [2msrc/components/array-input.tsx[22m[2K[1G[2K[1G[2K[1G[2K[1G[2K[1Gtransforming (1704) [2msrc/components/audio-recorder.tsx[22m[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[32m✓[39m 1810 modules transformed.
+[2K[1Grendering chunks (1)...[2K[1G[2K[1Gcomputing gzip size (0)...[2K[1Gcomputing gzip size (1)...[2K[1Gcomputing gzip size (2)...[2K[1Gcomputing gzip size (3)...[2K[1G[2mdist/[22m[32mindex.html                 [39m[1m[2m  0.44 kB[22m[1m[22m[2m │ gzip:   0.28 kB[22m
+[2mdist/[22m[2massets/[22m[35mindex-CQcFQ4Qn.css  [39m[1m[2m 42.25 kB[22m[1m[22m[2m │ gzip:   7.71 kB[22m
+[2mdist/[22m[2massets/[22m[36mindex-DLEOJa2L.js   [39m[1m[2m497.13 kB[22m[1m[22m[2m │ gzip: 164.22 kB[22m
+[32m✓ built in 1.80s[39m
+
+[36m✨ [vite-plugin-compression]:algorithm=brotliCompress[39m - compressed file successfully: 
+[2mdist/[22m[94m/Users/gabrielantonyxaviour/Developer/defius-maximus/eliza/client/assets/index-CQcFQ4Qn.css.br[39m   [2m41.26kb / brotliCompress: 6.56kb[22m
+[2mdist/[22m[94m/Users/gabrielantonyxaviour/Developer/defius-maximus/eliza/client/assets/index-DLEOJa2L.js.br[39m    [2m485.48kb / brotliCompress: 137.13kb[22m
+
+
