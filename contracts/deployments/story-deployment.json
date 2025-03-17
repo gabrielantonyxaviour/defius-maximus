@@ -1,7 +1,7 @@
 {
   "network": "story",
   "relayer": {
-    "target": "0xa4b83a29904e61A50C5fE5eCA42a61A23CFa36e1",
+    "target": "0x5A61F881a94B41905B899243aB204e281D149FCc",
     "interface": {
       "fragments": [
         {
@@ -54,6 +54,15 @@
               "name": "amount",
               "type": "uint256",
               "baseType": "uint256",
+              "indexed": false,
+              "components": null,
+              "arrayLength": null,
+              "arrayChildren": null
+            },
+            {
+              "name": "uniqueSalt",
+              "type": "bytes32",
+              "baseType": "bytes32",
               "indexed": false,
               "components": null,
               "arrayLength": null,
@@ -142,6 +151,14 @@
         {
           "type": "function",
           "inputs": [
+            {
+              "name": "uniqueSalt",
+              "type": "bytes32",
+              "baseType": "bytes32",
+              "components": null,
+              "arrayLength": null,
+              "arrayChildren": null
+            },
             {
               "name": "receiverIpId",
               "type": "address",

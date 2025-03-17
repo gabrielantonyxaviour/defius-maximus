@@ -43,7 +43,8 @@ contract DebridgeRoyaltyRelayer {
     event RoyaltySettled(
         address receiverIpId,
         address payerIpId,
-        uint256 amount
+        uint256 amount,
+        bytes32 uniqueSalt
     );
     event OwnershipTransferred(
         address indexed previousOwner,
@@ -64,6 +65,7 @@ contract DebridgeRoyaltyRelayer {
      * @param payerIpId Address of the payer's IP ID
      */
     function settleRoyalties(
+        bytes32 uniqueSalt,
         address receiverIpId,
         address payerIpId
     ) external payable {
@@ -98,7 +100,7 @@ contract DebridgeRoyaltyRelayer {
         // Execute multicall with the total value received
         IMulticall(MULTICALL).aggregate3Value{value: amount}(calls);
 
-        emit RoyaltySettled(receiverIpId, payerIpId, amount);
+        emit RoyaltySettled(receiverIpId, payerIpId, amount, uniqueSalt);
     }
 
     // Allow contract to receive ETH
