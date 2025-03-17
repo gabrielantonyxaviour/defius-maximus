@@ -11,6 +11,7 @@ import {
 import { privateKeyToAccount } from "viem/accounts";
 import { base, story } from "viem/chains";
 import dotenv from "dotenv";
+import { IpMetadata, StoryClient, StoryConfig } from "@story-protocol/core-sdk";
 dotenv.config();
 async function main() {
   const privateKey = process.env.MAINNET_PRIVATE_KEY || "";
@@ -30,6 +31,12 @@ async function main() {
     chain: story,
     transport: http("https://evm-rpc-story.j-node.net"),
   });
+  const config: StoryConfig = {
+    account: callerAccount, // the account object from above
+    transport: http("https://evm-rpc-story.j-node.net"),
+    chainId: "mainnet",
+  };
+  const client = StoryClient.newClient(config);
 
   // const mintLicenseTokensTxData = encodeFunctionData({
   //   abi: [

@@ -20,6 +20,7 @@ const FLOW_API_KEY = process.env.FLOW_API_KEY || "";
 const FLOW_FACTORY_ADDRESS = process.env.FLOW_FACTORY_ADDRESS;
 const FLOW_ROUTER_ADDRESS = process.env.FLOW_ROUTER_ADDRESS;
 const FLOW_WRAPPED = process.env.FLOW_WRAPPED;
+const MAINNET_PRIVATE_KEY = process.env.MAINNET_PRIVATE_KEY || "";
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -45,8 +46,27 @@ module.exports = {
       chainId: 545, // Update with actual Flow EVM Testnet chainId if different
       gasPrice: 1000000000, // 1 gwei - adjust based on network
     },
+    story: {
+      url: "https://mainnet.storyrpc.io",
+      accounts: [MAINNET_PRIVATE_KEY],
+      chainId: 1514,
+    },
   },
-  etherscan: {},
+  etherscan: {
+    apiKey: {
+      story: "TESTINGS",
+    },
+    customChains: [
+      {
+        network: "story",
+        chainId: 1514,
+        urls: {
+          apiURL: "https://www.storyscan.xyz/api",
+          browserURL: "https://www.storyscan.xyz",
+        },
+      },
+    ],
+  },
   paths: {
     sources: "./contracts",
     tests: "./test",
